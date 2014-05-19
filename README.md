@@ -20,6 +20,7 @@ Requirements
  * Refer to https://www.dropbox.com/developers/core/sdks/ios for more information
  
 Usage
+
     #import <iOSCoreLibrary/ICLUploadToDropboxViewController.h>
 
     NSDictionary* appearance = @{@"MeterColour": [UIColor colorWithHue:240.0f/360.0f saturation:0.5f brightness:0.95f alpha:1.0f],
@@ -44,6 +45,7 @@ Categories
 Applies a basic glass look to a UIButton which has been set to custom drawing. In iOS 6 the button corners are rounded, in iOS 7 they will be square.
 
 Usage
+
     #import <iOSCoreLibrary/UIButton+applyGlassStyle.h.h>
 
     # Apply the glass style to the done button using small corners on iOS 6
@@ -53,6 +55,8 @@ Usage
     
 
 ## UIViewController - Retrieve Top Level View Controller
+Retrieves the top level view controller when provided with an existing controller. The original source for this section of code was StackOverflow in this question http://stackoverflow.com/questions/6131205/iphone-how-to-find-topmost-view-controller
+
     #import <iOSCoreLibrary/UIButton+Extensions.h.h>
 
     # Call from within any view controller to retrieve the topmost one.
