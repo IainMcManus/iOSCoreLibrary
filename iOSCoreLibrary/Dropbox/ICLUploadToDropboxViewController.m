@@ -264,7 +264,12 @@
         _gaussianBlurFilter = [CIFilter filterWithName:@"CIGaussianBlur"];
         
         [_gaussianBlurFilter setDefaults];
-        [_gaussianBlurFilter setValue:@(10) forKey:kCIInputRadiusKey];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+            [_gaussianBlurFilter setValue:@(10) forKey:kCIInputRadiusKey];
+        }
+        else {
+            [_gaussianBlurFilter setValue:@(10) forKey:@"inputRadius"];
+        }
         
         _blendFilter = [CIFilter filterWithName:@"CISourceOverCompositing"];
         [_blendFilter setDefaults];
