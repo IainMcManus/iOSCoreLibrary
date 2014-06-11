@@ -16,6 +16,7 @@ Features
  
 Requirements
  * You will need the official Dropbox SDK and must run through their setup steps
+ * You will need to add the CoreImage and OpenGLES frameworks to your project
  * The Dropbox SDK must be added as a Framework to the iOSCoreLibrary project
  * Refer to https://www.dropbox.com/developers/core/sdks/ios for more information
  
