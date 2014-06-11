@@ -31,6 +31,8 @@
 + (id) create:(NSString*) title sourceFile:(NSString*) sourceFile destinationPath:(NSString*) destinationPath appearanceOptions:(NSDictionary*) appearanceOptions errorTitle:(NSString*) errorTitle errorMessage:(NSString*) errorMessage retryText:(NSString*) retryText cancelText:(NSString*) cancelText;
 - (void) show;
 
+- (void) cancelUpload;
+
 - (IBAction)doneButtonSelected:(id)sender;
 
 @end

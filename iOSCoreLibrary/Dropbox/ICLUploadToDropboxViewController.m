@@ -74,15 +74,8 @@
         _popoverViewController = [[UIPopoverController alloc] initWithContentViewController:_navigationViewController];
         [_popoverViewController setDelegate:self];
         
-        CGRect viewFrame = activeVC.view.frame;
-        
-        CGRect centeredRect;
-        if (UIInterfaceOrientationIsLandscape([activeVC interfaceOrientation])) {
-            centeredRect = CGRectMake(viewFrame.size.height/2, viewFrame.size.width/2, 1, 1);
-        }
-        else {
-            centeredRect = CGRectMake(viewFrame.size.width/2, viewFrame.size.height/2, 1, 1);
-        }
+        CGRect viewBounds = activeVC.view.bounds;
+        CGRect centeredRect = CGRectMake(viewBounds.size.width/2, viewBounds.size.height/2, 1, 1);
         
         [_popoverViewController presentPopoverFromRect:centeredRect inView:activeVC.view permittedArrowDirections:0 animated:YES];
         
@@ -380,18 +373,29 @@
         
         _navigationViewController = nil;
         _popoverViewController = nil;
+        
+        if (self.delegate) {
+            [self.delegate uploadToDropboxViewDidFinish:self uploaded:!_downloadFailed];
+        }
     }
     else {
-        [_navigationViewController dismissViewControllerAnimated:YES completion:nil];
-    }
-    
-    if (self.delegate) {
-        [self.delegate uploadToDropboxViewDidFinish:self uploaded:!_downloadFailed];
+        [_navigationViewController dismissViewControllerAnimated:YES completion:^{
+            if (self.delegate) {
+                [self.delegate uploadToDropboxViewDidFinish:self uploaded:!_downloadFailed];
+            }
+        }];
     }
 }
 
 - (BOOL) popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController {
     return NO;
+}
+
+- (void) cancelUpload {
+    [_restClient cancelAllRequests];
+    
+    _downloadFailed = YES;
+    [self.doneButton setHidden:NO];
 }
 
 @end
