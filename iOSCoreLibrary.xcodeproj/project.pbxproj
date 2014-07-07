@@ -21,7 +21,65 @@
 		AE9629901919FF5E00A9AAC3 /* ICLUploadToDropboxViewController~iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE96298B1919FEB200A9AAC3 /* ICLUploadToDropboxViewController~iPhone.xib */; };
 		AEA38057179A4A3000A1CAD2 /* UIButton+applyGlassStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = AEA38049179A4A3000A1CAD2 /* UIButton+applyGlassStyle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AEA38058179A4A3000A1CAD2 /* UIButton+applyGlassStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA3804A179A4A3000A1CAD2 /* UIButton+applyGlassStyle.m */; };
+		AEE765C8196A6DA600D8AAA4 /* ICLAlertViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = AEE765B8196A6DA600D8AAA4 /* ICLAlertViewController.h */; };
+		AEE765C9196A6DA600D8AAA4 /* ICLAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEE765B9196A6DA600D8AAA4 /* ICLAlertViewController.m */; };
+		AEE765CA196A6DA600D8AAA4 /* ICLAlertViewController2.xib in Resources */ = {isa = PBXBuildFile; fileRef = AEE765BA196A6DA600D8AAA4 /* ICLAlertViewController2.xib */; };
+		AEE765CB196A6DA600D8AAA4 /* ICLAlertViewController2~iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = AEE765BB196A6DA600D8AAA4 /* ICLAlertViewController2~iPhone.xib */; };
+		AEE765CC196A6DA600D8AAA4 /* ICLAlertViewController3.xib in Resources */ = {isa = PBXBuildFile; fileRef = AEE765BC196A6DA600D8AAA4 /* ICLAlertViewController3.xib */; };
+		AEE765CD196A6DA600D8AAA4 /* ICLAlertViewController3~iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = AEE765BD196A6DA600D8AAA4 /* ICLAlertViewController3~iPhone.xib */; };
+		AEE765CE196A6DA600D8AAA4 /* ICLCoreDataDeviceList.h in Headers */ = {isa = PBXBuildFile; fileRef = AEE765BF196A6DA600D8AAA4 /* ICLCoreDataDeviceList.h */; };
+		AEE765CF196A6DA600D8AAA4 /* ICLCoreDataDeviceList.m in Sources */ = {isa = PBXBuildFile; fileRef = AEE765C0196A6DA600D8AAA4 /* ICLCoreDataDeviceList.m */; };
+		AEE765D0196A6DA600D8AAA4 /* ICLCoreDataManager.h in Headers */ = {isa = PBXBuildFile; fileRef = AEE765C1196A6DA600D8AAA4 /* ICLCoreDataManager.h */; };
+		AEE765D1196A6DA600D8AAA4 /* ICLCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AEE765C2196A6DA600D8AAA4 /* ICLCoreDataManager.m */; };
+		AEE765D2196A6DA600D8AAA4 /* NSBundle+InternalExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = AEE765C4196A6DA600D8AAA4 /* NSBundle+InternalExtensions.h */; };
+		AEE765D3196A6DA600D8AAA4 /* NSBundle+InternalExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AEE765C5196A6DA600D8AAA4 /* NSBundle+InternalExtensions.m */; };
+		AEE765D4196A6DA600D8AAA4 /* NSURL+InternalExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = AEE765C6196A6DA600D8AAA4 /* NSURL+InternalExtensions.h */; };
+		AEE765D5196A6DA600D8AAA4 /* NSURL+InternalExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AEE765C7196A6DA600D8AAA4 /* NSURL+InternalExtensions.m */; };
+		AEE765F3196A6DC100D8AAA4 /* NSManagedObjectModel+KCOrderedAccessorFix.h in Headers */ = {isa = PBXBuildFile; fileRef = AEE765D8196A6DC100D8AAA4 /* NSManagedObjectModel+KCOrderedAccessorFix.h */; };
+		AEE765F4196A6DC100D8AAA4 /* NSManagedObjectModel+KCOrderedAccessorFix.m in Sources */ = {isa = PBXBuildFile; fileRef = AEE765D9196A6DC100D8AAA4 /* NSManagedObjectModel+KCOrderedAccessorFix.m */; };
+		AEE765F5196A6DC100D8AAA4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = AEE765DA196A6DC100D8AAA4 /* README.md */; };
+		AEE765F6196A6DC100D8AAA4 /* APLAppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = AEE765DD196A6DC100D8AAA4 /* APLAppDelegate.h */; };
+		AEE765F7196A6DC100D8AAA4 /* APLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AEE765DE196A6DC100D8AAA4 /* APLAppDelegate.m */; };
+		AEE765F8196A6DC100D8AAA4 /* APLViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = AEE765DF196A6DC100D8AAA4 /* APLViewController.h */; };
+		AEE765F9196A6DC100D8AAA4 /* APLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEE765E0196A6DC100D8AAA4 /* APLViewController.m */; };
+		AEE765FA196A6DC100D8AAA4 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AEE765E1196A6DC100D8AAA4 /* MainStoryboard.storyboard */; };
+		AEE765FB196A6DC100D8AAA4 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AEE765E3196A6DC100D8AAA4 /* Default-568h@2x.png */; };
+		AEE765FC196A6DC100D8AAA4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AEE765E4196A6DC100D8AAA4 /* InfoPlist.strings */; };
+		AEE765FD196A6DC100D8AAA4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AEE765E6196A6DC100D8AAA4 /* Localizable.strings */; };
+		AEE765FE196A6DC100D8AAA4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AEE765E9196A6DC100D8AAA4 /* Images.xcassets */; };
+		AEE765FF196A6DC100D8AAA4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AEE765EA196A6DC100D8AAA4 /* main.m */; };
+		AEE76600196A6DC100D8AAA4 /* Reachability-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AEE765EB196A6DC100D8AAA4 /* Reachability-Info.plist */; };
+		AEE76601196A6DC100D8AAA4 /* Reachability-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AEE765EC196A6DC100D8AAA4 /* Reachability-Prefix.pch */; };
+		AEE76602196A6DC100D8AAA4 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = AEE765ED196A6DC100D8AAA4 /* Reachability.h */; };
+		AEE76603196A6DC100D8AAA4 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AEE765EE196A6DC100D8AAA4 /* Reachability.m */; };
+		AEE76604196A6DC100D8AAA4 /* ReadMe.txt in Resources */ = {isa = PBXBuildFile; fileRef = AEE765F2196A6DC100D8AAA4 /* ReadMe.txt */; };
+		AEE76615196A6E1300D8AAA4 /* ICL_Common.strings in Resources */ = {isa = PBXBuildFile; fileRef = AEE7660B196A6E1300D8AAA4 /* ICL_Common.strings */; };
+		AEE76616196A6E1300D8AAA4 /* ICL_iCloud.strings in Resources */ = {isa = PBXBuildFile; fileRef = AEE7660D196A6E1300D8AAA4 /* ICL_iCloud.strings */; };
+		AEE76617196A6E1300D8AAA4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AEE7660F196A6E1300D8AAA4 /* InfoPlist.strings */; };
+		AEE76618196A6E1300D8AAA4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AEE76611196A6E1300D8AAA4 /* Localizable.strings */; };
+		AEE76619196A6E1300D8AAA4 /* UI_Autogenerated.strings in Resources */ = {isa = PBXBuildFile; fileRef = AEE76613196A6E1300D8AAA4 /* UI_Autogenerated.strings */; };
+		AEE7661C196A6E4F00D8AAA4 /* UIColor+extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = AEE7661A196A6E4F00D8AAA4 /* UIColor+extensions.h */; };
+		AEE7661D196A6E4F00D8AAA4 /* UIColor+extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AEE7661B196A6E4F00D8AAA4 /* UIColor+extensions.m */; };
+		AEE7661F196A6E7B00D8AAA4 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEE7661E196A6E7B00D8AAA4 /* DropboxSDK.framework */; };
+		AEE76620196A6E8E00D8AAA4 /* ICLAlertViewController2.xib in Resources */ = {isa = PBXBuildFile; fileRef = AEE765BA196A6DA600D8AAA4 /* ICLAlertViewController2.xib */; };
+		AEE76621196A6E9100D8AAA4 /* ICLAlertViewController2~iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = AEE765BB196A6DA600D8AAA4 /* ICLAlertViewController2~iPhone.xib */; };
+		AEE76622196A6E9400D8AAA4 /* ICLAlertViewController3.xib in Resources */ = {isa = PBXBuildFile; fileRef = AEE765BC196A6DA600D8AAA4 /* ICLAlertViewController3.xib */; };
+		AEE76623196A6E9600D8AAA4 /* ICLAlertViewController3~iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = AEE765BD196A6DA600D8AAA4 /* ICLAlertViewController3~iPhone.xib */; };
+		AEE76624196A6EA000D8AAA4 /* ICL_Common.strings in Resources */ = {isa = PBXBuildFile; fileRef = AEE7660B196A6E1300D8AAA4 /* ICL_Common.strings */; };
+		AEE76625196A6EA300D8AAA4 /* ICL_iCloud.strings in Resources */ = {isa = PBXBuildFile; fileRef = AEE7660D196A6E1300D8AAA4 /* ICL_iCloud.strings */; };
+		AEE76626196A6EA600D8AAA4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AEE76611196A6E1300D8AAA4 /* Localizable.strings */; };
+		AEE76627196A6EA900D8AAA4 /* UI_Autogenerated.strings in Resources */ = {isa = PBXBuildFile; fileRef = AEE76613196A6E1300D8AAA4 /* UI_Autogenerated.strings */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AEE76606196A6DC100D8AAA4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AEE765EF196A6DC100D8AAA4 /* Reachability.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 284A9D2117BACFCC00206D4F;
+			remoteInfo = Reachability;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		AE1744C217755777007051FF /* CopyFiles */ = {
@@ -56,6 +114,48 @@
 		AE96298B1919FEB200A9AAC3 /* ICLUploadToDropboxViewController~iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ICLUploadToDropboxViewController~iPhone.xib"; sourceTree = "<group>"; };
 		AEA38049179A4A3000A1CAD2 /* UIButton+applyGlassStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+applyGlassStyle.h"; path = "Categories/UIButton+applyGlassStyle.h"; sourceTree = "<group>"; };
 		AEA3804A179A4A3000A1CAD2 /* UIButton+applyGlassStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+applyGlassStyle.m"; path = "Categories/UIButton+applyGlassStyle.m"; sourceTree = "<group>"; };
+		AEE765B8196A6DA600D8AAA4 /* ICLAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICLAlertViewController.h; sourceTree = "<group>"; };
+		AEE765B9196A6DA600D8AAA4 /* ICLAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICLAlertViewController.m; sourceTree = "<group>"; };
+		AEE765BA196A6DA600D8AAA4 /* ICLAlertViewController2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ICLAlertViewController2.xib; sourceTree = "<group>"; };
+		AEE765BB196A6DA600D8AAA4 /* ICLAlertViewController2~iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ICLAlertViewController2~iPhone.xib"; sourceTree = "<group>"; };
+		AEE765BC196A6DA600D8AAA4 /* ICLAlertViewController3.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ICLAlertViewController3.xib; sourceTree = "<group>"; };
+		AEE765BD196A6DA600D8AAA4 /* ICLAlertViewController3~iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ICLAlertViewController3~iPhone.xib"; sourceTree = "<group>"; };
+		AEE765BF196A6DA600D8AAA4 /* ICLCoreDataDeviceList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICLCoreDataDeviceList.h; sourceTree = "<group>"; };
+		AEE765C0196A6DA600D8AAA4 /* ICLCoreDataDeviceList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICLCoreDataDeviceList.m; sourceTree = "<group>"; };
+		AEE765C1196A6DA600D8AAA4 /* ICLCoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICLCoreDataManager.h; sourceTree = "<group>"; };
+		AEE765C2196A6DA600D8AAA4 /* ICLCoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICLCoreDataManager.m; sourceTree = "<group>"; };
+		AEE765C4196A6DA600D8AAA4 /* NSBundle+InternalExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+InternalExtensions.h"; sourceTree = "<group>"; };
+		AEE765C5196A6DA600D8AAA4 /* NSBundle+InternalExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+InternalExtensions.m"; sourceTree = "<group>"; };
+		AEE765C6196A6DA600D8AAA4 /* NSURL+InternalExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+InternalExtensions.h"; sourceTree = "<group>"; };
+		AEE765C7196A6DA600D8AAA4 /* NSURL+InternalExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+InternalExtensions.m"; sourceTree = "<group>"; };
+		AEE765D8196A6DC100D8AAA4 /* NSManagedObjectModel+KCOrderedAccessorFix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectModel+KCOrderedAccessorFix.h"; sourceTree = "<group>"; };
+		AEE765D9196A6DC100D8AAA4 /* NSManagedObjectModel+KCOrderedAccessorFix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectModel+KCOrderedAccessorFix.m"; sourceTree = "<group>"; };
+		AEE765DA196A6DC100D8AAA4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		AEE765DD196A6DC100D8AAA4 /* APLAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APLAppDelegate.h; sourceTree = "<group>"; };
+		AEE765DE196A6DC100D8AAA4 /* APLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APLAppDelegate.m; sourceTree = "<group>"; };
+		AEE765DF196A6DC100D8AAA4 /* APLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APLViewController.h; sourceTree = "<group>"; };
+		AEE765E0196A6DC100D8AAA4 /* APLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APLViewController.m; sourceTree = "<group>"; };
+		AEE765E2196A6DC100D8AAA4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		AEE765E3196A6DC100D8AAA4 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		AEE765E5196A6DC100D8AAA4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		AEE765E7196A6DC100D8AAA4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		AEE765E8196A6DC100D8AAA4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		AEE765E9196A6DC100D8AAA4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		AEE765EA196A6DC100D8AAA4 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		AEE765EB196A6DC100D8AAA4 /* Reachability-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Reachability-Info.plist"; sourceTree = "<group>"; };
+		AEE765EC196A6DC100D8AAA4 /* Reachability-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Reachability-Prefix.pch"; sourceTree = "<group>"; };
+		AEE765ED196A6DC100D8AAA4 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		AEE765EE196A6DC100D8AAA4 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		AEE765EF196A6DC100D8AAA4 /* Reachability.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Reachability.xcodeproj; sourceTree = "<group>"; };
+		AEE765F2196A6DC100D8AAA4 /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
+		AEE7660C196A6E1300D8AAA4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = ICL_Common.strings; sourceTree = "<group>"; };
+		AEE7660E196A6E1300D8AAA4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = ICL_iCloud.strings; sourceTree = "<group>"; };
+		AEE76610196A6E1300D8AAA4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
+		AEE76612196A6E1300D8AAA4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
+		AEE76614196A6E1300D8AAA4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = UI_Autogenerated.strings; sourceTree = "<group>"; };
+		AEE7661A196A6E4F00D8AAA4 /* UIColor+extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+extensions.h"; path = "Categories/UIColor+extensions.h"; sourceTree = "<group>"; };
+		AEE7661B196A6E4F00D8AAA4 /* UIColor+extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+extensions.m"; path = "Categories/UIColor+extensions.m"; sourceTree = "<group>"; };
+		AEE7661E196A6E7B00D8AAA4 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +163,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AEE7661F196A6E7B00D8AAA4 /* DropboxSDK.framework in Frameworks */,
 				AE1744C817755777007051FF /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -100,6 +201,7 @@
 		AE1744C617755777007051FF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AEE7661E196A6E7B00D8AAA4 /* DropboxSDK.framework */,
 				AE1744C717755777007051FF /* Foundation.framework */,
 				AE1744D617755778007051FF /* SenTestingKit.framework */,
 				AE1744D817755778007051FF /* UIKit.framework */,
@@ -111,6 +213,10 @@
 		AE1744C917755777007051FF /* iOSCoreLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				AEE765D6196A6DC100D8AAA4 /* External */,
+				AEE765B7196A6DA600D8AAA4 /* AlertView */,
+				AEE765BE196A6DA600D8AAA4 /* CoreData */,
+				AEE765C3196A6DA600D8AAA4 /* InternalCategories */,
 				AE9629841919FE5300A9AAC3 /* Dropbox */,
 				AEA38046179A4A2200A1CAD2 /* Categories */,
 				AE1744CC17755777007051FF /* iOSCoreLibrary.h */,
@@ -131,6 +237,7 @@
 		AE17452C177579F7007051FF /* iOSCoreLibraryBundle */ = {
 			isa = PBXGroup;
 			children = (
+				AEE76609196A6DF700D8AAA4 /* Localization */,
 				AE17452D177579F8007051FF /* Supporting Files */,
 			);
 			path = iOSCoreLibraryBundle;
@@ -160,12 +267,127 @@
 		AEA38046179A4A2200A1CAD2 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				AEE7661A196A6E4F00D8AAA4 /* UIColor+extensions.h */,
+				AEE7661B196A6E4F00D8AAA4 /* UIColor+extensions.m */,
 				AEA38049179A4A3000A1CAD2 /* UIButton+applyGlassStyle.h */,
 				AEA3804A179A4A3000A1CAD2 /* UIButton+applyGlassStyle.m */,
 				AE09F619192093000065EE13 /* UIViewController+Extensions.h */,
 				AE09F61A192093000065EE13 /* UIViewController+Extensions.m */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		AEE765B7196A6DA600D8AAA4 /* AlertView */ = {
+			isa = PBXGroup;
+			children = (
+				AEE765B8196A6DA600D8AAA4 /* ICLAlertViewController.h */,
+				AEE765B9196A6DA600D8AAA4 /* ICLAlertViewController.m */,
+				AEE765BA196A6DA600D8AAA4 /* ICLAlertViewController2.xib */,
+				AEE765BB196A6DA600D8AAA4 /* ICLAlertViewController2~iPhone.xib */,
+				AEE765BC196A6DA600D8AAA4 /* ICLAlertViewController3.xib */,
+				AEE765BD196A6DA600D8AAA4 /* ICLAlertViewController3~iPhone.xib */,
+			);
+			path = AlertView;
+			sourceTree = "<group>";
+		};
+		AEE765BE196A6DA600D8AAA4 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				AEE765BF196A6DA600D8AAA4 /* ICLCoreDataDeviceList.h */,
+				AEE765C0196A6DA600D8AAA4 /* ICLCoreDataDeviceList.m */,
+				AEE765C1196A6DA600D8AAA4 /* ICLCoreDataManager.h */,
+				AEE765C2196A6DA600D8AAA4 /* ICLCoreDataManager.m */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		AEE765C3196A6DA600D8AAA4 /* InternalCategories */ = {
+			isa = PBXGroup;
+			children = (
+				AEE765C4196A6DA600D8AAA4 /* NSBundle+InternalExtensions.h */,
+				AEE765C5196A6DA600D8AAA4 /* NSBundle+InternalExtensions.m */,
+				AEE765C6196A6DA600D8AAA4 /* NSURL+InternalExtensions.h */,
+				AEE765C7196A6DA600D8AAA4 /* NSURL+InternalExtensions.m */,
+			);
+			path = InternalCategories;
+			sourceTree = "<group>";
+		};
+		AEE765D6196A6DC100D8AAA4 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				AEE765D7196A6DC100D8AAA4 /* KCOrderedAccessorFix */,
+				AEE765DB196A6DC100D8AAA4 /* Reachability */,
+			);
+			path = External;
+			sourceTree = "<group>";
+		};
+		AEE765D7196A6DC100D8AAA4 /* KCOrderedAccessorFix */ = {
+			isa = PBXGroup;
+			children = (
+				AEE765D8196A6DC100D8AAA4 /* NSManagedObjectModel+KCOrderedAccessorFix.h */,
+				AEE765D9196A6DC100D8AAA4 /* NSManagedObjectModel+KCOrderedAccessorFix.m */,
+				AEE765DA196A6DC100D8AAA4 /* README.md */,
+			);
+			path = KCOrderedAccessorFix;
+			sourceTree = "<group>";
+		};
+		AEE765DB196A6DC100D8AAA4 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				AEE765DC196A6DC100D8AAA4 /* Reachability */,
+				AEE765EF196A6DC100D8AAA4 /* Reachability.xcodeproj */,
+				AEE765F2196A6DC100D8AAA4 /* ReadMe.txt */,
+			);
+			path = Reachability;
+			sourceTree = "<group>";
+		};
+		AEE765DC196A6DC100D8AAA4 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				AEE765DD196A6DC100D8AAA4 /* APLAppDelegate.h */,
+				AEE765DE196A6DC100D8AAA4 /* APLAppDelegate.m */,
+				AEE765DF196A6DC100D8AAA4 /* APLViewController.h */,
+				AEE765E0196A6DC100D8AAA4 /* APLViewController.m */,
+				AEE765E1196A6DC100D8AAA4 /* MainStoryboard.storyboard */,
+				AEE765E3196A6DC100D8AAA4 /* Default-568h@2x.png */,
+				AEE765E4196A6DC100D8AAA4 /* InfoPlist.strings */,
+				AEE765E6196A6DC100D8AAA4 /* Localizable.strings */,
+				AEE765E9196A6DC100D8AAA4 /* Images.xcassets */,
+				AEE765EA196A6DC100D8AAA4 /* main.m */,
+				AEE765EB196A6DC100D8AAA4 /* Reachability-Info.plist */,
+				AEE765EC196A6DC100D8AAA4 /* Reachability-Prefix.pch */,
+				AEE765ED196A6DC100D8AAA4 /* Reachability.h */,
+				AEE765EE196A6DC100D8AAA4 /* Reachability.m */,
+			);
+			path = Reachability;
+			sourceTree = "<group>";
+		};
+		AEE765F0196A6DC100D8AAA4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AEE76607196A6DC100D8AAA4 /* Reachability.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AEE76609196A6DF700D8AAA4 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				AEE7660A196A6E1300D8AAA4 /* en.lproj */,
+			);
+			name = Localization;
+			sourceTree = "<group>";
+		};
+		AEE7660A196A6E1300D8AAA4 /* en.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				AEE7660B196A6E1300D8AAA4 /* ICL_Common.strings */,
+				AEE7660D196A6E1300D8AAA4 /* ICL_iCloud.strings */,
+				AEE7660F196A6E1300D8AAA4 /* InfoPlist.strings */,
+				AEE76611196A6E1300D8AAA4 /* Localizable.strings */,
+				AEE76613196A6E1300D8AAA4 /* UI_Autogenerated.strings */,
+			);
+			path = en.lproj;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -175,8 +397,19 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AEE76601196A6DC100D8AAA4 /* Reachability-Prefix.pch in Headers */,
+				AEE76602196A6DC100D8AAA4 /* Reachability.h in Headers */,
+				AEE765F8196A6DC100D8AAA4 /* APLViewController.h in Headers */,
 				AEA38057179A4A3000A1CAD2 /* UIButton+applyGlassStyle.h in Headers */,
+				AEE765C8196A6DA600D8AAA4 /* ICLAlertViewController.h in Headers */,
+				AEE765D2196A6DA600D8AAA4 /* NSBundle+InternalExtensions.h in Headers */,
+				AEE7661C196A6E4F00D8AAA4 /* UIColor+extensions.h in Headers */,
+				AEE765F3196A6DC100D8AAA4 /* NSManagedObjectModel+KCOrderedAccessorFix.h in Headers */,
+				AEE765CE196A6DA600D8AAA4 /* ICLCoreDataDeviceList.h in Headers */,
+				AEE765F6196A6DC100D8AAA4 /* APLAppDelegate.h in Headers */,
+				AEE765D4196A6DA600D8AAA4 /* NSURL+InternalExtensions.h in Headers */,
 				AE09F61B192093000065EE13 /* UIViewController+Extensions.h in Headers */,
+				AEE765D0196A6DA600D8AAA4 /* ICLCoreDataManager.h in Headers */,
 				AE9629881919FE9600A9AAC3 /* ICLUploadToDropboxViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -236,10 +469,17 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = AE1744BB17755777007051FF;
 			productRefGroup = AE1744C517755777007051FF /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = AEE765F0196A6DC100D8AAA4 /* Products */;
+					ProjectRef = AEE765EF196A6DC100D8AAA4 /* Reachability.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				AE1744C317755777007051FF /* iOSCoreLibrary */,
@@ -248,13 +488,39 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		AEE76607196A6DC100D8AAA4 /* Reachability.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Reachability.app;
+			remoteRef = AEE76606196A6DC100D8AAA4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		AE17450917756BEF007051FF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AEE76626196A6EA600D8AAA4 /* Localizable.strings in Resources */,
+				AEE765CC196A6DA600D8AAA4 /* ICLAlertViewController3.xib in Resources */,
+				AEE76625196A6EA300D8AAA4 /* ICL_iCloud.strings in Resources */,
+				AEE76600196A6DC100D8AAA4 /* Reachability-Info.plist in Resources */,
 				AE96298C1919FEB200A9AAC3 /* ICLUploadToDropboxViewController~iPhone.xib in Resources */,
+				AEE765FD196A6DC100D8AAA4 /* Localizable.strings in Resources */,
+				AEE765FB196A6DC100D8AAA4 /* Default-568h@2x.png in Resources */,
+				AEE765CD196A6DA600D8AAA4 /* ICLAlertViewController3~iPhone.xib in Resources */,
+				AEE765F5196A6DC100D8AAA4 /* README.md in Resources */,
+				AEE765CB196A6DA600D8AAA4 /* ICLAlertViewController2~iPhone.xib in Resources */,
+				AEE765CA196A6DA600D8AAA4 /* ICLAlertViewController2.xib in Resources */,
+				AEE765FA196A6DC100D8AAA4 /* MainStoryboard.storyboard in Resources */,
+				AEE765FE196A6DC100D8AAA4 /* Images.xcassets in Resources */,
+				AEE76627196A6EA900D8AAA4 /* UI_Autogenerated.strings in Resources */,
 				AE96298A1919FE9600A9AAC3 /* ICLUploadToDropboxViewController.xib in Resources */,
+				AEE76604196A6DC100D8AAA4 /* ReadMe.txt in Resources */,
+				AEE76624196A6EA000D8AAA4 /* ICL_Common.strings in Resources */,
+				AEE765FC196A6DC100D8AAA4 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,8 +528,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AEE76616196A6E1300D8AAA4 /* ICL_iCloud.strings in Resources */,
+				AEE76617196A6E1300D8AAA4 /* InfoPlist.strings in Resources */,
+				AEE76623196A6E9600D8AAA4 /* ICLAlertViewController3~iPhone.xib in Resources */,
 				AE96298F1919FF5E00A9AAC3 /* ICLUploadToDropboxViewController.xib in Resources */,
+				AEE76621196A6E9100D8AAA4 /* ICLAlertViewController2~iPhone.xib in Resources */,
+				AEE76618196A6E1300D8AAA4 /* Localizable.strings in Resources */,
 				AE9629901919FF5E00A9AAC3 /* ICLUploadToDropboxViewController~iPhone.xib in Resources */,
+				AEE76619196A6E1300D8AAA4 /* UI_Autogenerated.strings in Resources */,
+				AEE76622196A6E9400D8AAA4 /* ICLAlertViewController3.xib in Resources */,
+				AEE76615196A6E1300D8AAA4 /* ICL_Common.strings in Resources */,
+				AEE76620196A6E8E00D8AAA4 /* ICLAlertViewController2.xib in Resources */,
 				AE174531177579F8007051FF /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -275,9 +550,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AEE765FF196A6DC100D8AAA4 /* main.m in Sources */,
+				AEE765D5196A6DA600D8AAA4 /* NSURL+InternalExtensions.m in Sources */,
 				AE1744CF17755777007051FF /* iOSCoreLibrary.m in Sources */,
 				AEA38058179A4A3000A1CAD2 /* UIButton+applyGlassStyle.m in Sources */,
 				AE09F61C192093000065EE13 /* UIViewController+Extensions.m in Sources */,
+				AEE7661D196A6E4F00D8AAA4 /* UIColor+extensions.m in Sources */,
+				AEE765F4196A6DC100D8AAA4 /* NSManagedObjectModel+KCOrderedAccessorFix.m in Sources */,
+				AEE765D3196A6DA600D8AAA4 /* NSBundle+InternalExtensions.m in Sources */,
+				AEE765CF196A6DA600D8AAA4 /* ICLCoreDataDeviceList.m in Sources */,
+				AEE765F7196A6DC100D8AAA4 /* APLAppDelegate.m in Sources */,
+				AEE765C9196A6DA600D8AAA4 /* ICLAlertViewController.m in Sources */,
+				AEE76603196A6DC100D8AAA4 /* Reachability.m in Sources */,
+				AEE765D1196A6DA600D8AAA4 /* ICLCoreDataManager.m in Sources */,
+				AEE765F9196A6DC100D8AAA4 /* APLViewController.m in Sources */,
 				AE9629891919FE9600A9AAC3 /* ICLUploadToDropboxViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -298,6 +584,71 @@
 				AE174530177579F8007051FF /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		AEE765E1196A6DC100D8AAA4 /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AEE765E2196A6DC100D8AAA4 /* Base */,
+				AEE765E8196A6DC100D8AAA4 /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+		AEE765E4196A6DC100D8AAA4 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AEE765E5196A6DC100D8AAA4 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		AEE765E6196A6DC100D8AAA4 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AEE765E7196A6DC100D8AAA4 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		AEE7660B196A6E1300D8AAA4 /* ICL_Common.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AEE7660C196A6E1300D8AAA4 /* en */,
+			);
+			name = ICL_Common.strings;
+			sourceTree = "<group>";
+		};
+		AEE7660D196A6E1300D8AAA4 /* ICL_iCloud.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AEE7660E196A6E1300D8AAA4 /* en */,
+			);
+			name = ICL_iCloud.strings;
+			sourceTree = "<group>";
+		};
+		AEE7660F196A6E1300D8AAA4 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AEE76610196A6E1300D8AAA4 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		AEE76611196A6E1300D8AAA4 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AEE76612196A6E1300D8AAA4 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		AEE76613196A6E1300D8AAA4 /* UI_Autogenerated.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AEE76614196A6E1300D8AAA4 /* en */,
+			);
+			name = UI_Autogenerated.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

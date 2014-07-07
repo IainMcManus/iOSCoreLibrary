@@ -19,14 +19,12 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <navigationBar contentMode="scaleToFill" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="Pn6-US-ODp">
+                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pn6-US-ODp">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.050886277110000003" green="0.11183071880000001" blue="0.58428865669999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="6iD-th-yhq"/>
                     </constraints>
-                    <color key="tintColor" red="0.050886277110000003" green="0.11183071880000001" blue="0.58428865669999996" alpha="1" colorSpace="calibratedRGB"/>
                     <textAttributes key="titleTextAttributes">
                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                     </textAttributes>
@@ -57,7 +55,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
                     </subviews>
-                    <color key="backgroundColor" white="0.33333333329999998" alpha="0.75" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="1" alpha="0.40000000000000002" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="oFl-AO-z6B" secondAttribute="trailing" constant="20" id="4MW-HO-AHf"/>
                         <constraint firstAttribute="bottom" secondItem="oFl-AO-z6B" secondAttribute="bottom" constant="20" id="9Sf-m1-tiH"/>
