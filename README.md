@@ -25,6 +25,28 @@ This is a complete iCloud + Core Data stack for iOS 7+. It handles setting up, i
 
 I have fully documented the code at http://iaintheindie.com/2014/07/07/icloud-core-data-part-3-complete-stack/
 
+## Requirements
+To use the Core Data Stack you must provide a delegate which implements the ICLCoreDataManagerDelegate protocol.
+
+## Using the Stack
+During the initialisation of your app (in didFinishLaunchingWithOptions) you must setup the stack. The stack requires:
+ * A delegate that implements the ICLCoreDataManagerDelegate protocol.
+ * Colour information for the custom alert view.
+ * A call to start the loading process.
+ 
+An example of this loading process is shown below: 
+    [ICLCoreDataManager Instance].delegate = self;
+    
+    [ICLCoreDataManager Instance].Colour_AlertView_Button1 = [UIColor colorWithHue:220.0f/360.0f saturation:0.5f brightness:0.5f alpha:1.0f];
+    [ICLCoreDataManager Instance].Colour_AlertView_Button2 = [UIColor colorWithHue:110.0f/360.0f saturation:0.5f brightness:0.5f alpha:1.0f];
+    [ICLCoreDataManager Instance].Colour_AlertView_Panel1 = [UIColor colorWithHue:210.0f/360.0f saturation:0.5f brightness:1.0f alpha:0.25f];
+    [ICLCoreDataManager Instance].Colour_AlertView_Panel2 = [UIColor colorWithHue:110.0f/360.0f saturation:0.5f brightness:1.0f alpha:0.25f];
+
+    [[ICLCoreDataManager Instance] requestBeginLoadingDataStore];
+    
+Once your UI is ready and the Core Data Stack can show UI if required invoke the following method:
+    [[ICLCoreDataManager Instance] requestFinishLoadingDataStore];
+
 Dropbox Uploader
 ===============
 
