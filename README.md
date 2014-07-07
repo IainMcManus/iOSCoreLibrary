@@ -48,6 +48,59 @@ An example of this loading process is shown below:
 Once your UI is ready and the Core Data Stack can show UI if required invoke the following method:
 
     [[ICLCoreDataManager Instance] requestFinishLoadingDataStore];
+    
+The methods required by the ICLCoreDataManagerDelegate are shown below:
+
+	- (BOOL) performLegacyDataConversionIfRequired {
+		// TODO - perform any legacy data conversion.
+		// If conversion is performed return YES otherwise return NO.
+	
+		return NO;
+	}
+
+	- (void) loadMinimalDataSet {
+		// TODO - Load any initial seed data if required
+	}
+
+	- (NSString*) storeName_Local {
+		// Replace MyAppName with your app's name (or a similar unique name)
+		return @"MyAppName_Local";
+	}
+
+	- (NSString*) storeName_iCloud {
+		// Replace MyAppName with your app's name (or a similar unique name)
+		return @"MyAppName_iCloud";
+	}
+
+	- (NSURL*) modelURL {
+		// Return the URL for the Core Data model. Replace MyAppCoreData with the name of your model.
+		return [[NSBundle mainBundle] URLForResource:@"MyAppCoreData" withExtension:@"momd"];
+	}
+
+	- (NSString*) backgroundImageNameForDialogs {
+		// TODO - return the name for the background image for the app (or nil for none)
+	}
+
+	- (void) contextSaveNotification:(NSNotification*) notification {
+	}
+
+	- (void) storeWillChangeNotification {
+		// TODO - Cleanup the UI and prepare for all current managed objects to go away
+	}
+
+	- (void) storeDidChangeNotification {
+		// TODO - Add any custom handling in response to the stores changing
+	
+		// TODO - Add data de-duplication logic here
+
+		// TODO - Refresh UI    
+	}
+
+	- (void) storeDidImportUbiquitousContentChangesNotification:(NSNotification*) notification {
+		// TODO - Add data de-duplication logic here
+	
+		// TODO - Add any custom handling for deleted, added or modified objects
+	}
 
 Dropbox Uploader
 ===============
