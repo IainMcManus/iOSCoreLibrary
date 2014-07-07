@@ -35,6 +35,7 @@ During the initialisation of your app (in didFinishLaunchingWithOptions) you mus
  * A call to start the loading process.
  
 An example of this loading process is shown below: 
+
     [ICLCoreDataManager Instance].delegate = self;
     
     [ICLCoreDataManager Instance].Colour_AlertView_Button1 = [UIColor colorWithHue:220.0f/360.0f saturation:0.5f brightness:0.5f alpha:1.0f];
@@ -45,6 +46,7 @@ An example of this loading process is shown below:
     [[ICLCoreDataManager Instance] requestBeginLoadingDataStore];
     
 Once your UI is ready and the Core Data Stack can show UI if required invoke the following method:
+
     [[ICLCoreDataManager Instance] requestFinishLoadingDataStore];
 
 Dropbox Uploader
