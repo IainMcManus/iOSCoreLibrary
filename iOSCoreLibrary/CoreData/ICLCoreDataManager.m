@@ -26,7 +26,7 @@ NSString* Setting_MigrationFromCloudPerformedBase = @"iCloud.%@.MigrationPerform
 NSString* Setting_iCloudUUID = @"iCloud.UUID";
 NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
 
-@interface ICLCoreDataManager()
+@interface ICLCoreDataManager() <ICLAlertViewControllerDelegate, UIAlertViewDelegate>
     - (id)initInstance;
 @end
 
@@ -40,6 +40,8 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
     dispatch_queue_t _backgroundQueue;
     
     BOOL _accountChanged;
+    
+    BOOL _firstTimeOnline;
 }
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -55,6 +57,8 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
         _deviceList = nil;
         _iCloudStoreExists = NO;
         
+        _firstTimeOnline = YES;
+        
         _backgroundQueue = dispatch_queue_create("ICLCoreDataManager.BackgroundQueue", NULL);
         
         // create the iCloud UUID if it is missing
@@ -63,11 +67,6 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
             [userDefaults setObject:[[NSUUID UUID] UUIDString] forKey:Setting_iCloudUUID];
             [userDefaults synchronize];
         }
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(iCloudAccountChanged:)
-                                                     name:NSUbiquityIdentityDidChangeNotification
-                                                   object:nil];
     }
     
     return self;
@@ -484,15 +483,15 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
         [userDefaults synchronize];
 
         __block BOOL isLocalStorePresent = [self isLocalStorePresent];
+        
+        // always default to the local store
+        self.storeURL = [self storeURL_Local];
+        self.storeOptions = [self storeOptions_Local];
 
         // If the underlying data has not been converted to core data then perform the conversion
         if (![userDefaults boolForKey:Setting_LegacyDataConversionPerformed]) {
             // Enter conversion of legacy data state
             self.currentState = essConvertingLegacyDataToCoreData;
-            
-            // Force to use the local store initially
-            self.storeURL = [self storeURL_Local];
-            self.storeOptions = [self storeOptions_Local];
             
             // Perform the legacy data import and save the results
             [self.managedObjectContext performBlockAndWait:^{
@@ -523,10 +522,6 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
             
             // Load the minimal data set
             self.currentState = essImportingMinimalDataSet;
-            
-            // Force to use the local store initially
-            self.storeURL = [self storeURL_Local];
-            self.storeOptions = [self storeOptions_Local];
             
             // Load the bare minimum of data required to function
             [self.managedObjectContext performBlockAndWait:^{
@@ -575,25 +570,48 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
         if (identityToken) {
             NSData* previousTokenData = [userDefaults objectForKey:Setting_IdentityToken];
             id previousIdentityToken = previousTokenData ? [NSKeyedUnarchiver unarchiveObjectWithData:previousTokenData] : nil;
+            
+            [userDefaults setObject:[NSKeyedArchiver archivedDataWithRootObject:identityToken] forKey:Setting_IdentityToken];
+            [userDefaults synchronize];
 
             // The token has changed - warn the user so they know the data won't be present
-            if (_accountChanged || (previousIdentityToken && ![identityToken isEqual:previousIdentityToken])) {
+            if (previousIdentityToken && ![identityToken isEqual:previousIdentityToken]) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     NSString* msgTitle = NSLocalizedStringFromTableInBundle(@"iCloud.AccountChanged.Title", @"ICL_iCloud", [NSBundle localisationBundle], @"iCloud Account Changed");
                     NSString* msgBody = NSLocalizedStringFromTableInBundle(@"iCloud.AccountChanged.Body", @"ICL_iCloud", [NSBundle localisationBundle], @"You have signed into a different iCloud account.");
                     
-                    UIAlertView* warning = [[UIAlertView alloc] initWithTitle:msgTitle message:msgBody delegate:nil cancelButtonTitle:NSLocalizedStringFromTableInBundle(@"ok", @"ICL_Common", [NSBundle localisationBundle], @"Ok") otherButtonTitles:nil];
+                    self.accountChangedView = [[UIAlertView alloc] initWithTitle:msgTitle
+                                                                    message:msgBody
+                                                                   delegate:nil
+                                                          cancelButtonTitle:NSLocalizedStringFromTableInBundle(@"ok", @"ICL_Common", [NSBundle localisationBundle], @"Ok")
+                                                          otherButtonTitles:nil];
                     
                     if ([[UIApplication sharedApplication] isIgnoringInteractionEvents]) {
                         [[UIApplication sharedApplication] endIgnoringInteractionEvents];
                     }
                     
-                    [warning show];
+                    self.accountChangedView.delegate = self;
+                    
+                    NSString* tokenString = identityToken ? [[NSKeyedArchiver archivedDataWithRootObject:identityToken] base64Encoding] : nil;
+                    
+                    NSString* Setting_MigrationToCloudPerformed = [NSString stringWithFormat:Setting_MigrationToCloudPerformedBase, tokenString];
+                    NSString* Setting_MigrationFromCloudPerformed = identityToken ? [NSString stringWithFormat:Setting_MigrationFromCloudPerformedBase, tokenString] : nil;
+                    
+                    // Clear iCloud and migration related flags to force the user to make the choice again
+                    [userDefaults removeObjectForKey:Setting_iCloudEnabled];
+                    [userDefaults removeObjectForKey:Setting_MigrationToCloudPerformed];
+                    [userDefaults removeObjectForKey:Setting_MigrationFromCloudPerformed];
+                    [userDefaults synchronize];
+                    
+                    if ([[UIApplication sharedApplication] isIgnoringInteractionEvents]) {
+                        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+                    }
+                    [self.accountChangedView show];
                 });
+                
+                // We can safely exit at this point and re-enter the state machine later.
+                return;
             }
-            
-            [userDefaults setObject:[NSKeyedArchiver archivedDataWithRootObject:identityToken] forKey:Setting_IdentityToken];
-            [userDefaults synchronize];
             
             // if iCloud is supported but the user hasn't decided if they want to enable it or not yet
             BOOL iCloudEnablePromptRequired = !previousTokenData || ![userDefaults objectForKey:Setting_iCloudEnabled];
@@ -801,6 +819,14 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
             [self resetCoreDataInterfaces];
             [self managedObjectContext];
         });
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    // No additional logic is required for the account changed view.
+    // We can simply re-enter the state machine at it's current point.
+    if (alertView == self.accountChangedView) {
+        [self requestLoadDataStore];
     }
 }
 
@@ -1040,6 +1066,11 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
         return;
     }
     
+    // ignore iCloud account changes if the user has selected not to use iCloud
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:Setting_iCloudEnabled]) {
+        return;
+    }
+    
     // If the iCloud account changes then the device list path will be invalid.
     // Force it to update by tearing it down and recreating it.
     
@@ -1047,25 +1078,12 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
     
     [self setupDeviceList];
     
-    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
     BOOL iCloudExistsNow = [self iCloudAvailable];
     
     // If no previous identity token was stored then there will be no store changed notification.
     // Manually send it to trigger the refresh of the UI and the data.
     if (iCloudExistsNow) {
         _accountChanged = YES;
-        
-        id identityToken = [self ubiquityIdentityToken];
-        NSString* tokenString = identityToken ? [[NSKeyedArchiver archivedDataWithRootObject:identityToken] base64Encoding] : nil;
-        
-        NSString* Setting_MigrationToCloudPerformed = [NSString stringWithFormat:Setting_MigrationToCloudPerformedBase, tokenString];
-        NSString* Setting_MigrationFromCloudPerformed = identityToken ? [NSString stringWithFormat:Setting_MigrationFromCloudPerformedBase, tokenString] : nil;
-        
-        // remove all of the settings related to the identity token to force a full re-entry of the FSM
-        [userDefaults removeObjectForKey:Setting_MigrationToCloudPerformed];
-        [userDefaults removeObjectForKey:Setting_MigrationFromCloudPerformed];
-        [userDefaults removeObjectForKey:Setting_IdentityToken];
-        [userDefaults synchronize];
         
         [self CoreData_StoresWillChange:nil];
         
@@ -1131,6 +1149,16 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
         }
         
         [self.delegate storeDidChangeNotification];
+        
+        // listen for iCloud account changes
+        if (_firstTimeOnline) {
+            _firstTimeOnline = NO;
+            
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(iCloudAccountChanged:)
+                                                         name:NSUbiquityIdentityDidChangeNotification
+                                                       object:nil];
+        }
     }
 }
 

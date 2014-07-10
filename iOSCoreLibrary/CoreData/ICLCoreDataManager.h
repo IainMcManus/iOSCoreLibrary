@@ -30,7 +30,7 @@ typedef enum {
 
 @protocol ICLCoreDataManagerDelegate;
 
-@interface ICLCoreDataManager : NSObject <ICLAlertViewControllerDelegate>
+@interface ICLCoreDataManager : NSObject
 
 @property (weak, nonatomic) id <ICLCoreDataManagerDelegate> delegate;
 
@@ -44,6 +44,7 @@ typedef enum {
 @property (nonatomic, strong) ICLAlertViewController* iCloudEnableView;
 @property (nonatomic, strong) ICLAlertViewController* migrateFromCloudView;
 @property (nonatomic, strong) ICLAlertViewController* migrateToCloudView;
+@property (nonatomic, strong) UIAlertView* accountChangedView;
 @property (nonatomic, assign) StoreState currentState;
 @property (nonatomic, strong) NSCondition* canFinishLoadingDataStore;
 @property (nonatomic, assign) BOOL requestFinishLoadingDataStoreReceived;
