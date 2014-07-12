@@ -10,4 +10,6 @@
 
 @interface Pet (Extensions)
 
++ (NSArray*) allObjects;
+
 @end

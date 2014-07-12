@@ -10,4 +10,6 @@
 
 @interface Owner (Extensions)
 
++ (NSArray*) allObjects;
+
 @end

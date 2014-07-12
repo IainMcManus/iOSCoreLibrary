@@ -10,4 +10,6 @@
 
 @interface Classification (Extensions)
 
++ (NSArray*) allObjects;
+
 @end
