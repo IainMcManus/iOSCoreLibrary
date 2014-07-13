@@ -7,6 +7,7 @@
 //
 
 #import "ISAOwnersTabViewController.h"
+#import "ISAOwnerDetailsViewController.h"
 
 #import "Owner+Extensions.h"
 
@@ -34,6 +35,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[ISADataManager Instance] registerStoreChangedDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -55,6 +58,17 @@
 - (void) refreshDisplay {
     cachedOwners = [Owner allObjects];
     [self.ownersTable reloadData];
+}
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"AddOwner"]) {
+        ISAOwnerDetailsViewController* viewController = [segue destinationViewController];
+        viewController.owner = nil;
+    }
+    else if ([[segue identifier] isEqualToString:@"EditOwner"]) {
+        ISAOwnerDetailsViewController* viewController = [segue destinationViewController];
+        viewController.owner = sender;
+    }
 }
 
 #pragma mark StoreChangedDelegate Support

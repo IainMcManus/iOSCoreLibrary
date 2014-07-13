@@ -7,6 +7,7 @@
 //
 
 #import "ISAClassificationsTabViewController.h"
+#import "ISAClassificationDetailsViewController.h"
 
 #import "Classification+Extensions.h"
 
@@ -34,6 +35,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[ISADataManager Instance] registerStoreChangedDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -55,6 +58,17 @@
 - (void) refreshDisplay {
     cachedClassifications = [Classification allObjects];
     [self.classificationsTable reloadData];
+}
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"AddClassification"]) {
+        ISAClassificationDetailsViewController* viewController = [segue destinationViewController];
+        viewController.classification = nil;
+    }
+    else if ([[segue identifier] isEqualToString:@"EditClassification"]) {
+        ISAClassificationDetailsViewController* viewController = [segue destinationViewController];
+        viewController.classification = sender;
+    }
 }
 
 #pragma mark StoreChangedDelegate Support

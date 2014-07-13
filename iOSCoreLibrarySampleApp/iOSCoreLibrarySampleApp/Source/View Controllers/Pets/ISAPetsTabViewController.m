@@ -7,6 +7,7 @@
 //
 
 #import "ISAPetsTabViewController.h"
+#import "ISAPetDetailsViewController.h"
 
 #import "Pet+Extensions.h"
 
@@ -34,6 +35,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[ISADataManager Instance] registerStoreChangedDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -55,6 +58,17 @@
 - (void) refreshDisplay {
     cachedPets = [Pet allObjects];
     [self.petsTable reloadData];
+}
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"AddPet"]) {
+        ISAPetDetailsViewController* viewController = [segue destinationViewController];
+        viewController.pet = nil;
+    }
+    else if ([[segue identifier] isEqualToString:@"EditPet"]) {
+        ISAPetDetailsViewController* viewController = [segue destinationViewController];
+        viewController.pet = sender;
+    }
 }
 
 #pragma mark StoreChangedDelegate Support

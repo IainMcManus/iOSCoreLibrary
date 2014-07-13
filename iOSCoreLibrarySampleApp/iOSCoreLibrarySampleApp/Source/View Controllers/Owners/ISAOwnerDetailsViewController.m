@@ -1,18 +1,20 @@
 //
-//  ISASettingsTabViewController.m
+//  ISAOwnerDetailsViewController.m
 //  iOSCoreLibrarySampleApp
 //
-//  Created by Iain McManus on 12/07/2014.
+//  Created by Iain McManus on 13/07/2014.
 //  Copyright (c) 2014 Injaia. All rights reserved.
 //
 
-#import "ISASettingsTabViewController.h"
+#import "ISAOwnerDetailsViewController.h"
 
-@interface ISASettingsTabViewController () <StoreChangedDelegate>
+#import "Owner+Extensions.h"
+
+@interface ISAOwnerDetailsViewController () <StoreChangedDelegate>
 
 @end
 
-@implementation ISASettingsTabViewController
+@implementation ISAOwnerDetailsViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -26,7 +28,12 @@
 {
     [super viewDidLoad];
     
-    [[ISADataManager Instance] registerStoreChangedDelegate:self];
+    if (self.owner) {
+        [self.ownerName setText:self.owner.name];
+    }
+    else {
+        [self.ownerName setText:@""];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -41,6 +48,22 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:Notification_LoadedNewVC
                                                         object:nil
                                                       userInfo:@{@"viewController": self}];
+    
+    [[ISADataManager Instance] registerStoreChangedDelegate:self];
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[ISADataManager Instance] unregisterStoreChangedDelegate:self];
+}
+
+- (IBAction)cancel:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)done:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark StoreChangedDelegate Support
@@ -50,5 +73,4 @@
 
 - (void) storeDidChange {
 }
-
 @end
