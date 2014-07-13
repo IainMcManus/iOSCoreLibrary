@@ -10,6 +10,8 @@
 
 #import "Classification+Extensions.h"
 
+#import <iOSCoreLibrary/ICLCoreDataManager.h>
+
 @interface ISAClassificationDetailsViewController () <StoreChangedDelegate>
 
 @end
@@ -63,7 +65,29 @@
 }
 
 - (IBAction)done:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if ([self.classificationName.text length] > 0) {
+        ICLCoreDataManager* dataManager = [ICLCoreDataManager Instance];
+        
+        Classification* classification = self.classification;
+        
+        if (!classification) {
+            classification = [NSEntityDescription insertNewObjectForEntityForName:@"Classification"
+                                                           inManagedObjectContext:[dataManager managedObjectContext]];
+        }
+        
+        classification.name = self.classificationName.text;
+        
+        [dataManager saveContext];
+        
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    else {
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"IncorrectName.Title", @"Errors", @"Incorrect Name")
+                                    message:NSLocalizedStringFromTable(@"IncorrectName.Message", @"Errors", @"The name cannot be empty.")
+                                   delegate:nil
+                          cancelButtonTitle:nil
+                          otherButtonTitles:NSLocalizedStringFromTable(@"Ok", @"Common", @"Ok"), nil] show];
+    }
 }
 
 #pragma mark StoreChangedDelegate Support

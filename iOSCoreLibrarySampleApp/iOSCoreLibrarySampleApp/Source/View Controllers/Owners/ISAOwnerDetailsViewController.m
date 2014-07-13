@@ -10,6 +10,8 @@
 
 #import "Owner+Extensions.h"
 
+#import <iOSCoreLibrary/ICLCoreDataManager.h>
+
 @interface ISAOwnerDetailsViewController () <StoreChangedDelegate>
 
 @end
@@ -63,7 +65,29 @@
 }
 
 - (IBAction)done:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if ([self.ownerName.text length] > 0) {
+        ICLCoreDataManager* dataManager = [ICLCoreDataManager Instance];
+        
+        Owner* owner = self.owner;
+        
+        if (!owner) {
+            owner = [NSEntityDescription insertNewObjectForEntityForName:@"Owner"
+                                                  inManagedObjectContext:[dataManager managedObjectContext]];
+        }
+        
+        owner.name = self.ownerName.text;
+        
+        [dataManager saveContext];
+        
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    else {
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"IncorrectName.Title", @"Errors", @"Incorrect Name")
+                                    message:NSLocalizedStringFromTable(@"IncorrectName.Message", @"Errors", @"The name cannot be empty.")
+                                   delegate:nil
+                          cancelButtonTitle:nil
+                          otherButtonTitles:NSLocalizedStringFromTable(@"Ok", @"Common", @"Ok"), nil] show];
+    }
 }
 
 #pragma mark StoreChangedDelegate Support

@@ -12,6 +12,8 @@
 #import "Classification+Extensions.h"
 #import "Owner+Extensions.h"
 
+#import <iOSCoreLibrary/ICLCoreDataManager.h>
+
 @interface ISAPetDetailsViewController () <StoreChangedDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @end
@@ -91,7 +93,35 @@
 }
 
 - (IBAction)done:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if ([self.petName.text length] == 0) {
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"IncorrectName.Title", @"Errors", @"Incorrect Name")
+                                    message:NSLocalizedStringFromTable(@"IncorrectName.Message", @"Errors", @"The name cannot be empty.")
+                                   delegate:nil
+                          cancelButtonTitle:nil
+                          otherButtonTitles:NSLocalizedStringFromTable(@"Ok", @"Common", @"Ok"), nil] show];
+    }
+    else {
+        ICLCoreDataManager* dataManager = [ICLCoreDataManager Instance];
+        
+        Pet* pet = self.pet;
+        
+        if (!pet) {
+            pet = [NSEntityDescription insertNewObjectForEntityForName:@"PEt"
+                                                inManagedObjectContext:[dataManager managedObjectContext]];
+        }
+        
+        pet.name = self.petName.text;
+        
+        NSIndexPath* selectedOwner = [self.ownersTable indexPathForSelectedRow];
+        pet.owner = selectedOwner ? cachedOwners[selectedOwner.row] : nil;
+        
+        NSIndexPath* selectedClassification = [self.classificationsTable indexPathForSelectedRow];
+        pet.classification = selectedClassification ? cachedClassifications[selectedClassification.row] : nil;
+        
+        [dataManager saveContext];
+        
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 #pragma mark StoreChangedDelegate Support

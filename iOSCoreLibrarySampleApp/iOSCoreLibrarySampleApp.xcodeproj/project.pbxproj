@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE2341351972BB8F00CE6E38 /* Errors.strings in Resources */ = {isa = PBXBuildFile; fileRef = AE2341331972BB8F00CE6E38 /* Errors.strings */; };
 		AE96C6C21970F83800B48F45 /* ISAPetsTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE96C6C11970F83800B48F45 /* ISAPetsTabViewController.m */; };
 		AE96C6C51970F84C00B48F45 /* ISAOwnersTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE96C6C41970F84C00B48F45 /* ISAOwnersTabViewController.m */; };
 		AE96C6C91970F87200B48F45 /* ISAClassificationsTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE96C6C81970F87200B48F45 /* ISAClassificationsTabViewController.m */; };
@@ -87,6 +88,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AE2341341972BB8F00CE6E38 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Errors.strings; sourceTree = "<group>"; };
 		AE96C6C01970F83800B48F45 /* ISAPetsTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAPetsTabViewController.h; sourceTree = "<group>"; };
 		AE96C6C11970F83800B48F45 /* ISAPetsTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAPetsTabViewController.m; sourceTree = "<group>"; };
 		AE96C6C31970F84C00B48F45 /* ISAOwnersTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAOwnersTabViewController.h; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 		AE96C6CF197101EE00B48F45 /* en.lproj */ = {
 			isa = PBXGroup;
 			children = (
+				AE2341331972BB8F00CE6E38 /* Errors.strings */,
 				AE96C6D0197101EE00B48F45 /* Classifications.strings */,
 				AE96C6D2197101EE00B48F45 /* Common.strings */,
 				AE96C6D4197101EE00B48F45 /* InfoPlist.strings */,
@@ -529,6 +532,7 @@
 				AEAD361A196DFF83009BDC11 /* iOSCoreLibraryBundle.bundle in Resources */,
 				AEAD35E8196DFF27009BDC11 /* Main.storyboard in Resources */,
 				AE96C6DD197101EE00B48F45 /* Common.strings in Resources */,
+				AE2341351972BB8F00CE6E38 /* Errors.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -597,6 +601,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		AE2341331972BB8F00CE6E38 /* Errors.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AE2341341972BB8F00CE6E38 /* en */,
+			);
+			name = Errors.strings;
+			sourceTree = "<group>";
+		};
 		AE96C6D0197101EE00B48F45 /* Classifications.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
