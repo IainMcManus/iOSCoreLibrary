@@ -6,7 +6,7 @@ The iOS Core Library is a collection of useful screens and categories for iOS ap
 The library contains the following:
  * Dropbox Uploader - Simple wrapper for the Dropbox upload process that provides a progress indicator.
  * Alert View - Custom UI Alert View control.
- * Core Data Stack - Complete iCloud + Core Data stack.
+ * Core Data Stack - Complete iCloud + Core Data stack with sample application.
  * Custom Categories
    * UIButton+applyGlassStyle
    * UIColor+extensions
@@ -24,6 +24,11 @@ Core Data Stack
 This is a complete iCloud + Core Data stack for iOS 7+. It handles setting up, importing initial data, migrating existing data and enabling/disabling iCloud.
 
 I have fully documented the code at http://iaintheindie.com/2014/07/07/icloud-core-data-part-3-complete-stack/
+
+A sample application is included (iOSCoreLibrarySampleApp). The sample app has a basic setup of data and shows:
+ * Importing existing data to the Core Data stack.
+ * Reacting to remote changes to refresh displays or return to the main screen where required.
+ * Enabling/disabling iCloud including merging of the data and basic deduplication.
 
 ## Requirements
 To use the Core Data Stack you must provide a delegate which implements the ICLCoreDataManagerDelegate protocol.
@@ -113,10 +118,9 @@ Features
  * Reports upload errors to the user and permits retrying
  
 Requirements
- * You will need the official Dropbox SDK and must run through their setup steps
  * You will need to add the CoreImage and OpenGLES frameworks to your project
- * The Dropbox SDK must be added as a Framework to the iOSCoreLibrary project
- * Refer to https://www.dropbox.com/developers/core/sdks/ios for more information
+ * Version 1.3.11 of the Dropbox SDK has been included. For the latest version please go to https://www.dropbox.com/developers/core/sdks/ios
+ * The Dropbox SDK is the property of Dropbox Inc. Please refer to their license agreement before modifying or distributing their code.
  
 Usage
 

@@ -266,7 +266,6 @@
 		AEAD35DA196DFF27009BDC11 /* iOSCoreLibrarySampleApp */ = {
 			isa = PBXGroup;
 			children = (
-				AEAD3620196E00AD009BDC11 /* Miscellaneous */,
 				AEAD361F196E00A8009BDC11 /* Source */,
 				AEAD361E196E009F009BDC11 /* Content */,
 				AEAD35DB196DFF27009BDC11 /* Supporting Files */,
@@ -332,13 +331,6 @@
 				AEAD3621196E00C0009BDC11 /* Core Data */,
 			);
 			name = Source;
-			sourceTree = "<group>";
-		};
-		AEAD3620196E00AD009BDC11 /* Miscellaneous */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Miscellaneous;
 			sourceTree = "<group>";
 		};
 		AEAD3621196E00C0009BDC11 /* Core Data */ = {
