@@ -8,7 +8,7 @@
     <entity name="Owner" representedClassName="Owner" syncable="YES">
         <attribute name="creationDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="pets" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Pet" inverseName="owner" inverseEntity="Pet" syncable="YES"/>
+        <relationship name="pets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Pet" inverseName="owner" inverseEntity="Pet" syncable="YES"/>
     </entity>
     <entity name="Pet" representedClassName="Pet" syncable="YES">
         <attribute name="creationDate" optional="YES" attributeType="Date" syncable="YES"/>
@@ -17,8 +17,8 @@
         <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Owner" inverseName="pets" inverseEntity="Owner" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Pet" positionX="-63" positionY="-18" width="128" height="103"/>
-        <element name="Owner" positionX="-54" positionY="-9" width="128" height="88"/>
         <element name="Classification" positionX="-36" positionY="0" width="128" height="88"/>
+        <element name="Owner" positionX="-54" positionY="-9" width="128" height="88"/>
+        <element name="Pet" positionX="-63" positionY="-18" width="128" height="103"/>
     </elements>
 </model>
