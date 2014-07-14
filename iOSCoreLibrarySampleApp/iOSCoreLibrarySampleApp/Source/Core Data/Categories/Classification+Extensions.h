@@ -12,4 +12,7 @@
 
 + (NSArray*) allObjects;
 
+- (NSNumber*) fingerprint;
+- (void) remapAllReferencesTo:(Classification*) primeObject;
+
 @end

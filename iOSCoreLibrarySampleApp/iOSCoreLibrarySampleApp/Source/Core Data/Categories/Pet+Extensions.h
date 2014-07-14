@@ -12,4 +12,6 @@
 
 + (NSArray*) allObjects;
 
+- (NSNumber*) fingerprint;
+
 @end

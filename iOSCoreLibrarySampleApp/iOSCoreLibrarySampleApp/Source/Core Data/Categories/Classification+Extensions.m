@@ -7,6 +7,7 @@
 //
 
 #import "Classification+Extensions.h"
+#import "Pet+Extensions.h"
 
 #import <iOSCoreLibrary/ICLCoreDataManager.h>
 
@@ -31,6 +32,23 @@
     }];
     
     return results;
+}
+
+- (void) remapAllReferencesTo:(Classification*) primeObject {
+    // Switch all pets referencing this object to use the prime object
+    NSArray* linkedPets = [self.pets allObjects];
+    for (Pet* pet in linkedPets) {
+        pet.classification = primeObject;
+    }
+}
+
+- (NSNumber*) fingerprint {
+    NSUInteger prime = 31;
+    NSUInteger hash = 1;
+    
+    hash = prime * hash + [self.name hash];
+    
+    return @(hash);
 }
 
 @end

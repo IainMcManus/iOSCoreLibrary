@@ -7,6 +7,8 @@
 //
 
 #import "Pet+Extensions.h"
+#import "Owner+Extensions.h"
+#import "Classification+Extensions.h"
 
 #import <iOSCoreLibrary/ICLCoreDataManager.h>
 
@@ -31,6 +33,22 @@
     }];
     
     return results;
+}
+
+- (NSNumber*) fingerprint {
+    NSUInteger prime = 31;
+    NSUInteger hash = 1;
+    
+    hash = prime * hash + [self.name hash];
+    
+    if (self.owner) {
+        hash = prime * hash + [[self.owner fingerprint] integerValue];
+    }
+    if (self.classification) {
+        hash = prime * hash + [[self.classification fingerprint] integerValue];
+    }
+    
+    return @(hash);
 }
 
 @end

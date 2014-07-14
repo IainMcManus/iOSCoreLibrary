@@ -16,6 +16,151 @@
 
 @implementation ISADataManager (DBMaintenance)
 
+- (void) deduplicate_Classifications:(NSManagedObjectContext*) context {
+    NSMutableArray* purgeList = [[NSMutableArray alloc] init];
+    
+    NSArray* allClassifications = [Classification allObjects];
+    
+    // Extract an array of all the names with duplicates removed.
+    NSArray* classificationNames = [allClassifications valueForKeyPath:@"@distinctUnionOfObjects.name"];
+    
+    // no duplicates - nothing to do
+    if ([allClassifications count] == [classificationNames count]) {
+        return;
+    }
+    
+    NSSortDescriptor* creationDateSort = [NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES];
+    
+    // Traverse the list of unique classification names and identify any duplicates
+    for (NSString* classificationName in classificationNames) {
+        NSArray* filteredObjects = [allClassifications filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name = %@", classificationName]];
+        
+        // no work if there are no duplicates for this name
+        if ([filteredObjects count] <= 1) {
+            continue;
+        }
+        
+        [filteredObjects sortedArrayUsingDescriptors:@[creationDateSort]];
+        
+        // The first object is considered the prime object (ie. the one to be kept).
+        Classification* primeObject = [filteredObjects firstObject];
+        
+        for (Classification* classification in filteredObjects) {
+            // skip the prime object
+            if (classification == primeObject) {
+                continue;
+            }
+            
+            [classification remapAllReferencesTo:primeObject];
+            [purgeList addObject:classification];
+        }
+    }
+    
+    if ([purgeList count] > 0) {
+        NSLog(@"Purging %lu duplicate classifications", (unsigned long)[purgeList count]);
+        for (NSManagedObject* object in purgeList) {
+            [context deleteObject:object];
+        }
+    }
+}
+
+- (void) deduplicate_Owners:(NSManagedObjectContext*) context {
+    NSMutableArray* purgeList = [[NSMutableArray alloc] init];
+    
+    NSArray* allOwners = [Owner allObjects];
+    
+    // Extract an array of all the names with duplicates removed.
+    NSArray* ownerNames = [allOwners valueForKeyPath:@"@distinctUnionOfObjects.name"];
+    
+    // no duplicates - nothing to do
+    if ([allOwners count] == [ownerNames count]) {
+        return;
+    }
+    
+    NSSortDescriptor* creationDateSort = [NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES];
+    
+    // Traverse the list of unique owners names and identify any duplicates
+    for (NSString* ownerName in ownerNames) {
+        NSArray* filteredObjects = [allOwners filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name = %@", ownerName]];
+        
+        // no work if there are no duplicates for this name
+        if ([filteredObjects count] <= 1) {
+            continue;
+        }
+        
+        [filteredObjects sortedArrayUsingDescriptors:@[creationDateSort]];
+        
+        // The first object is considered the prime object (ie. the one to be kept).
+        Owner* primeObject = [filteredObjects firstObject];
+        
+        for (Owner* owner in filteredObjects) {
+            // skip the prime object
+            if (owner == primeObject) {
+                continue;
+            }
+            
+            [owner remapAllReferencesTo:primeObject];
+            [purgeList addObject:owner];
+        }
+    }
+    
+    if ([purgeList count] > 0) {
+        NSLog(@"Purging %lu duplicate owners", (unsigned long)[purgeList count]);
+        for (NSManagedObject* object in purgeList) {
+            [context deleteObject:object];
+        }
+    }
+}
+
+- (void) deduplicate_Pets:(NSManagedObjectContext*) context {
+    NSMutableArray* purgeList = [[NSMutableArray alloc] init];
+    
+    NSArray* allPets = [Pet allObjects];
+    
+    // Extract an array of all the names with duplicates removed.
+    NSArray* petFingerprints = [allPets valueForKeyPath:@"@distinctUnionOfObjects.fingerprint"];
+    
+    // no duplicates - nothing to do
+    if ([allPets count] == [petFingerprints count]) {
+        return;
+    }
+    
+    NSSortDescriptor* creationDateSort = [NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES];
+    
+    // Traverse the list of unique fingerprints and identify any duplicates
+    for (NSNumber* fingerprint in petFingerprints) {
+        NSArray* filteredObjects = [allPets filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"fingerprint = %@", fingerprint]];
+        
+        // no work if there are no duplicates for this name
+        if ([filteredObjects count] <= 1) {
+            continue;
+        }
+        
+        [filteredObjects sortedArrayUsingDescriptors:@[creationDateSort]];
+        
+        // The first object is considered the prime object (ie. the one to be kept).
+        Pet* primeObject = [filteredObjects firstObject];
+        
+        for (Pet* pet in filteredObjects) {
+            // skip the prime object
+            if (pet == primeObject) {
+                continue;
+            }
+            
+            // no remapping required, we can simply delete
+            
+            [purgeList addObject:pet];
+        }
+    }
+    
+    if ([purgeList count] > 0) {
+        NSLog(@"Purging %lu duplicate pets", (unsigned long)[purgeList count]);
+        for (NSManagedObject* object in purgeList) {
+            [context deleteObject:object];
+        }
+    }
+}
+
 - (void) performDataDeduplication {
     NSLog(@"Beginning deduplication pass");
 #if DEBUG
@@ -29,7 +174,12 @@
             [context.undoManager disableUndoRegistration];
         }
         
-        // TODO
+        // Remove all duplicate owners and classifications first
+        [self deduplicate_Classifications:context];
+        [self deduplicate_Owners:context];
+        
+        // Finally deduplicate all pets
+        [self deduplicate_Pets:context];
         
         [[ICLCoreDataManager Instance] saveContext];
         
