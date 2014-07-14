@@ -159,8 +159,6 @@ UIColor* Colour_AlertView_Panel2 = nil;
 }
 
 - (void) storeDidImportUbiquitousContentChangesNotification:(NSNotification*) notification {
-    [self performDataDeduplication];
-    
     NSManagedObjectContext* context = [[ICLCoreDataManager Instance] managedObjectContext];
     
     NSDictionary* changes = notification.userInfo;
@@ -179,7 +177,11 @@ UIColor* Colour_AlertView_Panel2 = nil;
             [self eventClassificationDeleted:(Classification*)deletedObject remoteChange:YES];
         }
     }
-    
+
+    // Run the de-duplication. This MUST NOT be run before processing deletes.
+    // If it is then none of the objects will be found.
+    [self performDataDeduplication];
+
     // Notify any registered listeners that a new object was added.
     for (NSManagedObjectID* addedObjectId in changes[NSInsertedObjectsKey]) {
         NSManagedObject* addedObject = [context existingObjectWithID:addedObjectId error:nil];

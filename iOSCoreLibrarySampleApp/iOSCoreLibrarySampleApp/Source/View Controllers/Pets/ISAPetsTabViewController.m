@@ -57,7 +57,9 @@
                                                         object:nil
                                                       userInfo:@{@"viewController": self}];
     
-    [self refreshDisplay];
+    if ([[ICLCoreDataManager Instance] isDataStoreOnline]) {
+        [self refreshDisplay];
+    }
 }
 
 - (void) refreshDisplay {
