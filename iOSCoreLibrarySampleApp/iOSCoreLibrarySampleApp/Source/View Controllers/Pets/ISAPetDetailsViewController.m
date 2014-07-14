@@ -127,7 +127,7 @@
         Pet* pet = self.pet;
         
         if (!pet) {
-            pet = [NSEntityDescription insertNewObjectForEntityForName:@"PEt"
+            pet = [NSEntityDescription insertNewObjectForEntityForName:@"Pet"
                                                 inManagedObjectContext:[dataManager managedObjectContext]];
         }
         

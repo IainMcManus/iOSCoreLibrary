@@ -8,23 +8,13 @@
 
 #import "ISADataManager+DBMaintenance.h"
 
+#import "Pet+Extensions.h"
+#import "Owner+Extensions.h"
+#import "Classification+Extensions.h"
+
 #import <iOSCoreLibrary/ICLCoreDataManager.h>
 
 @implementation ISADataManager (DBMaintenance)
-
-- (void) purgeInvalidData:(NSManagedObjectContext*) context {
-    NSMutableArray* purgeList = [[NSMutableArray alloc] init];
-    
-    // TODO
-    
-    if ([purgeList count] > 0) {
-        NSLog(@"Purging %lu invalid objects", (unsigned long)[purgeList count]);
-        for (NSManagedObject* object in purgeList) {
-            [context deleteObject:object];
-        }
-    }
-}
-
 
 - (void) performDataDeduplication {
     NSLog(@"Beginning deduplication pass");
@@ -38,8 +28,6 @@
         if (context.undoManager) {
             [context.undoManager disableUndoRegistration];
         }
-        
-        [self purgeInvalidData:context];
         
         // TODO
         
@@ -61,8 +49,64 @@
     
     [[coreDataManager persistentStoreCoordinator] lock];
     
-    if (0) {
+    if (([[Pet allObjects] count] == 0) &&
+        ([[Owner allObjects] count] == 0) &&
+        ([[Classification allObjects] count] == 0)) {
         NSManagedObjectContext *context = [coreDataManager managedObjectContext];
+        
+        NSError* err = nil;
+        
+        // Import all of the classification data from the JSON file
+        NSString* classificationsPath = [[NSBundle mainBundle] pathForResource:@"Classifications" ofType:@"json"];
+        NSArray* classificationsToImport = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:classificationsPath]
+                                                                           options:kNilOptions
+                                                                             error:&err];
+        for (NSDictionary* classification in classificationsToImport) {
+            Classification* newClassification = [NSEntityDescription insertNewObjectForEntityForName:@"Classification"
+                                                                              inManagedObjectContext:context];
+            newClassification.name = classification[@"name"];
+        }
+        
+        // Create a map of classification names to the objects
+        NSArray* allClassifications = [Classification allObjects];
+        NSArray* allClassificationNames = [allClassifications valueForKey:@"name"];
+        NSDictionary* classificationNameMapping = [[NSDictionary alloc] initWithObjects:allClassifications
+                                                                                forKeys:allClassificationNames];
+        
+        // Import all of the owner data from the JSON file
+        NSString* ownersPath = [[NSBundle mainBundle] pathForResource:@"Owners" ofType:@"json"];
+        NSArray* ownersToImport = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:ownersPath]
+                                                                           options:kNilOptions
+                                                                             error:&err];
+        for (NSDictionary* owner in ownersToImport) {
+            Owner* newOwner = [NSEntityDescription insertNewObjectForEntityForName:@"Owner"
+                                                            inManagedObjectContext:context];
+            newOwner.name = owner[@"name"];
+        }
+        
+        // Create a map of owner names to the objects
+        NSArray* allOwners = [Owner allObjects];
+        NSArray* allOwnerNames = [allOwners valueForKey:@"name"];
+        NSDictionary* ownerNameMapping = [[NSDictionary alloc] initWithObjects:allOwners
+                                                                       forKeys:allOwnerNames];
+        
+        // Import all of the pet data from the JSON file
+        NSString* petsPath = [[NSBundle mainBundle] pathForResource:@"Pets" ofType:@"json"];
+        NSArray* petsToImport = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:petsPath]
+                                                                           options:kNilOptions
+                                                                             error:&err];
+        for (NSDictionary* pet in petsToImport) {
+            Pet* newPet = [NSEntityDescription insertNewObjectForEntityForName:@"Pet"
+                                                        inManagedObjectContext:context];
+            newPet.name = pet[@"name"];
+            
+            if (pet[@"owner"]) {
+                newPet.owner = ownerNameMapping[pet[@"owner"]];
+            }
+            if (pet[@"classification"]) {
+                newPet.classification = classificationNameMapping[pet[@"classification"]];
+            }
+        }
         
         NSError *error;
         if (![context save:&error]) {
