@@ -17,5 +17,6 @@ typedef enum {
 @interface UIButton (applyGlassStyle)
 
 - (void) applyGlassStyle:(GlassButtonSize) inButtonSize colour:(UIColor*) inColour;
+- (void) applyGlassStyle:(GlassButtonSize) inButtonSize colour:(UIColor*) inColour autoColourText:(BOOL) autoColourText;
 
 @end

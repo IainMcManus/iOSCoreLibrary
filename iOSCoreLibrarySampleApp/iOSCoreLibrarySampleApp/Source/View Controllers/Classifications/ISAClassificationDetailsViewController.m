@@ -12,11 +12,13 @@
 
 #import <iOSCoreLibrary/ICLCoreDataManager.h>
 
-@interface ISAClassificationDetailsViewController () <StoreChangedDelegate>
+@interface ISAClassificationDetailsViewController () <StoreChangedDelegate, UIAlertViewDelegate, ClassificationChangedDelegate>
 
 @end
 
-@implementation ISAClassificationDetailsViewController
+@implementation ISAClassificationDetailsViewController {
+    UIAlertView* iCloudChangedAlert;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,9 +34,13 @@
     
     if (self.classification) {
         [self.classificationName setText:self.classification.name];
+        
+        [self.titleItem setTitle:NSLocalizedStringFromTable(@"EditClassification", @"Classifications", @"Edit Classification")];
     }
     else {
         [self.classificationName setText:@""];
+        
+        [self.titleItem setTitle:NSLocalizedStringFromTable(@"AddClassification", @"Classifications", @"Add Classification")];
     }
 }
 
@@ -52,12 +58,14 @@
                                                       userInfo:@{@"viewController": self}];
     
     [[ISADataManager Instance] registerStoreChangedDelegate:self];
+    [[ISADataManager Instance] registerClassificationChangedDelegate:self];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     [[ISADataManager Instance] unregisterStoreChangedDelegate:self];
+    [[ISADataManager Instance] unregisterClassificationChangedDelegate:self];
 }
 
 - (IBAction)cancel:(id)sender {
@@ -93,8 +101,75 @@
 #pragma mark StoreChangedDelegate Support
 
 - (void) storeWillChange {
+    self.classification = nil;
 }
 
 - (void) storeDidChange {
+    // StoreDidChange will typically NOT be called from the main thread.
+    // As we need to display UI we must issue that block on the main thread.
+    dispatch_async(dispatch_get_main_queue(), ^{
+        iCloudChangedAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"StoreChanged.Title", @"iCloud", @"iCloud Database Changed")
+                                                        message:NSLocalizedStringFromTable(@"StoreChanged.Message", @"iCloud", @"The iCloud database has changed. You will be returned to the main screen.")
+                                                       delegate:nil
+                                              cancelButtonTitle:nil
+                                              otherButtonTitles:NSLocalizedStringFromTable(@"Ok", @"Common", @"Ok"), nil];
+        iCloudChangedAlert.delegate = self;
+        
+        [iCloudChangedAlert show];
+    });
 }
+
+#pragma mark UIAlertViewDelegate Support
+
+- (void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    // All iCloud alerts dismiss the current view.
+    if (alertView == iCloudChangedAlert) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+#pragma ClassificationChangedDelegate support
+
+- (void) classificationAdded:(Classification *)classification remoteChange:(BOOL)isRemoteChange {
+    // Nothing to do in response to an add.
+}
+
+- (void) classificationDeleted:(Classification *)classification remoteChange:(BOOL)isRemoteChange {
+    // We only care if the classification we are editing was deleted.
+    if (self.classification && (self.classification == classification)) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString* messageTitle = NSLocalizedStringFromTable(@"Deleted.Title", @"Classifications", @"Current Classification Deleted");
+            NSString* message = NSLocalizedStringFromTable(@"Deleted.Message", @"Classifications", @"The Classification you are editing was deleted remotely. You will be returned to the main screen.");
+            
+            iCloudChangedAlert = [[UIAlertView alloc] initWithTitle:messageTitle
+                                                            message:message
+                                                           delegate:nil
+                                                  cancelButtonTitle:nil
+                                                  otherButtonTitles:NSLocalizedStringFromTable(@"Ok", @"Common", @"Ok"), nil];
+            iCloudChangedAlert.delegate = self;
+            
+            [iCloudChangedAlert show];
+        });
+    }
+}
+
+- (void) classificationUpdated:(Classification *)classification remoteChange:(BOOL)isRemoteChange {
+    // We only care if the classification we are editing was updated.
+    if (self.classification && (self.classification == classification)) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString* messageTitle = NSLocalizedStringFromTable(@"Modified.Title", @"Classifications", @"Current Classification Modified");
+            NSString* message = NSLocalizedStringFromTable(@"Modified.Message", @"Classifications", @"The Classification you are editing was modified remotely. You will be returned to the main screen.");
+            
+            iCloudChangedAlert = [[UIAlertView alloc] initWithTitle:messageTitle
+                                                            message:message
+                                                           delegate:nil
+                                                  cancelButtonTitle:nil
+                                                  otherButtonTitles:NSLocalizedStringFromTable(@"Ok", @"Common", @"Ok"), nil];
+            iCloudChangedAlert.delegate = self;
+            
+            [iCloudChangedAlert show];
+        });
+    }
+}
+
 @end

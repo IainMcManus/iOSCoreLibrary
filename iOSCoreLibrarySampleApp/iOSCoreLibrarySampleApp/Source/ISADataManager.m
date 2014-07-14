@@ -9,6 +9,10 @@
 #import "ISADataManager.h"
 #import "ISADataManager+DBMaintenance.h"
 
+#import "Pet+Extensions.h"
+#import "Owner+Extensions.h"
+#import "Classification+Extensions.h"
+
 #import <iOSCoreLibrary/ICLCoreDataManager.h>
 
 NSString* Setting_iCloudEnabledChanged = @"iCloud.EnabledChanged";
@@ -26,7 +30,12 @@ UIColor* Colour_AlertView_Panel2 = nil;
 @end;
 
 @implementation ISADataManager {
-    UIViewController* _currentViewController;
+    UIViewController* currentViewController;
+    
+    NSMutableArray* storeChangedDelegates;
+    NSMutableArray* petChangedDelegates;
+    NSMutableArray* ownerChangedDelegates;
+    NSMutableArray* classificationChangedDelegates;
 }
 
 - (id) initInstance {
@@ -35,6 +44,11 @@ UIColor* Colour_AlertView_Panel2 = nil;
         Colour_AlertView_Button2 = [UIColor colorWithHue:110.0f/360.0f saturation:0.5f brightness:0.5f alpha:1.0f];
         Colour_AlertView_Panel1 = [UIColor colorWithHue:210.0f/360.0f saturation:0.5f brightness:1.0f alpha:0.25f];
         Colour_AlertView_Panel2 = [UIColor colorWithHue:110.0f/360.0f saturation:0.5f brightness:1.0f alpha:0.25f];
+        
+        storeChangedDelegates = [[NSMutableArray alloc] init];
+        petChangedDelegates = [[NSMutableArray alloc] init];
+        ownerChangedDelegates = [[NSMutableArray alloc] init];
+        classificationChangedDelegates = [[NSMutableArray alloc] init];
     }
     
     return self;
@@ -80,9 +94,7 @@ UIColor* Colour_AlertView_Panel2 = nil;
     [ICLCoreDataManager Instance].Colour_AlertView_Panel1 = Colour_AlertView_Panel1;
     [ICLCoreDataManager Instance].Colour_AlertView_Panel2 = Colour_AlertView_Panel2;
     
-    _StoreChangedDelegates = [[NSMutableArray alloc] init];
-    
-    _currentViewController = nil;
+    currentViewController = nil;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadedNewVC:) name:Notification_LoadedNewVC object:nil];
     
     [[ICLCoreDataManager Instance] requestBeginLoadingDataStore];
@@ -91,16 +103,16 @@ UIColor* Colour_AlertView_Panel2 = nil;
 - (void)loadedNewVC:(NSNotification *) notification {
     if([notification userInfo][@"viewController"]) {
         // if this is the first view we have become aware of then the UI is ready and we can finish loading the data
-        if (!_currentViewController) {
+        if (!currentViewController) {
             [[ICLCoreDataManager Instance] requestFinishLoadingDataStore];
         }
         
-        _currentViewController = [notification userInfo][@"viewController"];
+        currentViewController = [notification userInfo][@"viewController"];
     }
 }
 
 - (UIViewController*) currentViewController {
-    return _currentViewController;
+    return currentViewController;
 }
 
 #pragma mark ICLCoreDataManagerDelegate Support
@@ -138,6 +150,7 @@ UIColor* Colour_AlertView_Panel2 = nil;
 
 - (void) storeDidChangeNotification {
     [self loadMinimalDataSetIfRequired];
+    
     [[ICLCoreDataManager Instance] saveContext];
     
     [self performDataDeduplication];
@@ -146,39 +159,80 @@ UIColor* Colour_AlertView_Panel2 = nil;
 }
 
 - (void) storeDidImportUbiquitousContentChangesNotification:(NSNotification*) notification {
-//    NSManagedObjectContext* context = [[ICLCoreDataManager Instance] managedObjectContext];
-    
     [self performDataDeduplication];
     
-//    NSDictionary* changes = notification.userInfo;
+    NSManagedObjectContext* context = [[ICLCoreDataManager Instance] managedObjectContext];
+    
+    NSDictionary* changes = notification.userInfo;
 
-//    for (NSManagedObjectID* deletedObjectId in changes[NSDeletedObjectsKey]) {
-//        NSManagedObject* deletedObject = [context existingObjectWithID:deletedObjectId error:nil];
-//    }
-//    for (NSManagedObjectID* addedObjectId in changes[NSInsertedObjectsKey]) {
-//        NSManagedObject* addedObject = [context existingObjectWithID:addedObjectId error:nil];
-//    }
-//    for (NSManagedObjectID* updatedObjectId in changes[NSUpdatedObjectsKey]) {
-//        NSManagedObject* updatedObject = [context existingObjectWithID:updatedObjectId error:nil];
-//    }
+    // Notify any registered listeners that an object was deleted.
+    for (NSManagedObjectID* deletedObjectId in changes[NSDeletedObjectsKey]) {
+        NSManagedObject* deletedObject = [context existingObjectWithID:deletedObjectId error:nil];
+        
+        if ([deletedObject isKindOfClass:[Pet class]]) {
+            [self eventPetDeleted:(Pet*)deletedObject remoteChange:YES];
+        }
+        else if ([deletedObject isKindOfClass:[Owner class]]) {
+            [self eventOwnerDeleted:(Owner*)deletedObject remoteChange:YES];
+        }
+        else if ([deletedObject isKindOfClass:[Classification class]]) {
+            [self eventClassificationDeleted:(Classification*)deletedObject remoteChange:YES];
+        }
+    }
+    
+    // Notify any registered listeners that a new object was added.
+    for (NSManagedObjectID* addedObjectId in changes[NSInsertedObjectsKey]) {
+        NSManagedObject* addedObject = [context existingObjectWithID:addedObjectId error:nil];
+        
+        if ([addedObject isKindOfClass:[Pet class]]) {
+            [self eventPetAdded:(Pet*)addedObject remoteChange:YES];
+        }
+        else if ([addedObject isKindOfClass:[Owner class]]) {
+            [self eventOwnerAdded:(Owner*)addedObject remoteChange:YES];
+        }
+        else if ([addedObject isKindOfClass:[Classification class]]) {
+            [self eventClassificationAdded:(Classification*)addedObject remoteChange:YES];
+        }
+    }
+    
+    // Notify any registered listeners that an existing object was modified.
+    for (NSManagedObjectID* updatedObjectId in changes[NSUpdatedObjectsKey]) {
+        NSManagedObject* updatedObject = [context existingObjectWithID:updatedObjectId error:nil];
+        
+        if ([updatedObject isKindOfClass:[Pet class]]) {
+            [self eventPetUpdated:(Pet*)updatedObject remoteChange:YES];
+        }
+        else if ([updatedObject isKindOfClass:[Owner class]]) {
+            [self eventOwnerUpdated:(Owner*)updatedObject remoteChange:YES];
+        }
+        else if ([updatedObject isKindOfClass:[Classification class]]) {
+            [self eventClassificationUpdated:(Classification*)updatedObject remoteChange:YES];
+        }
+    }
 }
 
 - (void) eventStoreWillChange {
+    // Prevent user interaction until the store comes back online.
     if (![[UIApplication sharedApplication] isIgnoringInteractionEvents]) {
         [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     }
     
-    for (id eventHandler in self.StoreChangedDelegates) {
+    // Notify all registered handlers to prepare for the store going away.
+    // Any held NSManagedObjects will be invalidated and can no longer be used.
+    for (id eventHandler in storeChangedDelegates) {
         [eventHandler storeWillChange];
     }
 }
 
 - (void) eventStoreDidChange {
+    // Permit user interaction again.
     if ([[UIApplication sharedApplication] isIgnoringInteractionEvents]) {
         [[UIApplication sharedApplication] endIgnoringInteractionEvents];
     }
     
-    if (_currentViewController && ![_currentViewController conformsToProtocol:@protocol(StoreChangedDelegate)]) {
+    // If we have a current view and it does not gracefully handle the store changes then force a reset
+    // back to the main view.
+    if (currentViewController && ![currentViewController conformsToProtocol:@protocol(StoreChangedDelegate)]) {
         dispatch_async(dispatch_get_main_queue(), ^{
             UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             
@@ -188,22 +242,102 @@ UIColor* Colour_AlertView_Panel2 = nil;
             appDelegate.window.rootViewController = viewController;
             [appDelegate.window makeKeyAndVisible];
             
-            [self.StoreChangedDelegates removeAllObjects];
+            [storeChangedDelegates removeAllObjects];
         });
-    }
+    } // Otherwise notify all registered handlers to reload data and refresh the UI.
     else {
-        for (id eventHandler in self.StoreChangedDelegates) {
+        for (id eventHandler in storeChangedDelegates) {
             [eventHandler storeDidChange];
         }
     }
 }
 
 - (void) registerStoreChangedDelegate:(id) inHandler {
-    [self.StoreChangedDelegates addObject:inHandler];
+    [storeChangedDelegates addObject:inHandler];
 }
 
 - (void) unregisterStoreChangedDelegate:(id) inHandler {
-    [self.StoreChangedDelegates removeObject:inHandler];
+    [storeChangedDelegates removeObject:inHandler];
+}
+
+#pragma mark Internal Handlers for Object Changes
+
+- (void) registerPetChangedDelegate:(id) inHandler {
+    [petChangedDelegates addObject:inHandler];
+}
+
+- (void) unregisterPetChangedDelegate:(id) inHandler {
+    [petChangedDelegates removeObject:inHandler];
+}
+
+- (void) registerOwnerChangedDelegate:(id) inHandler {
+    [ownerChangedDelegates addObject:inHandler];
+}
+
+- (void) unregisterOwnerChangedDelegate:(id) inHandler {
+    [ownerChangedDelegates removeObject:inHandler];
+}
+
+- (void) registerClassificationChangedDelegate:(id) inHandler {
+    [classificationChangedDelegates addObject:inHandler];
+}
+
+- (void) unregisterClassificationChangedDelegate:(id) inHandler {
+    [classificationChangedDelegates removeObject:inHandler];
+}
+
+- (void) eventPetAdded:(Pet*) pet remoteChange:(BOOL) isRemoteChange {
+    for (id eventHandler in petChangedDelegates) {
+        [eventHandler petAdded:pet remoteChange:isRemoteChange];
+    }
+}
+
+- (void) eventPetUpdated:(Pet*) pet remoteChange:(BOOL) isRemoteChange {
+    for (id eventHandler in petChangedDelegates) {
+        [eventHandler petUpdated:pet remoteChange:isRemoteChange];
+    }
+}
+
+- (void) eventPetDeleted:(Pet*) pet remoteChange:(BOOL) isRemoteChange {
+    for (id eventHandler in petChangedDelegates) {
+        [eventHandler petDeleted:pet remoteChange:isRemoteChange];
+    }
+}
+
+- (void) eventOwnerAdded:(Owner*) owner remoteChange:(BOOL) isRemoteChange {
+    for (id eventHandler in ownerChangedDelegates) {
+        [eventHandler ownerAdded:owner remoteChange:isRemoteChange];
+    }
+}
+
+- (void) eventOwnerUpdated:(Owner*) owner remoteChange:(BOOL) isRemoteChange {
+    for (id eventHandler in ownerChangedDelegates) {
+        [eventHandler ownerUpdated:owner remoteChange:isRemoteChange];
+    }
+}
+
+- (void) eventOwnerDeleted:(Owner*) owner remoteChange:(BOOL) isRemoteChange {
+    for (id eventHandler in ownerChangedDelegates) {
+        [eventHandler ownerDeleted:owner remoteChange:isRemoteChange];
+    }
+}
+
+- (void) eventClassificationAdded:(Classification*) classification remoteChange:(BOOL) isRemoteChange {
+    for (id eventHandler in classificationChangedDelegates) {
+        [eventHandler classificationAdded:classification remoteChange:isRemoteChange];
+    }
+}
+
+- (void) eventClassificationUpdated:(Classification*) classification remoteChange:(BOOL) isRemoteChange {
+    for (id eventHandler in classificationChangedDelegates) {
+        [eventHandler classificationUpdated:classification remoteChange:isRemoteChange];
+    }
+}
+
+- (void) eventClassificationDeleted:(Classification*) classification remoteChange:(BOOL) isRemoteChange {
+    for (id eventHandler in classificationChangedDelegates) {
+        [eventHandler classificationDeleted:classification remoteChange:isRemoteChange];
+    }
 }
 
 @end

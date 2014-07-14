@@ -12,11 +12,13 @@
 
 #import <iOSCoreLibrary/ICLCoreDataManager.h>
 
-@interface ISAOwnerDetailsViewController () <StoreChangedDelegate>
+@interface ISAOwnerDetailsViewController () <StoreChangedDelegate, UIAlertViewDelegate, OwnerChangedDelegate>
 
 @end
 
-@implementation ISAOwnerDetailsViewController
+@implementation ISAOwnerDetailsViewController {
+    UIAlertView* iCloudChangedAlert;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,9 +34,13 @@
     
     if (self.owner) {
         [self.ownerName setText:self.owner.name];
+        
+        [self.titleItem setTitle:NSLocalizedStringFromTable(@"EditOwner", @"Owners", @"Edit Owner")];
     }
     else {
         [self.ownerName setText:@""];
+        
+        [self.titleItem setTitle:NSLocalizedStringFromTable(@"AddOwner", @"Owners", @"Add Owner")];
     }
 }
 
@@ -52,12 +58,14 @@
                                                       userInfo:@{@"viewController": self}];
     
     [[ISADataManager Instance] registerStoreChangedDelegate:self];
+    [[ISADataManager Instance] registerOwnerChangedDelegate:self];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     [[ISADataManager Instance] unregisterStoreChangedDelegate:self];
+    [[ISADataManager Instance] unregisterOwnerChangedDelegate:self];
 }
 
 - (IBAction)cancel:(id)sender {
@@ -93,8 +101,78 @@
 #pragma mark StoreChangedDelegate Support
 
 - (void) storeWillChange {
+    self.owner = nil;
 }
 
 - (void) storeDidChange {
+    // StoreDidChange will typically NOT be called from the main thread.
+    // As we need to display UI we must issue that block on the main thread.
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSString* messageTitle = NSLocalizedStringFromTable(@"StoreChanged.Title", @"iCloud", @"iCloud Database Changed");
+        NSString* message = NSLocalizedStringFromTable(@"StoreChanged.Message", @"iCloud", @"The iCloud database has changed. You will be returned to the main screen.");
+        
+        iCloudChangedAlert = [[UIAlertView alloc] initWithTitle:messageTitle
+                                                        message:message
+                                                       delegate:nil
+                                              cancelButtonTitle:nil
+                                              otherButtonTitles:NSLocalizedStringFromTable(@"Ok", @"Common", @"Ok"), nil];
+        iCloudChangedAlert.delegate = self;
+        
+        [iCloudChangedAlert show];
+    });
 }
+
+#pragma mark UIAlertViewDelegate Support
+
+- (void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    // All iCloud alerts dismiss the current view.
+    if (alertView == iCloudChangedAlert) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+#pragma OwnerChangedDelegate support
+
+- (void) ownerAdded:(Owner *)owner remoteChange:(BOOL)isRemoteChange {
+    // Nothing to do in response to an add.
+}
+
+- (void) ownerDeleted:(Owner *)owner remoteChange:(BOOL)isRemoteChange {
+    // We only care if the owner we are editing was deleted.
+    if (self.owner && (self.owner == owner)) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString* messageTitle = NSLocalizedStringFromTable(@"Deleted.Title", @"Owners", @"Current Owner Deleted");
+            NSString* message = NSLocalizedStringFromTable(@"Deleted.Message", @"Owners", @"The Owner you are editing was deleted remotely. You will be returned to the main screen.");
+            
+            iCloudChangedAlert = [[UIAlertView alloc] initWithTitle:messageTitle
+                                                            message:message
+                                                           delegate:nil
+                                                  cancelButtonTitle:nil
+                                                  otherButtonTitles:NSLocalizedStringFromTable(@"Ok", @"Common", @"Ok"), nil];
+            iCloudChangedAlert.delegate = self;
+            
+            [iCloudChangedAlert show];
+        });
+    }
+}
+
+- (void) ownerUpdated:(Owner *)owner remoteChange:(BOOL)isRemoteChange {
+    // We only care if the owner we are editing was updated.
+    if (self.owner && (self.owner == owner)) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString* messageTitle = NSLocalizedStringFromTable(@"Modified.Title", @"Owners", @"Current Owner Modified");
+            NSString* message = NSLocalizedStringFromTable(@"Modified.Message", @"Owners", @"The Owner you are editing was modified remotely. You will be returned to the main screen.");
+            
+            iCloudChangedAlert = [[UIAlertView alloc] initWithTitle:messageTitle
+                                                            message:message
+                                                           delegate:nil
+                                                  cancelButtonTitle:nil
+                                                  otherButtonTitles:NSLocalizedStringFromTable(@"Ok", @"Common", @"Ok"), nil];
+            iCloudChangedAlert.delegate = self;
+            
+            [iCloudChangedAlert show];
+        });
+    }
+}
+
 @end

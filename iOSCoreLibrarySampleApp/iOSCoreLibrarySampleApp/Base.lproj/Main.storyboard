@@ -598,16 +598,53 @@
                                     <navigationItem title="Settings" id="4Oc-mH-fxr"/>
                                 </items>
                             </navigationBar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8kG-Ld-IJD">
+                                <rect key="frame" x="20" y="64" width="300" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="9J5-dH-flC"/>
+                                    <constraint firstAttribute="width" constant="300" id="nsW-c9-Ozd"/>
+                                </constraints>
+                                <state key="normal" title="Toggle iCloud">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="toggleiCloud:" destination="aEm-PC-fyP" eventType="touchUpInside" id="YGv-4H-U53"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="409" translatesAutoresizingMaskIntoConstraints="NO" id="Q7k-O5-Rc6">
+                                <rect key="frame" x="20" y="102" width="409" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="UG2-qv-b2g"/>
+                                    <constraint firstAttribute="width" constant="409" id="vu4-pe-o59"/>
+                                </constraints>
+                                <string key="text">iCloud is not available.
+ - Either no iCloud account has been setup.
+ - OR, you are running on a version of iOS below 7.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="llu-Jr-QDy" firstAttribute="top" secondItem="uAC-On-CY9" secondAttribute="top" id="29B-hC-cp1"/>
+                            <constraint firstItem="Q7k-O5-Rc6" firstAttribute="leading" secondItem="uAC-On-CY9" secondAttribute="leading" constant="20" id="Pb4-AN-CE3"/>
                             <constraint firstAttribute="trailing" secondItem="llu-Jr-QDy" secondAttribute="trailing" id="for-we-ZOO"/>
+                            <constraint firstItem="8kG-Ld-IJD" firstAttribute="leading" secondItem="uAC-On-CY9" secondAttribute="leading" constant="20" id="oOB-P3-e99"/>
                             <constraint firstItem="llu-Jr-QDy" firstAttribute="leading" secondItem="uAC-On-CY9" secondAttribute="leading" id="rjF-hi-RNd"/>
+                            <constraint firstItem="8kG-Ld-IJD" firstAttribute="top" secondItem="llu-Jr-QDy" secondAttribute="bottom" constant="20" id="vSh-Ta-bJp"/>
+                            <constraint firstItem="Q7k-O5-Rc6" firstAttribute="top" secondItem="8kG-Ld-IJD" secondAttribute="bottom" constant="8" id="xc6-aE-MUb"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <tabBarItem key="tabBarItem" title="Settings" image="SettingsIcon" id="Pq0-3Q-BBX"/>
+                    <connections>
+                        <outlet property="iCloudNotAvailableMessage" destination="Q7k-O5-Rc6" id="3OU-g5-rKy"/>
+                        <outlet property="toggleiCloudButton" destination="8kG-Ld-IJD" id="0rq-B5-Z5K"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QDh-ZD-zrq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

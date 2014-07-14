@@ -14,13 +14,18 @@
 
 #import <iOSCoreLibrary/ICLCoreDataManager.h>
 
-@interface ISAPetDetailsViewController () <StoreChangedDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface ISAPetDetailsViewController () <StoreChangedDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, PetChangedDelegate, OwnerChangedDelegate, ClassificationChangedDelegate>
 
 @end
 
 @implementation ISAPetDetailsViewController {
     NSArray* cachedClassifications;
     NSArray* cachedOwners;
+    
+    Classification* selectedClassification;
+    Owner* selectedOwner;
+    
+    UIAlertView* iCloudChangedAlert;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -41,7 +46,10 @@
     if (self.pet) {
         [self.petName setText:self.pet.name];
         
-        if (self.pet.classification) {
+        selectedClassification = self.pet.classification;
+        selectedOwner = self.pet.owner;
+        
+        if (selectedClassification) {
             NSUInteger classificationIndex = [cachedClassifications indexOfObject:self.pet.classification];
             
             NSIndexPath* indexPath = [NSIndexPath indexPathForRow:classificationIndex
@@ -51,7 +59,7 @@
                                              scrollPosition:UITableViewScrollPositionTop];
         }
         
-        if (self.pet.owner) {
+        if (selectedOwner) {
             NSUInteger ownerIndex = [cachedOwners indexOfObject:self.pet.owner];
             
             NSIndexPath* indexPath = [NSIndexPath indexPathForRow:ownerIndex
@@ -60,9 +68,16 @@
                                           animated:NO
                                     scrollPosition:UITableViewScrollPositionTop];
         }
+        
+        [self.titleItem setTitle:NSLocalizedStringFromTable(@"EditPet", @"Pets", @"Edit Pet")];
     }
     else {
         [self.petName setText:@""];
+        
+        selectedClassification = nil;
+        selectedOwner = nil;
+        
+        [self.titleItem setTitle:NSLocalizedStringFromTable(@"AddPet", @"Pets", @"Add Pet")];
     }
 }
 
@@ -80,12 +95,18 @@
                                                       userInfo:@{@"viewController": self}];
     
     [[ISADataManager Instance] registerStoreChangedDelegate:self];
+    [[ISADataManager Instance] registerPetChangedDelegate:self];
+    [[ISADataManager Instance] registerOwnerChangedDelegate:self];
+    [[ISADataManager Instance] registerClassificationChangedDelegate:self];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     [[ISADataManager Instance] unregisterStoreChangedDelegate:self];
+    [[ISADataManager Instance] unregisterPetChangedDelegate:self];
+    [[ISADataManager Instance] unregisterOwnerChangedDelegate:self];
+    [[ISADataManager Instance] unregisterClassificationChangedDelegate:self];
 }
 
 - (IBAction)cancel:(id)sender {
@@ -112,11 +133,8 @@
         
         pet.name = self.petName.text;
         
-        NSIndexPath* selectedOwner = [self.ownersTable indexPathForSelectedRow];
-        pet.owner = selectedOwner ? cachedOwners[selectedOwner.row] : nil;
-        
-        NSIndexPath* selectedClassification = [self.classificationsTable indexPathForSelectedRow];
-        pet.classification = selectedClassification ? cachedClassifications[selectedClassification.row] : nil;
+        pet.owner = selectedOwner;
+        pet.classification = selectedClassification;
         
         [dataManager saveContext];
         
@@ -127,9 +145,35 @@
 #pragma mark StoreChangedDelegate Support
 
 - (void) storeWillChange {
+    self.pet = nil;
+    cachedOwners = nil;
+    cachedClassifications = nil;
+    selectedOwner = nil;
+    selectedClassification = nil;
 }
 
 - (void) storeDidChange {
+    // StoreDidChange will typically NOT be called from the main thread.
+    // As we need to display UI we must issue that block on the main thread.
+    dispatch_async(dispatch_get_main_queue(), ^{
+        iCloudChangedAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"StoreChanged.Title", @"iCloud", @"iCloud Database Changed")
+                                                        message:NSLocalizedStringFromTable(@"StoreChanged.Message", @"iCloud", @"The iCloud database has changed. You will be returned to the main screen.")
+                                                       delegate:nil
+                                              cancelButtonTitle:nil
+                                              otherButtonTitles:NSLocalizedStringFromTable(@"Ok", @"Common", @"Ok"), nil];
+        iCloudChangedAlert.delegate = self;
+        
+        [iCloudChangedAlert show];
+    });
+}
+
+#pragma mark UIAlertViewDelegate Support
+
+- (void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    // All iCloud alerts dismiss the current view.
+    if (alertView == iCloudChangedAlert) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 #pragma mark UITableViewDataSource Support
@@ -166,9 +210,138 @@
 
 #pragma mark UITableViewDelegate Support
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (tableView == self.classificationsTable) {
+        selectedClassification = cachedClassifications[indexPath.row];
+    }
+    else if (tableView == self.ownersTable) {
+        selectedOwner = cachedOwners[indexPath.row];
+    }
+}
 
 - (UITableViewCellEditingStyle) tableView:(UITableView*) tableView editingStyleForRowAtIndexPath:(NSIndexPath*) indexPath {
     return UITableViewCellEditingStyleNone;
+}
+
+#pragma PetChangedDelegate support
+
+- (void) petAdded:(Pet *)pet remoteChange:(BOOL)isRemoteChange {
+    // Nothing to do in response to an add.
+}
+
+- (void) petDeleted:(Pet *)pet remoteChange:(BOOL)isRemoteChange {
+    // We only care if the pet we are editing was deleted.
+    if (self.pet && (self.pet == pet)) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString* messageTitle = NSLocalizedStringFromTable(@"Deleted.Title", @"Pets", @"Current Pet Deleted");
+            NSString* message = NSLocalizedStringFromTable(@"Deleted.Message", @"Pets", @"The Pet you are editing was deleted remotely. You will be returned to the main screen.");
+            
+            iCloudChangedAlert = [[UIAlertView alloc] initWithTitle:messageTitle
+                                                            message:message
+                                                           delegate:nil
+                                                  cancelButtonTitle:nil
+                                                  otherButtonTitles:NSLocalizedStringFromTable(@"Ok", @"Common", @"Ok"), nil];
+            iCloudChangedAlert.delegate = self;
+            
+            [iCloudChangedAlert show];
+        });
+    }
+}
+
+- (void) petUpdated:(Pet *)pet remoteChange:(BOOL)isRemoteChange {
+    // We only care if the pet we are editing was updated.
+    if (self.pet && (self.pet == pet)) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString* messageTitle = NSLocalizedStringFromTable(@"Modified.Title", @"Pets", @"Current Pet Modified");
+            NSString* message = NSLocalizedStringFromTable(@"Modified.Message", @"Pets", @"The Pet you are editing was modified remotely. You will be returned to the main screen.");
+            
+            iCloudChangedAlert = [[UIAlertView alloc] initWithTitle:messageTitle
+                                                            message:message
+                                                           delegate:nil
+                                                  cancelButtonTitle:nil
+                                                  otherButtonTitles:NSLocalizedStringFromTable(@"Ok", @"Common", @"Ok"), nil];
+            
+            iCloudChangedAlert.delegate = self;
+            
+            [iCloudChangedAlert show];
+        });
+    }
+}
+
+#pragma ClassificationChangedDelegate support
+
+- (void) classificationAdded:(Classification *)classification remoteChange:(BOOL)isRemoteChange {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self refreshClassificationTable];
+    });
+}
+
+- (void) classificationDeleted:(Classification *)classification remoteChange:(BOOL)isRemoteChange {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // if the selected classification was deleted then clear it
+        if (selectedClassification == classification) {
+            selectedClassification = nil;
+        }
+        
+        [self refreshClassificationTable];
+    });
+}
+
+- (void) classificationUpdated:(Classification *)classification remoteChange:(BOOL)isRemoteChange {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self refreshClassificationTable];
+    });
+}
+
+- (void) refreshClassificationTable {
+    cachedClassifications = [Classification allObjects];
+    [self.classificationsTable reloadData];
+    
+    if (selectedClassification) {
+        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:[cachedClassifications indexOfObject:selectedClassification]
+                                                    inSection:0];
+        [self.classificationsTable selectRowAtIndexPath:indexPath
+                                               animated:NO
+                                         scrollPosition:UITableViewScrollPositionTop];
+    }
+}
+
+#pragma OwnerChangedDelegate support
+
+- (void) ownerAdded:(Owner *)owner remoteChange:(BOOL)isRemoteChange {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self refreshOwnerTable];
+    });
+}
+
+- (void) ownerDeleted:(Owner *)owner remoteChange:(BOOL)isRemoteChange {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // if the selected owner was deleted then clear it
+        if (selectedOwner == owner) {
+            selectedOwner = nil;
+        }
+        
+        [self refreshOwnerTable];
+    });
+}
+
+- (void) ownerUpdated:(Owner *)owner remoteChange:(BOOL)isRemoteChange {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self refreshOwnerTable];
+    });
+}
+
+- (void) refreshOwnerTable {
+    cachedOwners = [Owner allObjects];
+    [self.ownersTable reloadData];
+    
+    if (selectedOwner) {
+        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:[cachedOwners indexOfObject:selectedOwner]
+                                                    inSection:0];
+        [self.ownersTable selectRowAtIndexPath:indexPath
+                                      animated:NO
+                                scrollPosition:UITableViewScrollPositionTop];
+    }
 }
 
 @end

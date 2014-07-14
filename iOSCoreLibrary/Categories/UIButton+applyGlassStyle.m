@@ -7,11 +7,16 @@
 //
 
 #import "UIButton+applyGlassStyle.h"
+#import "UIColor+extensions.h"
 #import <QuartzCore/QuartzCore.h>
 
 @implementation UIButton (applyGlassStyle)
 
 - (void) applyGlassStyle:(GlassButtonSize) inButtonSize colour:(UIColor*) inColour {
+    [self applyGlassStyle:inButtonSize colour:inColour autoColourText:NO];
+}
+
+- (void) applyGlassStyle:(GlassButtonSize) inButtonSize colour:(UIColor*) inColour autoColourText:(BOOL) autoColourText {
     CALayer* buttonLayer = self.layer;
     
     float cornerRadius = 0.0f;
@@ -135,6 +140,15 @@
         [self.imageView.layer removeFromSuperlayer];
         
         [buttonLayer addSublayer:imageLayer];
+    }
+    
+    if (autoColourText) {
+        if ([inColour perceivedBrightness] < 0.5f) {
+            [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        }
+        else {
+            [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        }
     }
 }
 

@@ -10,4 +10,9 @@
 
 @interface ISASettingsTabViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIButton *toggleiCloudButton;
+@property (weak, nonatomic) IBOutlet UILabel *iCloudNotAvailableMessage;
+
+- (IBAction)toggleiCloud:(id)sender;
+
 @end

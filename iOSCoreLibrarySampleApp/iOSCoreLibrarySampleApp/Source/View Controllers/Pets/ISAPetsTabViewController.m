@@ -10,10 +10,12 @@
 #import "ISAPetDetailsViewController.h"
 
 #import "Pet+Extensions.h"
+#import "Owner+Extensions.h"
+#import "Classification+Extensions.h"
 
 #import <iOSCoreLibrary/ICLCoreDataManager.h>
 
-@interface ISAPetsTabViewController () <StoreChangedDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
+@interface ISAPetsTabViewController () <StoreChangedDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, PetChangedDelegate, OwnerChangedDelegate, ClassificationChangedDelegate>
 
 @end
 
@@ -37,6 +39,9 @@
     [super viewDidLoad];
     
     [[ISADataManager Instance] registerStoreChangedDelegate:self];
+    [[ISADataManager Instance] registerPetChangedDelegate:self];
+    [[ISADataManager Instance] registerOwnerChangedDelegate:self];
+    [[ISADataManager Instance] registerClassificationChangedDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -74,9 +79,18 @@
 #pragma mark StoreChangedDelegate Support
 
 - (void) storeWillChange {
+    // The objects are going away so clear out any stored data
+    cachedPets = nil;
+    [self.petsTable reloadData];
 }
 
 - (void) storeDidChange {
+    // If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
+    if ([[ISADataManager Instance] currentViewController] == self) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self refreshDisplay];
+        });
+    }
 }
 
 #pragma mark UITableViewDataSource Support
@@ -89,7 +103,19 @@
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"PetCell"];
     Pet* petForCell = cachedPets[indexPath.row];
     
-    [cell.textLabel setText:petForCell.name];
+    NSString* cellText = petForCell.name;
+    
+    if (petForCell.owner && petForCell.classification) {
+        cellText = [NSString stringWithFormat:@"%@ (%@) owned by %@", petForCell.name, petForCell.classification.name, petForCell.owner.name];
+    }
+    else if (petForCell.owner) {
+        cellText = [NSString stringWithFormat:@"%@ owned by %@", petForCell.name, petForCell.owner.name];
+    }
+    else if (petForCell.classification) {
+        cellText = [NSString stringWithFormat:@"%@ (%@)", petForCell.name, petForCell.classification.name];
+    }
+    
+    [cell.textLabel setText:cellText];
     
     return cell;
 }
@@ -135,6 +161,93 @@
             
             [self refreshDisplay];
         }
+    }
+}
+
+#pragma PetChangedDelegate support
+
+- (void) petAdded:(Pet *)pet remoteChange:(BOOL)isRemoteChange {
+    // Nothing fancy is required. If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
+    if ([[ISADataManager Instance] currentViewController] == self) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self refreshDisplay];
+        });
+    }
+}
+
+- (void) petDeleted:(Pet *)pet remoteChange:(BOOL)isRemoteChange {
+    // Nothing fancy is required. If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
+    if ([[ISADataManager Instance] currentViewController] == self) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self refreshDisplay];
+        });
+    }
+}
+
+- (void) petUpdated:(Pet *)pet remoteChange:(BOOL)isRemoteChange {
+    // Nothing fancy is required. If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
+    if ([[ISADataManager Instance] currentViewController] == self) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self refreshDisplay];
+        });
+    }
+}
+
+#pragma ClassificationChangedDelegate support
+
+- (void) classificationAdded:(Classification *)classification remoteChange:(BOOL)isRemoteChange {
+    // Nothing fancy is required. If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
+    if ([[ISADataManager Instance] currentViewController] == self) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self refreshDisplay];
+        });
+    }
+}
+
+- (void) classificationDeleted:(Classification *)classification remoteChange:(BOOL)isRemoteChange {
+    // Nothing fancy is required. If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
+    if ([[ISADataManager Instance] currentViewController] == self) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self refreshDisplay];
+        });
+    }
+}
+
+- (void) classificationUpdated:(Classification *)classification remoteChange:(BOOL)isRemoteChange {
+    // Nothing fancy is required. If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
+    if ([[ISADataManager Instance] currentViewController] == self) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self refreshDisplay];
+        });
+    }
+}
+
+#pragma OwnerChangedDelegate support
+
+- (void) ownerAdded:(Owner *)owner remoteChange:(BOOL)isRemoteChange {
+    // Nothing fancy is required. If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
+    if ([[ISADataManager Instance] currentViewController] == self) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self refreshDisplay];
+        });
+    }
+}
+
+- (void) ownerDeleted:(Owner *)owner remoteChange:(BOOL)isRemoteChange {
+    // Nothing fancy is required. If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
+    if ([[ISADataManager Instance] currentViewController] == self) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self refreshDisplay];
+        });
+    }
+}
+
+- (void) ownerUpdated:(Owner *)owner remoteChange:(BOOL)isRemoteChange {
+    // Nothing fancy is required. If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
+    if ([[ISADataManager Instance] currentViewController] == self) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self refreshDisplay];
+        });
     }
 }
 

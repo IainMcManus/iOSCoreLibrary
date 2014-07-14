@@ -13,7 +13,7 @@
 
 #import <iOSCoreLibrary/ICLCoreDataManager.h>
 
-@interface ISAOwnersTabViewController () <StoreChangedDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
+@interface ISAOwnersTabViewController () <StoreChangedDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, OwnerChangedDelegate>
 
 @end
 
@@ -37,6 +37,7 @@
     [super viewDidLoad];
     
     [[ISADataManager Instance] registerStoreChangedDelegate:self];
+    [[ISADataManager Instance] registerOwnerChangedDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -74,9 +75,18 @@
 #pragma mark StoreChangedDelegate Support
 
 - (void) storeWillChange {
+    // The objects are going away so clear out any stored data
+    cachedOwners = nil;
+    [self.ownersTable reloadData];
 }
 
 - (void) storeDidChange {
+    // If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
+    if ([[ISADataManager Instance] currentViewController] == self) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self refreshDisplay];
+        });
+    }
 }
 
 #pragma mark UITableViewDataSource Support
@@ -135,6 +145,35 @@
             
             [self refreshDisplay];
         }
+    }
+}
+
+#pragma OwnerChangedDelegate support
+
+- (void) ownerAdded:(Owner *)owner remoteChange:(BOOL)isRemoteChange {
+    // Nothing fancy is required. If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
+    if ([[ISADataManager Instance] currentViewController] == self) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self refreshDisplay];
+        });
+    }
+}
+
+- (void) ownerDeleted:(Owner *)owner remoteChange:(BOOL)isRemoteChange {
+    // Nothing fancy is required. If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
+    if ([[ISADataManager Instance] currentViewController] == self) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self refreshDisplay];
+        });
+    }
+}
+
+- (void) ownerUpdated:(Owner *)owner remoteChange:(BOOL)isRemoteChange {
+    // Nothing fancy is required. If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
+    if ([[ISADataManager Instance] currentViewController] == self) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self refreshDisplay];
+        });
     }
 }
 
