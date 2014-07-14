@@ -106,6 +106,19 @@ The methods required by the ICLCoreDataManagerDelegate are shown below:
 	
 		// TODO - Add any custom handling for deleted, added or modified objects
 	}
+	
+It is very important that when using the library any calls you make using the managed object context are executed on the context's queue. To do that use performBlock/performBlockAndWait. For example:
+
+    // Synchronously execute code that uses the context
+    [[[ICLCoreDataManager Instance] managedObjectContext] performBlockAndWait:^{
+        // Insert your code here
+    }];
+    
+    // Asynchronously execute code that uses the context
+    [[[ICLCoreDataManager Instance] managedObjectContext] performBlock:^{
+        // Insert your code here
+    }];
+
 
 Dropbox Uploader
 ===============
