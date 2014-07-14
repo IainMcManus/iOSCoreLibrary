@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Iain McManus. All rights reserved.
 //
 
+#if ICL_Using_Dropbox
+
 #import "ICLUploadToDropboxViewController.h"
 #import "UIButton+applyGlassStyle.h"
 #import "UIViewController+Extensions.h"
@@ -399,3 +401,5 @@
 }
 
 @end
+
+#endif // ICL_Using_Dropbox

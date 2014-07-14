@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		AE2341351972BB8F00CE6E38 /* Errors.strings in Resources */ = {isa = PBXBuildFile; fileRef = AE2341331972BB8F00CE6E38 /* Errors.strings */; };
 		AE23413A19735A1800CE6E38 /* iCloud.strings in Resources */ = {isa = PBXBuildFile; fileRef = AE23413819735A1800CE6E38 /* iCloud.strings */; };
-		AE23413C19735B6500CE6E38 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE23413B19735B6500CE6E38 /* DropboxSDK.framework */; };
 		AE23414019735C7100CE6E38 /* Classifications.json in Resources */ = {isa = PBXBuildFile; fileRef = AE23413F19735C7100CE6E38 /* Classifications.json */; };
 		AE23414319735C9C00CE6E38 /* Owners.json in Resources */ = {isa = PBXBuildFile; fileRef = AE23414219735C9C00CE6E38 /* Owners.json */; };
 		AE23414519735CA500CE6E38 /* Pets.json in Resources */ = {isa = PBXBuildFile; fileRef = AE23414419735CA500CE6E38 /* Pets.json */; };
@@ -26,7 +25,6 @@
 		AE99BAEB197203CB00FDB6C0 /* ISAPetDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE99BAEA197203CB00FDB6C0 /* ISAPetDetailsViewController.m */; };
 		AE99BAEE197204C800FDB6C0 /* ISAOwnerDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE99BAED197204C800FDB6C0 /* ISAOwnerDetailsViewController.m */; };
 		AE99BAF1197204D500FDB6C0 /* ISAClassificationDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE99BAF0197204D500FDB6C0 /* ISAClassificationDetailsViewController.m */; };
-		AE9D3067196F99D50076398C /* libiOSCoreLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AEAD3613196DFF44009BDC11 /* libiOSCoreLibrary.a */; };
 		AE9D3069196F99EC0076398C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE9D3068196F99EC0076398C /* SystemConfiguration.framework */; };
 		AE9D306B196F99F10076398C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE9D306A196F99F10076398C /* CoreData.framework */; };
 		AE9D306E196F9A5B0076398C /* ISADataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9D306D196F9A5B0076398C /* ISADataManager.m */; };
@@ -43,7 +41,6 @@
 		AEAD35F9196DFF27009BDC11 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEAD35D8196DFF27009BDC11 /* UIKit.framework */; };
 		AEAD3601196DFF27009BDC11 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AEAD35FF196DFF27009BDC11 /* InfoPlist.strings */; };
 		AEAD3603196DFF27009BDC11 /* iOSCoreLibrarySampleAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAD3602196DFF27009BDC11 /* iOSCoreLibrarySampleAppTests.m */; };
-		AEAD361A196DFF83009BDC11 /* iOSCoreLibraryBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AEAD3615196DFF44009BDC11 /* iOSCoreLibraryBundle.bundle */; };
 		AEAD362F196E01BE009BDC11 /* CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AEAD362D196E01BE009BDC11 /* CoreData.xcdatamodeld */; };
 		AEAD363B196E029E009BDC11 /* Pet+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAD363A196E029E009BDC11 /* Pet+Extensions.m */; };
 		AEAD363E196E02A8009BDC11 /* Owner+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAD363D196E02A8009BDC11 /* Owner+Extensions.m */; };
@@ -51,6 +48,8 @@
 		AEAD364E196E0424009BDC11 /* Classification.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAD364D196E0424009BDC11 /* Classification.m */; };
 		AEAD3651196E0424009BDC11 /* Pet.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAD3650196E0424009BDC11 /* Pet.m */; };
 		AEAD3654196E0424009BDC11 /* Owner.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAD3653196E0424009BDC11 /* Owner.m */; };
+		AEB83CF2197391E9005C7640 /* libiOSCoreLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AEAD3613196DFF44009BDC11 /* libiOSCoreLibrary.a */; };
+		AEB83CF3197392CF005C7640 /* iOSCoreLibraryBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AEAD3615196DFF44009BDC11 /* iOSCoreLibraryBundle.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,7 +93,6 @@
 /* Begin PBXFileReference section */
 		AE2341341972BB8F00CE6E38 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Errors.strings; sourceTree = "<group>"; };
 		AE23413919735A1800CE6E38 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = iCloud.strings; sourceTree = "<group>"; };
-		AE23413B19735B6500CE6E38 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DropboxSDK.framework; path = ../ThirdParty/DropboxSDK/DropboxSDK.framework; sourceTree = "<group>"; };
 		AE23413F19735C7100CE6E38 /* Classifications.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Classifications.json; sourceTree = "<group>"; };
 		AE23414219735C9C00CE6E38 /* Owners.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Owners.json; sourceTree = "<group>"; };
 		AE23414419735CA500CE6E38 /* Pets.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Pets.json; sourceTree = "<group>"; };
@@ -162,10 +160,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AEB83CF2197391E9005C7640 /* libiOSCoreLibrary.a in Frameworks */,
 				AE9D306B196F99F10076398C /* CoreData.framework in Frameworks */,
 				AE9D3069196F99EC0076398C /* SystemConfiguration.framework in Frameworks */,
-				AE23413C19735B6500CE6E38 /* DropboxSDK.framework in Frameworks */,
-				AE9D3067196F99D50076398C /* libiOSCoreLibrary.a in Frameworks */,
 				AEAD35D7196DFF27009BDC11 /* CoreGraphics.framework in Frameworks */,
 				AEAD35D9196DFF27009BDC11 /* UIKit.framework in Frameworks */,
 				AEAD35D5196DFF27009BDC11 /* Foundation.framework in Frameworks */,
@@ -252,7 +249,6 @@
 		AEAD35D3196DFF27009BDC11 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AE23413B19735B6500CE6E38 /* DropboxSDK.framework */,
 				AE9D306A196F99F10076398C /* CoreData.framework */,
 				AE9D3068196F99EC0076398C /* SystemConfiguration.framework */,
 				AEAD35D4196DFF27009BDC11 /* Foundation.framework */,
@@ -535,6 +531,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AEB83CF3197392CF005C7640 /* iOSCoreLibraryBundle.bundle in Resources */,
 				AE96C6DC197101EE00B48F45 /* Classifications.strings in Resources */,
 				AE96C6DE197101EE00B48F45 /* InfoPlist.strings in Resources */,
 				AEAD35F0196DFF27009BDC11 /* Images.xcassets in Resources */,
@@ -545,7 +542,6 @@
 				AE96C6E0197101EE00B48F45 /* Pets.strings in Resources */,
 				AE23414319735C9C00CE6E38 /* Owners.json in Resources */,
 				AE96C6DF197101EE00B48F45 /* Owners.strings in Resources */,
-				AEAD361A196DFF83009BDC11 /* iOSCoreLibraryBundle.bundle in Resources */,
 				AEAD35E8196DFF27009BDC11 /* Main.storyboard in Resources */,
 				AE96C6DD197101EE00B48F45 /* Common.strings in Resources */,
 				AE2341351972BB8F00CE6E38 /* Errors.strings in Resources */,

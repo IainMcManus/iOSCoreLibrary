@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#if ICL_Using_Dropbox
+
 @class DBRestClient;
 
 @protocol ICLUploadToDropboxViewControllerDelegate;
@@ -44,3 +46,5 @@
 - (void) uploadToDropboxViewDidFinish:(ICLUploadToDropboxViewController*) alertView uploaded:(BOOL) uploaded;
 
 @end;
+
+#endif // ICL_Using_Dropbox

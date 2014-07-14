@@ -134,6 +134,12 @@ Requirements
  * You will need to add the CoreImage and OpenGLES frameworks to your project
  * Version 1.3.11 of the Dropbox SDK has been included. For the latest version please go to https://www.dropbox.com/developers/core/sdks/ios
  * The Dropbox SDK is the property of Dropbox Inc. Please refer to their license agreement before modifying or distributing their code.
+
+Enabling Dropbox
+ * Dropbox is disabled in the library by default.
+ * To enable it open the iOSCoreLibrary-Prefix.pch file in the Supporting Files group.
+ * Change #define ICL_Using_Dropbox 0 to #define ICL_Using_Dropbox 1 and recompile.
+ * Be sure to have the Dropbox SDK included in your application.
  
 Usage
 
