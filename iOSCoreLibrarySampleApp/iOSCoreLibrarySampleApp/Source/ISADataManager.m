@@ -81,12 +81,6 @@ UIColor* Colour_AlertView_Panel2 = nil;
 }
 
 - (void) applicationInitialised {
-#if DEBUG
-    //    NSString *domainName = [[NSBundle mainBundle] bundleIdentifier];
-    //    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:domainName];
-    //    [[NSUserDefaults standardUserDefaults] synchronize];
-#endif // DEBUG
-    
     [ICLCoreDataManager Instance].delegate = self;
     
     [ICLCoreDataManager Instance].Colour_AlertView_Button1 = Colour_AlertView_Button1;
@@ -150,11 +144,11 @@ UIColor* Colour_AlertView_Panel2 = nil;
 
 - (void) storeDidChangeNotification {
     [self loadMinimalDataSetIfRequired];
-    
+
     [[ICLCoreDataManager Instance] saveContext];
-    
+
     [self performDataDeduplication];
-    
+
     [self eventStoreDidChange];
 }
 

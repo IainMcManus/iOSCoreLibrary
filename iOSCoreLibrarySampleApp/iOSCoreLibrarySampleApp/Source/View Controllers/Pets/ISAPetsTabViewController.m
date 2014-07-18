@@ -83,7 +83,10 @@
 - (void) storeWillChange {
     // The objects are going away so clear out any stored data
     cachedPets = nil;
-    [self.petsTable reloadData];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.petsTable reloadData];
+    });
 }
 
 - (void) storeDidChange {

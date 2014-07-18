@@ -40,7 +40,7 @@
             continue;
         }
         
-        [filteredObjects sortedArrayUsingDescriptors:@[creationDateSort]];
+        filteredObjects = [filteredObjects sortedArrayUsingDescriptors:@[creationDateSort]];
         
         // The first object is considered the prime object (ie. the one to be kept).
         Classification* primeObject = [filteredObjects firstObject];
@@ -88,7 +88,7 @@
             continue;
         }
         
-        [filteredObjects sortedArrayUsingDescriptors:@[creationDateSort]];
+        filteredObjects = [filteredObjects sortedArrayUsingDescriptors:@[creationDateSort]];
         
         // The first object is considered the prime object (ie. the one to be kept).
         Owner* primeObject = [filteredObjects firstObject];
@@ -130,13 +130,13 @@
     // Traverse the list of unique fingerprints and identify any duplicates
     for (NSNumber* fingerprint in petFingerprints) {
         NSArray* filteredObjects = [allPets filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"fingerprint = %@", fingerprint]];
-        
+
         // no work if there are no duplicates for this name
         if ([filteredObjects count] <= 1) {
             continue;
         }
-        
-        [filteredObjects sortedArrayUsingDescriptors:@[creationDateSort]];
+
+        filteredObjects = [filteredObjects sortedArrayUsingDescriptors:@[creationDateSort]];
         
         // The first object is considered the prime object (ie. the one to be kept).
         Pet* primeObject = [filteredObjects firstObject];
@@ -199,6 +199,7 @@
     
     [[coreDataManager persistentStoreCoordinator] lock];
     
+    // Only perform the import if there is no data present for any of the managed objects
     if (([[Pet allObjects] count] == 0) &&
         ([[Owner allObjects] count] == 0) &&
         ([[Classification allObjects] count] == 0)) {
@@ -222,7 +223,7 @@
         NSArray* allClassificationNames = [allClassifications valueForKey:@"name"];
         NSDictionary* classificationNameMapping = [[NSDictionary alloc] initWithObjects:allClassifications
                                                                                 forKeys:allClassificationNames];
-        
+
         // Import all of the owner data from the JSON file
         NSString* ownersPath = [[NSBundle mainBundle] pathForResource:@"Owners" ofType:@"json"];
         NSArray* ownersToImport = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:ownersPath]
@@ -233,13 +234,13 @@
                                                             inManagedObjectContext:context];
             newOwner.name = owner[@"name"];
         }
-        
+
         // Create a map of owner names to the objects
         NSArray* allOwners = [Owner allObjects];
         NSArray* allOwnerNames = [allOwners valueForKey:@"name"];
         NSDictionary* ownerNameMapping = [[NSDictionary alloc] initWithObjects:allOwners
                                                                        forKeys:allOwnerNames];
-        
+
         // Import all of the pet data from the JSON file
         NSString* petsPath = [[NSBundle mainBundle] pathForResource:@"Pets" ofType:@"json"];
         NSArray* petsToImport = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:petsPath]

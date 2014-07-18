@@ -79,7 +79,10 @@
 - (void) storeWillChange {
     // The objects are going away so clear out any stored data
     cachedOwners = nil;
-    [self.ownersTable reloadData];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.ownersTable reloadData];
+    });
 }
 
 - (void) storeDidChange {

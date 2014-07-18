@@ -79,7 +79,10 @@
 - (void) storeWillChange {
     // The objects are going away so clear out any stored data
     cachedClassifications = nil;
-    [self.classificationsTable reloadData];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.classificationsTable reloadData];
+    });
 }
 
 - (void) storeDidChange {
