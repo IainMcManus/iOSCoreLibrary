@@ -6,9 +6,10 @@
 //  Copyright (c) 2014 Iain McManus. All rights reserved.
 //
 
+#import "ICLUploadToDropboxViewController.h"
+
 #if ICL_Using_Dropbox
 
-#import "ICLUploadToDropboxViewController.h"
 #import "UIButton+applyGlassStyle.h"
 #import "UIViewController+Extensions.h"
 
@@ -147,20 +148,20 @@
     
     [self.doneButton applyGlassStyle:egbsSmall colour:self.doneButton.backgroundColor];
     [self.doneButton setHidden:YES];
-
+    
     _newProgress = 0;
     _lastProgress = -1;
     [self updateProgressImage];
 }
 
 - (void) displayUpdateTimer:(NSTimer*) inTimer {
-//    if (_newProgress < 100) {
-//        _newProgress = MIN(100, MAX(_newProgress + 5, 0));
-//    }
-//    else {
-//        _newProgress = 0;
-//        _downloadFailed = !_downloadFailed;
-//    }
+    //    if (_newProgress < 100) {
+    //        _newProgress = MIN(100, MAX(_newProgress + 5, 0));
+    //    }
+    //    else {
+    //        _newProgress = 0;
+    //        _downloadFailed = !_downloadFailed;
+    //    }
     
     [self updateProgressImage];
 }
@@ -179,7 +180,7 @@
     CGFloat maximumRadius = MIN(width / 2.0f, height / 2.0f);
     CGFloat radius = maximumRadius - (meterWidth/2.0f) - radiusOffset;
     CGPoint origin = CGPointMake(width / 2.0f, height / 2.0f);
-
+    
     UIImage* image = nil;
     
     UIColor* colour = nil;
@@ -226,7 +227,7 @@
         CGSize textSize = [workingText sizeWithFont:textFont];
         CGFloat xOffset = (width - textSize.width) / 2;
         CGFloat yOffset = (height - textSize.height) / 2;
-
+        
         CGRect textRect = CGRectMake(xOffset, yOffset, textSize.width, textSize.height);
         
         CGContextSaveGState(context);

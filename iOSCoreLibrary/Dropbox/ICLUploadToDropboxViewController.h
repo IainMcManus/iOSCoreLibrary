@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "BuildFlags.h"
+
 #if ICL_Using_Dropbox
 
 @class DBRestClient;

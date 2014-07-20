@@ -14,6 +14,7 @@
 		AE17452B177579F7007051FF /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE174511177574F5007051FF /* CoreFoundation.framework */; };
 		AE174531177579F8007051FF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AE17452F177579F8007051FF /* InfoPlist.strings */; };
 		AE23413E19735B8400CE6E38 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE23413D19735B8400CE6E38 /* DropboxSDK.framework */; };
+		AE65B08B197B7D3900DB2172 /* BuildFlags.h in Headers */ = {isa = PBXBuildFile; fileRef = AE65B08A197B7D3900DB2172 /* BuildFlags.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AE9629881919FE9600A9AAC3 /* ICLUploadToDropboxViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = AE9629851919FE9600A9AAC3 /* ICLUploadToDropboxViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AE9629891919FE9600A9AAC3 /* ICLUploadToDropboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9629861919FE9600A9AAC3 /* ICLUploadToDropboxViewController.m */; };
 		AE96298A1919FE9600A9AAC3 /* ICLUploadToDropboxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE9629871919FE9600A9AAC3 /* ICLUploadToDropboxViewController.xib */; };
@@ -87,6 +88,7 @@
 		AE174530177579F8007051FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AE174532177579F8007051FF /* iOSCoreLibraryBundle-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iOSCoreLibraryBundle-Prefix.pch"; sourceTree = "<group>"; };
 		AE23413D19735B8400CE6E38 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DropboxSDK.framework; path = ThirdParty/DropboxSDK/DropboxSDK.framework; sourceTree = "<group>"; };
+		AE65B08A197B7D3900DB2172 /* BuildFlags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuildFlags.h; sourceTree = "<group>"; };
 		AE9629851919FE9600A9AAC3 /* ICLUploadToDropboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICLUploadToDropboxViewController.h; sourceTree = "<group>"; };
 		AE9629861919FE9600A9AAC3 /* ICLUploadToDropboxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICLUploadToDropboxViewController.m; sourceTree = "<group>"; };
 		AE9629871919FE9600A9AAC3 /* ICLUploadToDropboxViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ICLUploadToDropboxViewController.xib; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				AEE765C3196A6DA600D8AAA4 /* InternalCategories */,
 				AE9629841919FE5300A9AAC3 /* Dropbox */,
 				AEA38046179A4A2200A1CAD2 /* Categories */,
+				AE65B08A197B7D3900DB2172 /* BuildFlags.h */,
 				AE1744CC17755777007051FF /* iOSCoreLibrary.h */,
 				AE1744CE17755777007051FF /* iOSCoreLibrary.m */,
 				AE1744CA17755777007051FF /* Supporting Files */,
@@ -347,6 +350,7 @@
 				AEE7661C196A6E4F00D8AAA4 /* UIColor+extensions.h in Headers */,
 				AEE765F3196A6DC100D8AAA4 /* NSManagedObjectModel+KCOrderedAccessorFix.h in Headers */,
 				AEE765CE196A6DA600D8AAA4 /* ICLCoreDataDeviceList.h in Headers */,
+				AE65B08B197B7D3900DB2172 /* BuildFlags.h in Headers */,
 				AEE765D4196A6DA600D8AAA4 /* NSURL+InternalExtensions.h in Headers */,
 				AE09F61B192093000065EE13 /* UIViewController+Extensions.h in Headers */,
 				AEE765D0196A6DA600D8AAA4 /* ICLCoreDataManager.h in Headers */,
