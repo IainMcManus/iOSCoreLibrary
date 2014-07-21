@@ -137,7 +137,7 @@ Requirements
 
 Enabling Dropbox
  * Dropbox is disabled in the library by default.
- * To enable it open the iOSCoreLibrary-Prefix.pch file in the Supporting Files group.
+ * To enable it open the BuildFlags.h file in the Supporting Files group.
  * Change #define ICL_Using_Dropbox 0 to #define ICL_Using_Dropbox 1 and recompile.
  * Be sure to have the Dropbox SDK included in your application.
  
