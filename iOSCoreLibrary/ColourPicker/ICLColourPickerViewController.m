@@ -196,6 +196,18 @@ typedef struct
             
             [self.view addSubview:imgView];
             [self.view sendSubviewToBack:imgView];
+            
+            [imgView setTranslatesAutoresizingMaskIntoConstraints:NO];
+            [self.view addConstraints:[NSLayoutConstraint
+                                       constraintsWithVisualFormat:@"H:|-0-[imgView]-0-|"
+                                       options:NSLayoutFormatDirectionLeadingToTrailing
+                                       metrics:nil
+                                       views:NSDictionaryOfVariableBindings(imgView)]];
+            [self.view addConstraints:[NSLayoutConstraint
+                                       constraintsWithVisualFormat:@"V:|-0-[imgView]-0-|"
+                                       options:NSLayoutFormatDirectionLeadingToTrailing
+                                       metrics:nil
+                                       views:NSDictionaryOfVariableBindings(imgView)]];
         }
     }
 }

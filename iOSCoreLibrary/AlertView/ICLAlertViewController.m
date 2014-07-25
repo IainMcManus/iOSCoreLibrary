@@ -57,7 +57,7 @@ NSString* const kICLButton3Colour = @"Button3Colour";
         assert(0);
         return nil;
     }
-
+    
     // load the correct XIB for the number of options
     NSString* baseXIBName = [optionNames count] == 2 ? @"ICLAlertViewController2" : @"ICLAlertViewController3";
     if (Using_iPad) {
@@ -86,7 +86,7 @@ NSString* const kICLButton3Colour = @"Button3Colour";
         // Create the popover
         _alertViewPopoverController = [[UIPopoverController alloc] initWithContentViewController:_alertViewNavController];
         [_alertViewPopoverController setDelegate:self];
-
+        
         CGRect viewBounds = activeVC.view.bounds;
         CGRect centeredRect = CGRectMake(viewBounds.size.width/2, viewBounds.size.height/2, 1, 1);
         
@@ -138,14 +138,14 @@ NSString* const kICLButton3Colour = @"Button3Colour";
     if ([self.optionNames count] == 3) {
         [self.option3Button setTitle:self.optionNames[2] forState:UIControlStateNormal];
     }
-
+    
     // Set the descriptions
     [self.option1Description setText:self.optionDescriptions[0]];
     [self.option2Description setText:self.optionDescriptions[1]];
     if ([self.optionNames count] == 3) {
         [self.option3Description setText:self.optionDescriptions[2]];
     }
-
+    
     // for the iPad version set the titles
     if (Using_iPad) {
         [self.option1Title setText:self.optionNames[0]];
@@ -253,11 +253,23 @@ NSString* const kICLButton3Colour = @"Button3Colour";
             UIImageView *imgView = [[UIImageView alloc] initWithImage:image];
             
             imgView.frame = self.view.bounds;
-            imgView.contentMode = UIViewContentModeTopLeft;
+            imgView.contentMode = UIViewContentModeScaleAspectFill;
             
             [self.view addSubview:imgView];
             [self.view sendSubviewToBack:imgView];
             [self.view setBackgroundColor:[UIColor clearColor]];
+            
+            [imgView setTranslatesAutoresizingMaskIntoConstraints:NO];
+            [self.view addConstraints:[NSLayoutConstraint
+                                       constraintsWithVisualFormat:@"H:|-0-[imgView]-0-|"
+                                       options:NSLayoutFormatDirectionLeadingToTrailing
+                                       metrics:nil
+                                       views:NSDictionaryOfVariableBindings(imgView)]];
+            [self.view addConstraints:[NSLayoutConstraint
+                                       constraintsWithVisualFormat:@"V:|-0-[imgView]-0-|"
+                                       options:NSLayoutFormatDirectionLeadingToTrailing
+                                       metrics:nil
+                                       views:NSDictionaryOfVariableBindings(imgView)]];
         }
     }
 }
