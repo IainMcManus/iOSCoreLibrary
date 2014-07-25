@@ -646,6 +646,63 @@
             </objects>
             <point key="canvasLocation" x="3042" y="3585"/>
         </scene>
+        <!--Miscellaneous Tab View Controller - Miscellaneous-->
+        <scene sceneID="4ZC-68-zI2">
+            <objects>
+                <viewController id="Htu-VY-MEw" customClass="ISAMiscellaneousTabViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="KUD-h1-V7k"/>
+                        <viewControllerLayoutGuide type="bottom" id="q9B-Ku-Vcz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zoD-pj-ipe">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="975"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hlg-Fc-Yba">
+                                <rect key="frame" x="20" y="64" width="200" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.27577263120000001" green="0.38304129240000001" blue="0.75453895329999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="GnK-nR-psV"/>
+                                    <constraint firstAttribute="height" constant="30" id="xJ3-WI-U0Q"/>
+                                </constraints>
+                                <state key="normal" title="Select Colour">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="selectColour:" destination="Htu-VY-MEw" eventType="touchUpInside" id="bpG-Tm-1Cq"/>
+                                </connections>
+                            </button>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2nK-J8-IBs">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="gWb-jz-MtX"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem title="Miscellaneous" id="u1A-Tp-nrR"/>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2nK-J8-IBs" firstAttribute="top" secondItem="zoD-pj-ipe" secondAttribute="top" id="27u-3p-CzA"/>
+                            <constraint firstItem="2nK-J8-IBs" firstAttribute="leading" secondItem="zoD-pj-ipe" secondAttribute="leading" id="2b8-Zl-VBV"/>
+                            <constraint firstAttribute="trailing" secondItem="2nK-J8-IBs" secondAttribute="trailing" id="UAC-bN-E0s"/>
+                            <constraint firstItem="Hlg-Fc-Yba" firstAttribute="top" secondItem="2nK-J8-IBs" secondAttribute="bottom" constant="20" id="dve-Gh-Lsm"/>
+                            <constraint firstItem="Hlg-Fc-Yba" firstAttribute="leading" secondItem="zoD-pj-ipe" secondAttribute="leading" constant="20" id="woe-Ld-p2G"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
+                    <tabBarItem key="tabBarItem" title="Miscellaneous" image="MiscellaneousIcon" id="n11-Vl-ilh"/>
+                    <connections>
+                        <outlet property="selectColourButton" destination="Hlg-Fc-Yba" id="wJ5-ci-T1d"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="E03-0O-PRn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3042" y="4735"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
@@ -662,6 +719,7 @@
                         <segue destination="8rJ-Kc-sve" kind="relationship" relationship="viewControllers" id="lzU-1b-eKA"/>
                         <segue destination="6xi-6G-ATf" kind="relationship" relationship="viewControllers" id="UKz-DH-KId"/>
                         <segue destination="aEm-PC-fyP" kind="relationship" relationship="viewControllers" id="Ov1-sw-P6c"/>
+                        <segue destination="Htu-VY-MEw" kind="relationship" relationship="viewControllers" id="eIC-CS-ccg"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
@@ -671,6 +729,7 @@
     </scenes>
     <resources>
         <image name="ClassificationsIcon" width="30" height="30"/>
+        <image name="MiscellaneousIcon" width="30" height="30"/>
         <image name="OwnersIcon" width="30" height="30"/>
         <image name="PetsIcon" width="30" height="30"/>
         <image name="SettingsIcon" width="30" height="30"/>

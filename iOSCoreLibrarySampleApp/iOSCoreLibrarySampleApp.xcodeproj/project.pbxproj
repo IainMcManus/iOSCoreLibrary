@@ -12,6 +12,8 @@
 		AE23414019735C7100CE6E38 /* Classifications.json in Resources */ = {isa = PBXBuildFile; fileRef = AE23413F19735C7100CE6E38 /* Classifications.json */; };
 		AE23414319735C9C00CE6E38 /* Owners.json in Resources */ = {isa = PBXBuildFile; fileRef = AE23414219735C9C00CE6E38 /* Owners.json */; };
 		AE23414519735CA500CE6E38 /* Pets.json in Resources */ = {isa = PBXBuildFile; fileRef = AE23414419735CA500CE6E38 /* Pets.json */; };
+		AE7FF7581981D4D2002D3F9E /* ISAMiscellaneousTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE7FF7571981D4D2002D3F9E /* ISAMiscellaneousTabViewController.m */; };
+		AE7FF75D1981DDD1002D3F9E /* Categories.strings in Resources */ = {isa = PBXBuildFile; fileRef = AE7FF75B1981DDD1002D3F9E /* Categories.strings */; };
 		AE96C6C21970F83800B48F45 /* ISAPetsTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE96C6C11970F83800B48F45 /* ISAPetsTabViewController.m */; };
 		AE96C6C51970F84C00B48F45 /* ISAOwnersTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE96C6C41970F84C00B48F45 /* ISAOwnersTabViewController.m */; };
 		AE96C6C91970F87200B48F45 /* ISAClassificationsTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE96C6C81970F87200B48F45 /* ISAClassificationsTabViewController.m */; };
@@ -96,6 +98,9 @@
 		AE23413F19735C7100CE6E38 /* Classifications.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Classifications.json; sourceTree = "<group>"; };
 		AE23414219735C9C00CE6E38 /* Owners.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Owners.json; sourceTree = "<group>"; };
 		AE23414419735CA500CE6E38 /* Pets.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Pets.json; sourceTree = "<group>"; };
+		AE7FF7561981D4D2002D3F9E /* ISAMiscellaneousTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAMiscellaneousTabViewController.h; sourceTree = "<group>"; };
+		AE7FF7571981D4D2002D3F9E /* ISAMiscellaneousTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAMiscellaneousTabViewController.m; sourceTree = "<group>"; };
+		AE7FF75C1981DDD1002D3F9E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Categories.strings; sourceTree = "<group>"; };
 		AE96C6C01970F83800B48F45 /* ISAPetsTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAPetsTabViewController.h; sourceTree = "<group>"; };
 		AE96C6C11970F83800B48F45 /* ISAPetsTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISAPetsTabViewController.m; sourceTree = "<group>"; };
 		AE96C6C31970F84C00B48F45 /* ISAOwnersTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISAOwnersTabViewController.h; sourceTree = "<group>"; };
@@ -192,6 +197,15 @@
 			path = InitialData;
 			sourceTree = "<group>";
 		};
+		AE7FF7551981D4B3002D3F9E /* Miscellaneous */ = {
+			isa = PBXGroup;
+			children = (
+				AE7FF7561981D4D2002D3F9E /* ISAMiscellaneousTabViewController.h */,
+				AE7FF7571981D4D2002D3F9E /* ISAMiscellaneousTabViewController.m */,
+			);
+			path = Miscellaneous;
+			sourceTree = "<group>";
+		};
 		AE96C6C61970F85900B48F45 /* Classifications */ = {
 			isa = PBXGroup;
 			children = (
@@ -214,6 +228,7 @@
 		AE96C6CF197101EE00B48F45 /* en.lproj */ = {
 			isa = PBXGroup;
 			children = (
+				AE7FF75B1981DDD1002D3F9E /* Categories.strings */,
 				AE23413819735A1800CE6E38 /* iCloud.strings */,
 				AE2341331972BB8F00CE6E38 /* Errors.strings */,
 				AE96C6D0197101EE00B48F45 /* Classifications.strings */,
@@ -381,6 +396,7 @@
 		AEAD3625196E0107009BDC11 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				AE7FF7551981D4B3002D3F9E /* Miscellaneous */,
 				AE96C6C61970F85900B48F45 /* Classifications */,
 				AEAD3628196E013C009BDC11 /* Pets */,
 				AEAD3627196E012D009BDC11 /* Owners */,
@@ -542,6 +558,7 @@
 				AE96C6E0197101EE00B48F45 /* Pets.strings in Resources */,
 				AE23414319735C9C00CE6E38 /* Owners.json in Resources */,
 				AE96C6DF197101EE00B48F45 /* Owners.strings in Resources */,
+				AE7FF75D1981DDD1002D3F9E /* Categories.strings in Resources */,
 				AEAD35E8196DFF27009BDC11 /* Main.storyboard in Resources */,
 				AE96C6DD197101EE00B48F45 /* Common.strings in Resources */,
 				AE2341351972BB8F00CE6E38 /* Errors.strings in Resources */,
@@ -568,6 +585,7 @@
 				AE9D306E196F9A5B0076398C /* ISADataManager.m in Sources */,
 				AE99BAEB197203CB00FDB6C0 /* ISAPetDetailsViewController.m in Sources */,
 				AE96C6CC1970F88600B48F45 /* ISASettingsTabViewController.m in Sources */,
+				AE7FF7581981D4D2002D3F9E /* ISAMiscellaneousTabViewController.m in Sources */,
 				AE99BAEE197204C800FDB6C0 /* ISAOwnerDetailsViewController.m in Sources */,
 				AEAD363B196E029E009BDC11 /* Pet+Extensions.m in Sources */,
 				AEAD364E196E0424009BDC11 /* Classification.m in Sources */,
@@ -627,6 +645,14 @@
 				AE23413919735A1800CE6E38 /* en */,
 			);
 			name = iCloud.strings;
+			sourceTree = "<group>";
+		};
+		AE7FF75B1981DDD1002D3F9E /* Categories.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AE7FF75C1981DDD1002D3F9E /* en */,
+			);
+			name = Categories.strings;
 			sourceTree = "<group>";
 		};
 		AE96C6D0197101EE00B48F45 /* Classifications.strings */ = {

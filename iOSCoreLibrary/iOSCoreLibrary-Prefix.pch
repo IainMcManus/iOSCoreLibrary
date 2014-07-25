@@ -2,8 +2,8 @@
 // Prefix header for all source files of the 'iOSCoreLibrary' target in the 'iOSCoreLibrary' project
 //
 
-#define ICL_Using_Dropbox 0
-
 #ifdef __OBJC__
     #import <Foundation/Foundation.h>
+
+    #import "iOSCoreLibraryCommon.h"
 #endif

@@ -7,22 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AE09F61B192093000065EE13 /* UIViewController+Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = AE09F619192093000065EE13 /* UIViewController+Extensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AE09F61C192093000065EE13 /* UIViewController+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AE09F61A192093000065EE13 /* UIViewController+Extensions.m */; };
 		AE1744C817755777007051FF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE1744C717755777007051FF /* Foundation.framework */; };
 		AE1744CF17755777007051FF /* iOSCoreLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1744CE17755777007051FF /* iOSCoreLibrary.m */; };
 		AE17452B177579F7007051FF /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE174511177574F5007051FF /* CoreFoundation.framework */; };
 		AE174531177579F8007051FF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AE17452F177579F8007051FF /* InfoPlist.strings */; };
+		AE21AFC61980909C00EE7644 /* ICLColourPickerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = AE21AFC21980909C00EE7644 /* ICLColourPickerViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AE21AFC71980909C00EE7644 /* ICLColourPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE21AFC31980909C00EE7644 /* ICLColourPickerViewController.m */; };
+		AE21AFC81980909C00EE7644 /* ICLColourPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE21AFC41980909C00EE7644 /* ICLColourPickerViewController.xib */; };
+		AE21AFC91980909C00EE7644 /* ICLColourPickerViewController~iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE21AFC51980909C00EE7644 /* ICLColourPickerViewController~iPhone.xib */; };
+		AE21AFCA198090A900EE7644 /* ICLColourPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE21AFC41980909C00EE7644 /* ICLColourPickerViewController.xib */; };
+		AE21AFCB198090AC00EE7644 /* ICLColourPickerViewController~iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE21AFC51980909C00EE7644 /* ICLColourPickerViewController~iPhone.xib */; };
+		AE21AFCE1980912F00EE7644 /* NSDate+Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = AE21AFCC1980912F00EE7644 /* NSDate+Extensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AE21AFCF1980912F00EE7644 /* NSDate+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AE21AFCD1980912F00EE7644 /* NSDate+Extensions.m */; };
+		AE21AFD61980919000EE7644 /* UIButton+applyGlassStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = AE21AFD01980919000EE7644 /* UIButton+applyGlassStyle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AE21AFD71980919000EE7644 /* UIButton+applyGlassStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = AE21AFD11980919000EE7644 /* UIButton+applyGlassStyle.m */; };
+		AE21AFD81980919000EE7644 /* UIColor+extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = AE21AFD21980919000EE7644 /* UIColor+extensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AE21AFD91980919000EE7644 /* UIColor+extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AE21AFD31980919000EE7644 /* UIColor+extensions.m */; };
+		AE21AFDA1980919000EE7644 /* UIViewController+Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = AE21AFD41980919000EE7644 /* UIViewController+Extensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AE21AFDB1980919000EE7644 /* UIViewController+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AE21AFD51980919000EE7644 /* UIViewController+Extensions.m */; };
 		AE23413E19735B8400CE6E38 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE23413D19735B8400CE6E38 /* DropboxSDK.framework */; };
+		AE57F7CE1980F16900B5B3FC /* iOSCoreLibraryCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = AE57F7CD1980F16900B5B3FC /* iOSCoreLibraryCommon.h */; };
 		AE65B08B197B7D3900DB2172 /* BuildFlags.h in Headers */ = {isa = PBXBuildFile; fileRef = AE65B08A197B7D3900DB2172 /* BuildFlags.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AE7FF7531981CE09002D3F9E /* UITextField+matchesRegex.h in Headers */ = {isa = PBXBuildFile; fileRef = AE7FF7511981CE09002D3F9E /* UITextField+matchesRegex.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AE7FF7541981CE09002D3F9E /* UITextField+matchesRegex.m in Sources */ = {isa = PBXBuildFile; fileRef = AE7FF7521981CE09002D3F9E /* UITextField+matchesRegex.m */; };
 		AE9629881919FE9600A9AAC3 /* ICLUploadToDropboxViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = AE9629851919FE9600A9AAC3 /* ICLUploadToDropboxViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AE9629891919FE9600A9AAC3 /* ICLUploadToDropboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9629861919FE9600A9AAC3 /* ICLUploadToDropboxViewController.m */; };
 		AE96298A1919FE9600A9AAC3 /* ICLUploadToDropboxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE9629871919FE9600A9AAC3 /* ICLUploadToDropboxViewController.xib */; };
 		AE96298C1919FEB200A9AAC3 /* ICLUploadToDropboxViewController~iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE96298B1919FEB200A9AAC3 /* ICLUploadToDropboxViewController~iPhone.xib */; };
 		AE96298F1919FF5E00A9AAC3 /* ICLUploadToDropboxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE9629871919FE9600A9AAC3 /* ICLUploadToDropboxViewController.xib */; };
 		AE9629901919FF5E00A9AAC3 /* ICLUploadToDropboxViewController~iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE96298B1919FEB200A9AAC3 /* ICLUploadToDropboxViewController~iPhone.xib */; };
-		AEA38057179A4A3000A1CAD2 /* UIButton+applyGlassStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = AEA38049179A4A3000A1CAD2 /* UIButton+applyGlassStyle.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AEA38058179A4A3000A1CAD2 /* UIButton+applyGlassStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA3804A179A4A3000A1CAD2 /* UIButton+applyGlassStyle.m */; };
 		AEE765C8196A6DA600D8AAA4 /* ICLAlertViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = AEE765B8196A6DA600D8AAA4 /* ICLAlertViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AEE765C9196A6DA600D8AAA4 /* ICLAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEE765B9196A6DA600D8AAA4 /* ICLAlertViewController.m */; };
 		AEE765CA196A6DA600D8AAA4 /* ICLAlertViewController2.xib in Resources */ = {isa = PBXBuildFile; fileRef = AEE765BA196A6DA600D8AAA4 /* ICLAlertViewController2.xib */; };
@@ -48,8 +61,6 @@
 		AEE76617196A6E1300D8AAA4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AEE7660F196A6E1300D8AAA4 /* InfoPlist.strings */; };
 		AEE76618196A6E1300D8AAA4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AEE76611196A6E1300D8AAA4 /* Localizable.strings */; };
 		AEE76619196A6E1300D8AAA4 /* UI_Autogenerated.strings in Resources */ = {isa = PBXBuildFile; fileRef = AEE76613196A6E1300D8AAA4 /* UI_Autogenerated.strings */; };
-		AEE7661C196A6E4F00D8AAA4 /* UIColor+extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = AEE7661A196A6E4F00D8AAA4 /* UIColor+extensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AEE7661D196A6E4F00D8AAA4 /* UIColor+extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AEE7661B196A6E4F00D8AAA4 /* UIColor+extensions.m */; };
 		AEE76620196A6E8E00D8AAA4 /* ICLAlertViewController2.xib in Resources */ = {isa = PBXBuildFile; fileRef = AEE765BA196A6DA600D8AAA4 /* ICLAlertViewController2.xib */; };
 		AEE76621196A6E9100D8AAA4 /* ICLAlertViewController2~iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = AEE765BB196A6DA600D8AAA4 /* ICLAlertViewController2~iPhone.xib */; };
 		AEE76622196A6E9400D8AAA4 /* ICLAlertViewController3.xib in Resources */ = {isa = PBXBuildFile; fileRef = AEE765BC196A6DA600D8AAA4 /* ICLAlertViewController3.xib */; };
@@ -73,8 +84,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		AE09F619192093000065EE13 /* UIViewController+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+Extensions.h"; path = "Categories/UIViewController+Extensions.h"; sourceTree = "<group>"; };
-		AE09F61A192093000065EE13 /* UIViewController+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+Extensions.m"; path = "Categories/UIViewController+Extensions.m"; sourceTree = "<group>"; };
 		AE1744C417755777007051FF /* libiOSCoreLibrary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiOSCoreLibrary.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE1744C717755777007051FF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AE1744CB17755777007051FF /* iOSCoreLibrary-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iOSCoreLibrary-Prefix.pch"; sourceTree = "<group>"; };
@@ -87,14 +96,27 @@
 		AE17452E177579F8007051FF /* iOSCoreLibraryBundle-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iOSCoreLibraryBundle-Info.plist"; sourceTree = "<group>"; };
 		AE174530177579F8007051FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AE174532177579F8007051FF /* iOSCoreLibraryBundle-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iOSCoreLibraryBundle-Prefix.pch"; sourceTree = "<group>"; };
+		AE21AFC21980909C00EE7644 /* ICLColourPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICLColourPickerViewController.h; sourceTree = "<group>"; };
+		AE21AFC31980909C00EE7644 /* ICLColourPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICLColourPickerViewController.m; sourceTree = "<group>"; };
+		AE21AFC41980909C00EE7644 /* ICLColourPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ICLColourPickerViewController.xib; sourceTree = "<group>"; };
+		AE21AFC51980909C00EE7644 /* ICLColourPickerViewController~iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ICLColourPickerViewController~iPhone.xib"; sourceTree = "<group>"; };
+		AE21AFCC1980912F00EE7644 /* NSDate+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extensions.h"; sourceTree = "<group>"; };
+		AE21AFCD1980912F00EE7644 /* NSDate+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extensions.m"; sourceTree = "<group>"; };
+		AE21AFD01980919000EE7644 /* UIButton+applyGlassStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+applyGlassStyle.h"; sourceTree = "<group>"; };
+		AE21AFD11980919000EE7644 /* UIButton+applyGlassStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+applyGlassStyle.m"; sourceTree = "<group>"; };
+		AE21AFD21980919000EE7644 /* UIColor+extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+extensions.h"; sourceTree = "<group>"; };
+		AE21AFD31980919000EE7644 /* UIColor+extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+extensions.m"; sourceTree = "<group>"; };
+		AE21AFD41980919000EE7644 /* UIViewController+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Extensions.h"; sourceTree = "<group>"; };
+		AE21AFD51980919000EE7644 /* UIViewController+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Extensions.m"; sourceTree = "<group>"; };
 		AE23413D19735B8400CE6E38 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DropboxSDK.framework; path = ThirdParty/DropboxSDK/DropboxSDK.framework; sourceTree = "<group>"; };
+		AE57F7CD1980F16900B5B3FC /* iOSCoreLibraryCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSCoreLibraryCommon.h; sourceTree = "<group>"; };
 		AE65B08A197B7D3900DB2172 /* BuildFlags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuildFlags.h; sourceTree = "<group>"; };
+		AE7FF7511981CE09002D3F9E /* UITextField+matchesRegex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+matchesRegex.h"; sourceTree = "<group>"; };
+		AE7FF7521981CE09002D3F9E /* UITextField+matchesRegex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+matchesRegex.m"; sourceTree = "<group>"; };
 		AE9629851919FE9600A9AAC3 /* ICLUploadToDropboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICLUploadToDropboxViewController.h; sourceTree = "<group>"; };
 		AE9629861919FE9600A9AAC3 /* ICLUploadToDropboxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICLUploadToDropboxViewController.m; sourceTree = "<group>"; };
 		AE9629871919FE9600A9AAC3 /* ICLUploadToDropboxViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ICLUploadToDropboxViewController.xib; sourceTree = "<group>"; };
 		AE96298B1919FEB200A9AAC3 /* ICLUploadToDropboxViewController~iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ICLUploadToDropboxViewController~iPhone.xib"; sourceTree = "<group>"; };
-		AEA38049179A4A3000A1CAD2 /* UIButton+applyGlassStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+applyGlassStyle.h"; path = "Categories/UIButton+applyGlassStyle.h"; sourceTree = "<group>"; };
-		AEA3804A179A4A3000A1CAD2 /* UIButton+applyGlassStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+applyGlassStyle.m"; path = "Categories/UIButton+applyGlassStyle.m"; sourceTree = "<group>"; };
 		AEE765B8196A6DA600D8AAA4 /* ICLAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICLAlertViewController.h; sourceTree = "<group>"; };
 		AEE765B9196A6DA600D8AAA4 /* ICLAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICLAlertViewController.m; sourceTree = "<group>"; };
 		AEE765BA196A6DA600D8AAA4 /* ICLAlertViewController2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ICLAlertViewController2.xib; sourceTree = "<group>"; };
@@ -120,8 +142,6 @@
 		AEE76610196A6E1300D8AAA4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
 		AEE76612196A6E1300D8AAA4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
 		AEE76614196A6E1300D8AAA4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = UI_Autogenerated.strings; sourceTree = "<group>"; };
-		AEE7661A196A6E4F00D8AAA4 /* UIColor+extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+extensions.h"; path = "Categories/UIColor+extensions.h"; sourceTree = "<group>"; };
-		AEE7661B196A6E4F00D8AAA4 /* UIColor+extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+extensions.m"; path = "Categories/UIColor+extensions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +199,7 @@
 		AE1744C917755777007051FF /* iOSCoreLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				AE21AFC11980909C00EE7644 /* ColourPicker */,
 				AEE765D6196A6DC100D8AAA4 /* External */,
 				AEE765B7196A6DA600D8AAA4 /* AlertView */,
 				AEE765BE196A6DA600D8AAA4 /* CoreData */,
@@ -196,6 +217,7 @@
 		AE1744CA17755777007051FF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AE57F7CD1980F16900B5B3FC /* iOSCoreLibraryCommon.h */,
 				AE1744CB17755777007051FF /* iOSCoreLibrary-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -220,6 +242,17 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		AE21AFC11980909C00EE7644 /* ColourPicker */ = {
+			isa = PBXGroup;
+			children = (
+				AE21AFC21980909C00EE7644 /* ICLColourPickerViewController.h */,
+				AE21AFC31980909C00EE7644 /* ICLColourPickerViewController.m */,
+				AE21AFC41980909C00EE7644 /* ICLColourPickerViewController.xib */,
+				AE21AFC51980909C00EE7644 /* ICLColourPickerViewController~iPhone.xib */,
+			);
+			path = ColourPicker;
+			sourceTree = "<group>";
+		};
 		AE9629841919FE5300A9AAC3 /* Dropbox */ = {
 			isa = PBXGroup;
 			children = (
@@ -234,14 +267,18 @@
 		AEA38046179A4A2200A1CAD2 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				AEE7661A196A6E4F00D8AAA4 /* UIColor+extensions.h */,
-				AEE7661B196A6E4F00D8AAA4 /* UIColor+extensions.m */,
-				AEA38049179A4A3000A1CAD2 /* UIButton+applyGlassStyle.h */,
-				AEA3804A179A4A3000A1CAD2 /* UIButton+applyGlassStyle.m */,
-				AE09F619192093000065EE13 /* UIViewController+Extensions.h */,
-				AE09F61A192093000065EE13 /* UIViewController+Extensions.m */,
+				AE7FF7511981CE09002D3F9E /* UITextField+matchesRegex.h */,
+				AE7FF7521981CE09002D3F9E /* UITextField+matchesRegex.m */,
+				AE21AFD01980919000EE7644 /* UIButton+applyGlassStyle.h */,
+				AE21AFD11980919000EE7644 /* UIButton+applyGlassStyle.m */,
+				AE21AFD21980919000EE7644 /* UIColor+extensions.h */,
+				AE21AFD31980919000EE7644 /* UIColor+extensions.m */,
+				AE21AFD41980919000EE7644 /* UIViewController+Extensions.h */,
+				AE21AFD51980919000EE7644 /* UIViewController+Extensions.m */,
+				AE21AFCC1980912F00EE7644 /* NSDate+Extensions.h */,
+				AE21AFCD1980912F00EE7644 /* NSDate+Extensions.m */,
 			);
-			name = Categories;
+			path = Categories;
 			sourceTree = "<group>";
 		};
 		AEE765B7196A6DA600D8AAA4 /* AlertView */ = {
@@ -344,17 +381,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				AEE76602196A6DC100D8AAA4 /* Reachability.h in Headers */,
-				AEA38057179A4A3000A1CAD2 /* UIButton+applyGlassStyle.h in Headers */,
 				AEE765C8196A6DA600D8AAA4 /* ICLAlertViewController.h in Headers */,
+				AE7FF7531981CE09002D3F9E /* UITextField+matchesRegex.h in Headers */,
+				AE21AFD61980919000EE7644 /* UIButton+applyGlassStyle.h in Headers */,
 				AEE765D2196A6DA600D8AAA4 /* NSBundle+InternalExtensions.h in Headers */,
-				AEE7661C196A6E4F00D8AAA4 /* UIColor+extensions.h in Headers */,
+				AE21AFC61980909C00EE7644 /* ICLColourPickerViewController.h in Headers */,
+				AE21AFCE1980912F00EE7644 /* NSDate+Extensions.h in Headers */,
 				AEE765F3196A6DC100D8AAA4 /* NSManagedObjectModel+KCOrderedAccessorFix.h in Headers */,
+				AE21AFD81980919000EE7644 /* UIColor+extensions.h in Headers */,
 				AEE765CE196A6DA600D8AAA4 /* ICLCoreDataDeviceList.h in Headers */,
 				AE65B08B197B7D3900DB2172 /* BuildFlags.h in Headers */,
 				AEE765D4196A6DA600D8AAA4 /* NSURL+InternalExtensions.h in Headers */,
-				AE09F61B192093000065EE13 /* UIViewController+Extensions.h in Headers */,
 				AEE765D0196A6DA600D8AAA4 /* ICLCoreDataManager.h in Headers */,
 				AE9629881919FE9600A9AAC3 /* ICLUploadToDropboxViewController.h in Headers */,
+				AE21AFDA1980919000EE7644 /* UIViewController+Extensions.h in Headers */,
+				AE57F7CE1980F16900B5B3FC /* iOSCoreLibraryCommon.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,7 +483,9 @@
 				AEE76627196A6EA900D8AAA4 /* UI_Autogenerated.strings in Resources */,
 				AE96298A1919FE9600A9AAC3 /* ICLUploadToDropboxViewController.xib in Resources */,
 				AEE76604196A6DC100D8AAA4 /* ReadMe.txt in Resources */,
+				AE21AFC91980909C00EE7644 /* ICLColourPickerViewController~iPhone.xib in Resources */,
 				AEE76624196A6EA000D8AAA4 /* ICL_Common.strings in Resources */,
+				AE21AFC81980909C00EE7644 /* ICLColourPickerViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,7 +504,9 @@
 				AEE76622196A6E9400D8AAA4 /* ICLAlertViewController3.xib in Resources */,
 				AEE76615196A6E1300D8AAA4 /* ICL_Common.strings in Resources */,
 				AEE76620196A6E8E00D8AAA4 /* ICLAlertViewController2.xib in Resources */,
+				AE21AFCB198090AC00EE7644 /* ICLColourPickerViewController~iPhone.xib in Resources */,
 				AE174531177579F8007051FF /* InfoPlist.strings in Resources */,
+				AE21AFCA198090A900EE7644 /* ICLColourPickerViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -474,16 +519,19 @@
 			files = (
 				AEE765D5196A6DA600D8AAA4 /* NSURL+InternalExtensions.m in Sources */,
 				AE1744CF17755777007051FF /* iOSCoreLibrary.m in Sources */,
-				AEA38058179A4A3000A1CAD2 /* UIButton+applyGlassStyle.m in Sources */,
-				AE09F61C192093000065EE13 /* UIViewController+Extensions.m in Sources */,
-				AEE7661D196A6E4F00D8AAA4 /* UIColor+extensions.m in Sources */,
 				AEE765F4196A6DC100D8AAA4 /* NSManagedObjectModel+KCOrderedAccessorFix.m in Sources */,
+				AE21AFD71980919000EE7644 /* UIButton+applyGlassStyle.m in Sources */,
+				AE21AFCF1980912F00EE7644 /* NSDate+Extensions.m in Sources */,
+				AE21AFD91980919000EE7644 /* UIColor+extensions.m in Sources */,
 				AEE765D3196A6DA600D8AAA4 /* NSBundle+InternalExtensions.m in Sources */,
 				AEE765CF196A6DA600D8AAA4 /* ICLCoreDataDeviceList.m in Sources */,
 				AEE765C9196A6DA600D8AAA4 /* ICLAlertViewController.m in Sources */,
+				AE7FF7541981CE09002D3F9E /* UITextField+matchesRegex.m in Sources */,
 				AEE76603196A6DC100D8AAA4 /* Reachability.m in Sources */,
+				AE21AFDB1980919000EE7644 /* UIViewController+Extensions.m in Sources */,
 				AEE765D1196A6DA600D8AAA4 /* ICLCoreDataManager.m in Sources */,
 				AE9629891919FE9600A9AAC3 /* ICLUploadToDropboxViewController.m in Sources */,
+				AE21AFC71980909C00EE7644 /* ICLColourPickerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -412,12 +412,11 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
 }
 
 - (id) ubiquityIdentityToken {
-    // versions below iOS 7 return nil to prevent iCloud ever enabling
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 7) {
-        return nil;
+    if (Using_iOS7OrAbove) {
+        return [[NSFileManager defaultManager] ubiquityIdentityToken];
     }
     else {
-        return [[NSFileManager defaultManager] ubiquityIdentityToken];
+        return nil;
     }
 }
 
@@ -507,7 +506,7 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
 
         // Are we running a version of iOS below 7?
         // If so iCloud will not be used due to reliablilty issues.
-        if ([[[UIDevice currentDevice] systemVersion] floatValue] < 7) {
+        if (!Using_iOS7OrAbove) {
             // Force iCloud to be disabled by disabling the flag and removing any stored identity token
             [userDefaults setBool:NO forKey:Setting_iCloudEnabled];
             [userDefaults removeObjectForKey:Setting_IdentityToken];
@@ -1013,7 +1012,7 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
 - (void)CoreData_RegisterForNotifications:(NSPersistentStoreCoordinator*) coordinator {
     NSNotificationCenter* notificationCentre = [NSNotificationCenter defaultCenter];
     
-    if (([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)) {
+    if (Using_iOS7OrAbove) {
         [notificationCentre addObserver:self
                                selector:@selector(CoreData_StoresWillChange:)
                                    name:NSPersistentStoreCoordinatorStoresWillChangeNotification
@@ -1034,7 +1033,7 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
 - (void)CoreData_UnregisterForNotifications {
     NSNotificationCenter* notificationCentre = [NSNotificationCenter defaultCenter];
     
-    if (([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)) {
+    if (Using_iOS7OrAbove) {
         [notificationCentre removeObserver:self
                                       name:NSPersistentStoreCoordinatorStoresWillChangeNotification
                                     object:self.persistentStoreCoordinator];
@@ -1132,7 +1131,7 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
     }
     
     // iOS 6 and below do not support the StoresWillChange notification
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 7) {
+    if (!Using_iOS7OrAbove) {
         [self CoreData_StoresWillChange:nil];
     }
     

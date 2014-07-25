@@ -42,7 +42,7 @@
     
     ICLUploadToDropboxViewController* viewController = nil;
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+    if (Using_iPad) {
         viewController = [[ICLUploadToDropboxViewController alloc] initWithNibName:@"ICLUploadToDropboxViewController" bundle:libBundle];
     }
     else {
@@ -72,7 +72,7 @@
     
     UIViewController* activeVC = [self topViewController];
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+    if (Using_iPad) {
         // Create the popover
         _popoverViewController = [[UIPopoverController alloc] initWithContentViewController:_navigationViewController];
         [_popoverViewController setDelegate:self];
@@ -101,18 +101,17 @@
 {
     [super viewDidLoad];
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+    if (Using_iPad) {
         CGFloat viewWidth = 320.0f;
         CGFloat viewHeight = 400.0f;
         
         CGSize contentSize = CGSizeMake(viewWidth, viewHeight);
         
-        // set content size for versions < iOS 7
-        if ([[[UIDevice currentDevice] systemVersion] floatValue] < 7) {
-            self.contentSizeForViewInPopover = contentSize;
-        } // iOS7 and above
-        else {
+        if (Using_iOS7OrAbove) {
             self.preferredContentSize = contentSize;
+        }
+        else {
+            self.contentSizeForViewInPopover = contentSize;
         }
     }
     
@@ -260,7 +259,7 @@
         _gaussianBlurFilter = [CIFilter filterWithName:@"CIGaussianBlur"];
         
         [_gaussianBlurFilter setDefaults];
-        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        if (Using_iOS7OrAbove) {
             [_gaussianBlurFilter setValue:@(10) forKey:kCIInputRadiusKey];
         }
         else {
@@ -371,7 +370,7 @@
 - (IBAction)doneButtonSelected:(id)sender {
     [_displayUpdateTimer invalidate];
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+    if (Using_iPad) {
         [_popoverViewController dismissPopoverAnimated:YES];
         
         _navigationViewController = nil;

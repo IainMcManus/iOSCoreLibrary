@@ -4,16 +4,28 @@ Introduction
 The iOS Core Library is a collection of useful screens and categories for iOS applications. The GitHub version is not the full library at this point. Overtime I will be cleaning up the code and making it all available.
 
 The library contains the following:
+ * Core Data Stack - Complete iCloud + Core Data stack with sample application.
  * Dropbox Uploader - Simple wrapper for the Dropbox upload process that provides a progress indicator.
  * Alert View - Custom UI Alert View control.
- * Core Data Stack - Complete iCloud + Core Data stack with sample application.
+ * Colour Picker - iPad/iPhone compatible colour picker.
  * Custom Categories
-   * UIButton+applyGlassStyle
-   * UIColor+extensions
-   * UIViewController+extensions
- * Internal Categories
-   * NSBundle+InternalExtensions
-   * NSURL+InternalExtensions
+   * NSDate
+     * Methods to round time to start/end of the day
+     * Methods to convert from a provided date to the start/end of the week it belongs to
+     * Methods to convert from a provided date to the start/end of the month
+     * Methods to take a date and move a week forward/back
+     * Methods to take a date and move a month forward/back
+   * UIButton
+     * Category to apply a glass style to buttons.
+   * UIColor
+     * Conversions to/from strings
+     * Perceived brightness calculation
+     * Automatic generation of different shades
+   * UITextField
+     * Helper for comparison to regex
+   * UIViewController
+     * Helpers to retrieve the topmost view controller
+ * Sample application showing how to use the Core Data stack and some selected other code
  * Third Party Code
    * Reachability code from Apple. The code is provided in full without modifications. Copyright for the code belongs to Apple. Please read and abide by their license.
    * KCOrderedAccessorFix from https://github.com/CFKevinRef/KCOrderedAccessorFix. Copyright for the code belongs to Kevin Cassidy Jr. Please read and abide by their license.
@@ -164,8 +176,67 @@ Usage
 ![Dropbox Upload in Progress (iPhone)](/Screenshots/iPhone_DropboxUpload_InProgress.png?raw=true "Dropbox Upload in Progress (iPhone)")
 ![Dropbox Upload Successful (iPhone)](/Screenshots/iPhone_DropboxUpload_Success.png?raw=true "Dropbox Upload Successful (iPhone)") 
 
+Alert View
+===============
+
+Colour Picker
+===============
+
+The colour picker is an iPhone/iPad compatible view which allows users to pick a colour. The colour picker contains:
+ * A colour wheel which the user can tap to select a specific colour (based on hue and saturation)
+ * Red, Green and Blue component sliders for adjusting the individual values
+ * Red, Green and Blue component text fields for direct entry of the individual values
+ * Brightness slider
+ 
+The colour picker is compatible with iPad and iPhone and has been tested on iOS 6 and above. An example of using the colour picker is provided in [Colour Picker Example](/iOSCoreLibrarySampleApp/iOSCoreLibrarySampleApp/Source/View%20Controllers/Miscellaneous/ISAMiscellaneousTabViewController.m)
+
 Categories
 ===============
+
+## NSDate+Extensions
+Provides a range of helper methods to manipulate an NSDate object.
+
+Usage
+
+	#import <iOSCoreLibrary/NSDate+Extensions.h>
+	
+	NSDate* currentDate = [NSDate date]
+	
+	// Floors the time component of the date (ie. set to 0:00)
+	NSDate* flooredDate = [currentDate dateFloor];
+	
+	// Ceils the time component of the date (ie. set to 23:59:59)
+	NSDate* ceiledDate = [currentDate dateCeil];
+	
+	// Returns an NSDate for the start of the week relative to the provided date
+	NSDate* startOfWeek = [currentDate startOfWeek];
+	
+	// Returns an NSDate for the end of the week relative to the provided date
+	NSDate* endOfWeek = [currentDate endOfWeek];
+	
+	// Returns an NSDate for the start of the month relative to the provided date
+	NSDate* startOfMonth = [currentDate startOfMonth];
+	
+	// Returns an NSDate for the end of the month relative to the provided date
+	NSDate* endOfMonth = [currentDate endOfMonth];
+	
+	// Returns an NSDate for 1 week before the provided date
+	NSDate* previousWeek = [currentDate previousWeek];
+	
+	// Returns an NSDate for 1 week after the provided date
+	NSDate* nextWeek = [currentDate nextWeek];
+	
+	// Returns an NSDate for 1 month before the provided date
+	// The day component will be clamped to lie within the valid range for that month
+	NSDate* previousMonth = [currentDate previousMonth];
+	
+	// Returns an NSDate for 1 month after the provided date
+	// The day component will be clamped to lie within the valid range for that month
+	NSDate* nextMonth = [currentDate nextMonth];
+	
+	// Returns YES if the provided date is between the two provided dates
+	if ([currentDate isBetweenDates:startOfWeek endDate:endOfWeek]) {
+	}
 
 ## UIButton+applyGlassStyle
 Applies a basic glass look to a UIButton which has been set to custom drawing. In iOS 6 the button corners are rounded, in iOS 7 they will be square.
@@ -174,10 +245,14 @@ Usage
 
     #import <iOSCoreLibrary/UIButton+applyGlassStyle.h>
 
-    # Apply the glass style to the done button using small corners on iOS 6
-    # Also supported are medium (egbsMedium) and large (egbsLarge) rounded corners.
+    // Apply the glass style to the done button using small corners on iOS 6
+    // Also supported are medium (egbsMedium) and large (egbsLarge) rounded corners.
     UIColor* buttonColour = [UIColor colorWithHue:240.0f/360.0f saturation:0.5f brightness:0.95f alpha:1.0f];
     [self.doneButton applyGlassStyle:egbsSmall colour:buttonColour];
+
+    // Applies the glass style and autocolours the text based on the perceived brightness of the colour    
+    [self.doneButton applyGlassStyle:egbsSmall colour:buttonColour autoColourText:YES];
+
     
 ## UIColor+extensions
 Provides a set of routines to perform common manipulations on UIColor.
@@ -188,29 +263,42 @@ Usage
     
     UIColor* buttonColour = [UIColor colorWithHue:240.0f/360.0f saturation:0.5f brightness:0.95f alpha:1.0f];
     
-    # Generates a HTML style hex string (#RRGGBBAA) representation of the colour
+    // Generates a HTML style hex string (#RRGGBBAA) representation of the colour
     NSString* hexButtonColour = [buttonColour hexString];
     
-    # Converts from a hex string to a UIColor
+    // Converts from a hex string to a UIColor
     UIColor* buttonColour2 = [UIColor fromHexString:hexButtonColour];
     
-    # Calculates the perceived brightness (0 to 1) of a colour. 0 indicates black and 1 indicates white.
+    // Calculates the perceived brightness (0 to 1) of a colour. 0 indicates black and 1 indicates white.
     CGFloat perceivedBrightness = [buttonColour perceivedBrightness];
     
-    # Attempts to generate a different shade of the same colour. The new colour may be lighter or darker.
+    // Attempts to generate a different shade of the same colour. The new colour may be lighter or darker.
     UIColor* Colour = [buttonColour autoGenerateDifferentShade];
     
-    # Generates a slightly lighter shade of the colour.
+    // Generates a slightly lighter shade of the colour.
     UIColor* Colour = [buttonColour autoGenerateLighterShade];
     
-    # Generates a significantly lighter shade of the colour.
+    // Generates a significantly lighter shade of the colour.
     UIColor* Colour = [buttonColour autoGenerateMuchLighterShade];
+
+## UITextField+matchesRegex
+Provides a single method that indicates if the current content of the field matches the supplied regex.
+
+Usage
+
+    #import <iOSCoreLibrary/UITextField+matchesRegex.h>
+    
+    NSString* validRGBRegex = @"^([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])$";
+    
+    // Check if the red value text field contains an invalid value (0-255).
+    if (![self.redField matchesRegex:validRGBRegex]) {
+    }
 
 ## UIViewController+extensions
 Retrieves the top level view controller when provided with an existing controller. The original source for this section of code was StackOverflow in this question http://stackoverflow.com/questions/6131205/iphone-how-to-find-topmost-view-controller
 
     #import <iOSCoreLibrary/UIButton+Extensions.h>
 
-    # Call from within any view controller to retrieve the topmost one.
-    # Currently used by the Dropbox view after it creates it's View Controller but prior to it being displayed.
+    // Call from within any view controller to retrieve the topmost one.
+    // Currently used by the Dropbox view after it creates it's View Controller but prior to it being displayed.
     UIViewController* topVC = [self topViewController];

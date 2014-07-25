@@ -23,7 +23,7 @@
     float borderWidth = 0.0f;
     
     // If the device running iOS version < 7 then use rounded corners
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 7) {
+    if (!Using_iOS7OrAbove) {
         if (inButtonSize == egbsSmall) {
             cornerRadius = 4.0f;
             borderWidth = 1.0f;

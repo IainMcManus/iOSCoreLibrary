@@ -172,10 +172,6 @@ UIColor* Colour_AlertView_Panel2 = nil;
         }
     }
 
-    // Run the de-duplication. This MUST NOT be run before processing deletes.
-    // If it is then none of the objects will be found.
-    [self performDataDeduplication];
-
     // Notify any registered listeners that a new object was added.
     for (NSManagedObjectID* addedObjectId in changes[NSInsertedObjectsKey]) {
         NSManagedObject* addedObject = [context existingObjectWithID:addedObjectId error:nil];
@@ -205,6 +201,10 @@ UIColor* Colour_AlertView_Panel2 = nil;
             [self eventClassificationUpdated:(Classification*)updatedObject remoteChange:YES];
         }
     }
+    
+    // Run the de-duplication. This MUST NOT be run before processing deletes.
+    // If it is then none of the objects will be found.
+    [self performDataDeduplication];
 }
 
 - (void) eventStoreWillChange {
@@ -230,15 +230,22 @@ UIColor* Colour_AlertView_Panel2 = nil;
     // back to the main view.
     if (currentViewController && ![currentViewController conformsToProtocol:@protocol(StoreChangedDelegate)]) {
         dispatch_async(dispatch_get_main_queue(), ^{
+            // Clear all delegates as we are fully resetting the user interface
+            [storeChangedDelegates removeAllObjects];
+            [petChangedDelegates removeAllObjects];
+            [ownerChangedDelegates removeAllObjects];
+            [classificationChangedDelegates removeAllObjects];
+            
+            // Load the main storyboard
             UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             
+            // Instantiate a new view with the storyboard id MainView
             UIViewController* viewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"MainView"];
             
+            // Switch to the new view
             id<UIApplicationDelegate> appDelegate = [[UIApplication sharedApplication] delegate];
             appDelegate.window.rootViewController = viewController;
             [appDelegate.window makeKeyAndVisible];
-            
-            [storeChangedDelegates removeAllObjects];
         });
     } // Otherwise notify all registered handlers to reload data and refresh the UI.
     else {

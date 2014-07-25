@@ -51,7 +51,7 @@
 
     // load the correct XIB for the number of options
     NSString* baseXIBName = [optionNames count] == 2 ? @"ICLAlertViewController2" : @"ICLAlertViewController3";
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+    if (Using_iPad) {
         viewController = [[ICLAlertViewController alloc] initWithNibName:baseXIBName bundle:libBundle];
     }
     else {
@@ -73,7 +73,7 @@
     
     UIViewController* activeVC = [self topViewController];
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+    if (Using_iPad) {
         // Create the popover
         _alertViewPopoverController = [[UIPopoverController alloc] initWithContentViewController:_alertViewNavController];
         [_alertViewPopoverController setDelegate:self];
@@ -107,18 +107,17 @@
 {
     [super viewDidLoad];
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+    if (Using_iPad) {
         CGFloat viewWidth = 600.0f;
         CGFloat viewHeight = 400.0f;
         
         CGSize contentSize = CGSizeMake(viewWidth, viewHeight);
         
-        // set content size for versions < iOS 7
-        if ([[[UIDevice currentDevice] systemVersion] floatValue] < 7) {
-            self.contentSizeForViewInPopover = contentSize;
-        } // iOS7 and above
-        else {
+        if (Using_iOS7OrAbove) {
             self.preferredContentSize = contentSize;
+        }
+        else {
+            self.contentSizeForViewInPopover = contentSize;
         }
     }
     
@@ -139,7 +138,7 @@
     }
 
     // for the iPad version set the titles
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+    if (Using_iPad) {
         [self.option1Title setText:self.optionNames[0]];
         [self.option2Title setText:self.optionNames[1]];
         
@@ -204,14 +203,14 @@
     if ([panel1Colour perceivedBrightness] < 0.5f) {
         [self.option1Description setTextColor:[UIColor whiteColor]];
         
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        if (Using_iPad) {
             [self.option1Title setTextColor:[UIColor whiteColor]];
         }
     }
     if ([panel2Colour perceivedBrightness] < 0.5f) {
         [self.option2Description setTextColor:[UIColor whiteColor]];
         
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        if (Using_iPad) {
             [self.option2Title setTextColor:[UIColor whiteColor]];
         }
     }
@@ -219,7 +218,7 @@
         if ([panel3Colour perceivedBrightness] < 0.5f) {
             [self.option3Description setTextColor:[UIColor whiteColor]];
             
-            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            if (Using_iPad) {
                 [self.option3Title setTextColor:[UIColor whiteColor]];
             }
         }
@@ -239,14 +238,18 @@
     }
     
     if (self.appearanceOptions[@"BackgroundImage"]) {
-        UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:self.appearanceOptions[@"BackgroundImage"]]];
+        UIImage* image = [UIImage imageNamed:self.appearanceOptions[@"BackgroundImage"]];
         
-        imgView.frame = self.view.bounds;
-        imgView.contentMode = UIViewContentModeTopLeft;
-        
-        [self.view addSubview:imgView];
-        [self.view sendSubviewToBack:imgView];
-        [self.view setBackgroundColor:[UIColor clearColor]];
+        if (image) {
+            UIImageView *imgView = [[UIImageView alloc] initWithImage:image];
+            
+            imgView.frame = self.view.bounds;
+            imgView.contentMode = UIViewContentModeTopLeft;
+            
+            [self.view addSubview:imgView];
+            [self.view sendSubviewToBack:imgView];
+            [self.view setBackgroundColor:[UIColor clearColor]];
+        }
     }
 }
 
@@ -254,10 +257,10 @@
     [super viewDidAppear:animated];
     
     // Apply the glass style to the buttons
-    [self.option1Button applyGlassStyle:egbsSmall colour:self.option1Button.backgroundColor];
-    [self.option2Button applyGlassStyle:egbsSmall colour:self.option2Button.backgroundColor];
+    [self.option1Button applyGlassStyle:egbsSmall colour:self.option1Button.backgroundColor autoColourText:YES];
+    [self.option2Button applyGlassStyle:egbsSmall colour:self.option2Button.backgroundColor autoColourText:YES];
     if ([self.optionNames count] == 3) {
-        [self.option3Button applyGlassStyle:egbsSmall colour:self.option3Button.backgroundColor];
+        [self.option3Button applyGlassStyle:egbsSmall colour:self.option3Button.backgroundColor autoColourText:YES];
     }
 }
 
@@ -279,7 +282,7 @@
 }
 
 - (void) dismissAlertView:(NSUInteger) selectedOption {
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+    if (Using_iPad) {
         [_alertViewPopoverController dismissPopoverAnimated:YES];
         
         _alertViewNavController = nil;
