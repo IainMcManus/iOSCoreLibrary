@@ -26,7 +26,7 @@
 		AE21AFDA1980919000EE7644 /* UIViewController+Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = AE21AFD41980919000EE7644 /* UIViewController+Extensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AE21AFDB1980919000EE7644 /* UIViewController+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AE21AFD51980919000EE7644 /* UIViewController+Extensions.m */; };
 		AE23413E19735B8400CE6E38 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE23413D19735B8400CE6E38 /* DropboxSDK.framework */; };
-		AE57F7CE1980F16900B5B3FC /* iOSCoreLibraryCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = AE57F7CD1980F16900B5B3FC /* iOSCoreLibraryCommon.h */; };
+		AE57F7CE1980F16900B5B3FC /* iOSCoreLibraryCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = AE57F7CD1980F16900B5B3FC /* iOSCoreLibraryCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AE65B08B197B7D3900DB2172 /* BuildFlags.h in Headers */ = {isa = PBXBuildFile; fileRef = AE65B08A197B7D3900DB2172 /* BuildFlags.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AE7FF7531981CE09002D3F9E /* UITextField+matchesRegex.h in Headers */ = {isa = PBXBuildFile; fileRef = AE7FF7511981CE09002D3F9E /* UITextField+matchesRegex.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AE7FF7541981CE09002D3F9E /* UITextField+matchesRegex.m in Sources */ = {isa = PBXBuildFile; fileRef = AE7FF7521981CE09002D3F9E /* UITextField+matchesRegex.m */; };
@@ -36,6 +36,7 @@
 		AE96298C1919FEB200A9AAC3 /* ICLUploadToDropboxViewController~iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE96298B1919FEB200A9AAC3 /* ICLUploadToDropboxViewController~iPhone.xib */; };
 		AE96298F1919FF5E00A9AAC3 /* ICLUploadToDropboxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE9629871919FE9600A9AAC3 /* ICLUploadToDropboxViewController.xib */; };
 		AE9629901919FF5E00A9AAC3 /* ICLUploadToDropboxViewController~iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE96298B1919FEB200A9AAC3 /* ICLUploadToDropboxViewController~iPhone.xib */; };
+		AE9E91AE198232DD00C8179E /* ICL_Dropbox.strings in Resources */ = {isa = PBXBuildFile; fileRef = AE9E91AC198232DD00C8179E /* ICL_Dropbox.strings */; };
 		AEE765C8196A6DA600D8AAA4 /* ICLAlertViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = AEE765B8196A6DA600D8AAA4 /* ICLAlertViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AEE765C9196A6DA600D8AAA4 /* ICLAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEE765B9196A6DA600D8AAA4 /* ICLAlertViewController.m */; };
 		AEE765CA196A6DA600D8AAA4 /* ICLAlertViewController2.xib in Resources */ = {isa = PBXBuildFile; fileRef = AEE765BA196A6DA600D8AAA4 /* ICLAlertViewController2.xib */; };
@@ -117,6 +118,7 @@
 		AE9629861919FE9600A9AAC3 /* ICLUploadToDropboxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICLUploadToDropboxViewController.m; sourceTree = "<group>"; };
 		AE9629871919FE9600A9AAC3 /* ICLUploadToDropboxViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ICLUploadToDropboxViewController.xib; sourceTree = "<group>"; };
 		AE96298B1919FEB200A9AAC3 /* ICLUploadToDropboxViewController~iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ICLUploadToDropboxViewController~iPhone.xib"; sourceTree = "<group>"; };
+		AE9E91AD198232DD00C8179E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = ICL_Dropbox.strings; sourceTree = "<group>"; };
 		AEE765B8196A6DA600D8AAA4 /* ICLAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICLAlertViewController.h; sourceTree = "<group>"; };
 		AEE765B9196A6DA600D8AAA4 /* ICLAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICLAlertViewController.m; sourceTree = "<group>"; };
 		AEE765BA196A6DA600D8AAA4 /* ICLAlertViewController2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ICLAlertViewController2.xib; sourceTree = "<group>"; };
@@ -364,6 +366,7 @@
 		AEE7660A196A6E1300D8AAA4 /* en.lproj */ = {
 			isa = PBXGroup;
 			children = (
+				AE9E91AC198232DD00C8179E /* ICL_Dropbox.strings */,
 				AEE7660B196A6E1300D8AAA4 /* ICL_Common.strings */,
 				AEE7660D196A6E1300D8AAA4 /* ICL_iCloud.strings */,
 				AEE7660F196A6E1300D8AAA4 /* InfoPlist.strings */,
@@ -494,6 +497,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AEE76616196A6E1300D8AAA4 /* ICL_iCloud.strings in Resources */,
+				AE9E91AE198232DD00C8179E /* ICL_Dropbox.strings in Resources */,
 				AEE76617196A6E1300D8AAA4 /* InfoPlist.strings in Resources */,
 				AEE76623196A6E9600D8AAA4 /* ICLAlertViewController3~iPhone.xib in Resources */,
 				AE96298F1919FF5E00A9AAC3 /* ICLUploadToDropboxViewController.xib in Resources */,
@@ -551,6 +555,14 @@
 				AE174530177579F8007051FF /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		AE9E91AC198232DD00C8179E /* ICL_Dropbox.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AE9E91AD198232DD00C8179E /* en */,
+			);
+			name = ICL_Dropbox.strings;
 			sourceTree = "<group>";
 		};
 		AEE7660B196A6E1300D8AAA4 /* ICL_Common.strings */ = {

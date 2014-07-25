@@ -11,6 +11,15 @@
 #import "UIViewController+Extensions.h"
 #import "UIColor+extensions.h"
 
+NSString* const kICLPanelColour = @"PanelColour";
+NSString* const kICLPanel1Colour = @"Panel1Colour";
+NSString* const kICLPanel2Colour = @"Panel2Colour";
+NSString* const kICLPanel3Colour = @"Panel3Colour";
+NSString* const kICLButtonColour = @"ButtonColour";
+NSString* const kICLButton1Colour = @"Button1Colour";
+NSString* const kICLButton2Colour = @"Button2Colour";
+NSString* const kICLButton3Colour = @"Button3Colour";
+
 @interface ICLAlertViewController () <UIPopoverControllerDelegate>
 
 @end
@@ -148,20 +157,20 @@
     }
     
     // Determine the panel colours
-    UIColor* panelColour = self.appearanceOptions[@"PanelColour"];
+    UIColor* panelColour = self.appearanceOptions[kICLPanelColour];
     if (!panelColour) {
         panelColour = [UIColor colorWithHue:220.0f/360.0f saturation:0.25f brightness:0.25f alpha:0.5f];
     }
     
-    UIColor* panel1Colour = self.appearanceOptions[@"Panel1Colour"];
+    UIColor* panel1Colour = self.appearanceOptions[kICLPanel1Colour];
     if (!panel1Colour) {
         panel1Colour = panelColour;
     }
-    UIColor* panel2Colour = self.appearanceOptions[@"Panel2Colour"];
+    UIColor* panel2Colour = self.appearanceOptions[kICLPanel2Colour];
     if (!panel2Colour) {
         panel2Colour = panelColour;
     }
-    UIColor* panel3Colour = self.appearanceOptions[@"Panel3Colour"];
+    UIColor* panel3Colour = self.appearanceOptions[kICLPanel3Colour];
     if (!panel3Colour) {
         panel3Colour = panelColour;
     }
@@ -174,20 +183,20 @@
     }
     
     // Determine the colour for each button
-    UIColor* buttonColour = self.appearanceOptions[@"ButtonColour"];
+    UIColor* buttonColour = self.appearanceOptions[kICLButtonColour];
     if (!buttonColour) {
         buttonColour = [UIColor colorWithHue:220.0f/360.0f saturation:0.5f brightness:0.5f alpha:1.0f];
     }
     
-    UIColor* button1Colour = self.appearanceOptions[@"Button1Colour"];
+    UIColor* button1Colour = self.appearanceOptions[kICLButton1Colour];
     if (!button1Colour) {
         button1Colour = buttonColour;
     }
-    UIColor* button2Colour = self.appearanceOptions[@"Button2Colour"];
+    UIColor* button2Colour = self.appearanceOptions[kICLButton2Colour];
     if (!button2Colour) {
         button2Colour = buttonColour;
     }
-    UIColor* button3Colour = self.appearanceOptions[@"Button3Colour"];
+    UIColor* button3Colour = self.appearanceOptions[kICLButton3Colour];
     if (!button3Colour) {
         button3Colour = buttonColour;
     }
@@ -237,8 +246,8 @@
         }
     }
     
-    if (self.appearanceOptions[@"BackgroundImage"]) {
-        UIImage* image = [UIImage imageNamed:self.appearanceOptions[@"BackgroundImage"]];
+    if (self.appearanceOptions[kICLBackgroundImage]) {
+        UIImage* image = [UIImage imageNamed:self.appearanceOptions[kICLBackgroundImage]];
         
         if (image) {
             UIImageView *imgView = [[UIImageView alloc] initWithImage:image];

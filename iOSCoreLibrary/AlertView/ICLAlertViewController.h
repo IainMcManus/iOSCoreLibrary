@@ -8,7 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+#import "iOSCoreLibraryCommon.h"
+
 @protocol ICLAlertViewControllerDelegate;
+
+extern NSString* const kICLPanelColour;
+extern NSString* const kICLPanel1Colour;
+extern NSString* const kICLPanel2Colour;
+extern NSString* const kICLPanel3Colour;
+extern NSString* const kICLButtonColour;
+extern NSString* const kICLButton1Colour;
+extern NSString* const kICLButton2Colour;
+extern NSString* const kICLButton3Colour;
 
 @interface ICLAlertViewController : UIViewController
 

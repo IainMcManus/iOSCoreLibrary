@@ -630,12 +630,12 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
                     
                     NSString* option_Locally = NSLocalizedStringFromTableInBundle(@"Locally", @"ICL_iCloud", [NSBundle localisationBundle], @"Locally");
                     NSString* description_Locally = NSLocalizedStringFromTableInBundle(@"LocallyDescription", @"ICL_iCloud", [NSBundle localisationBundle], @"All project related data will be stored locally on the device. If you have multiple devices then the data will not be synchronised between them.");
-                    
-                    NSDictionary* appearance = @{@"Button1Colour": self.Colour_AlertView_Button1,
-                                                 @"Button2Colour": self.Colour_AlertView_Button2,
-                                                 @"Panel1Colour": self.Colour_AlertView_Panel1,
-                                                 @"Panel2Colour": self.Colour_AlertView_Panel2,
-                                                 @"BackgroundImage": [self.delegate backgroundImageNameForDialogs]};
+
+                    NSDictionary* appearance = @{kICLButton1Colour: self.Colour_AlertView_Button1,
+                                                 kICLButton2Colour: self.Colour_AlertView_Button2,
+                                                 kICLPanel1Colour: self.Colour_AlertView_Panel1,
+                                                 kICLPanel2Colour: self.Colour_AlertView_Panel2,
+                                                 kICLBackgroundImage: [self.delegate backgroundImageNameForDialogs]};
                     
                     self.iCloudEnableView = [ICLAlertViewController create:msgTitle
                                                                optionNames:@[option_iCloud, option_Locally]
@@ -692,11 +692,11 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
                         NSString* option_NoMigrate = NSLocalizedStringFromTableInBundle(@"iCloud.NoMigrateToCloud", @"ICL_iCloud", [NSBundle localisationBundle], @"Keep iCloud Data");
                         NSString* description_NoMigrate = NSLocalizedStringFromTableInBundle(@"iCloud.NoMigrateToCloudDescription", @"ICL_iCloud", [NSBundle localisationBundle], @"This will use the existing data on iCloud. Your local data will not be changed.\n\nAll local data will not be accessible until iCloud is disabled.");
                         
-                        NSDictionary* appearance = @{@"Button1Colour": self.Colour_AlertView_Button1,
-                                                     @"Button2Colour": self.Colour_AlertView_Button2,
-                                                     @"Panel1Colour": self.Colour_AlertView_Panel1,
-                                                     @"Panel2Colour": self.Colour_AlertView_Panel2,
-                                                     @"BackgroundImage": [self.delegate backgroundImageNameForDialogs]};
+                        NSDictionary* appearance = @{kICLButton1Colour: self.Colour_AlertView_Button1,
+                                                     kICLButton2Colour: self.Colour_AlertView_Button2,
+                                                     kICLPanel1Colour: self.Colour_AlertView_Panel1,
+                                                     kICLPanel2Colour: self.Colour_AlertView_Panel2,
+                                                     kICLBackgroundImage: [self.delegate backgroundImageNameForDialogs]};
                         
                         self.migrateToCloudView = [ICLAlertViewController create:msgTitle
                                                                      optionNames:@[option_Migrate, option_NoMigrate]
@@ -756,11 +756,11 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
                     NSString* option_NoMigrate = NSLocalizedStringFromTableInBundle(@"iCloud.NoMigrateFromCloud", @"ICL_iCloud", [NSBundle localisationBundle], @"Keep Local Data");
                     NSString* description_NoMigrate = NSLocalizedStringFromTableInBundle(@"iCloud.NoMigrateFromCloudDescription", @"ICL_iCloud", [NSBundle localisationBundle], @"This will use the existing local data. Your iCloud data will not be changed.\n\nAll iCloud data will not be accessible until iCloud is enabled.");
                     
-                    NSDictionary* appearance = @{@"Button1Colour": self.Colour_AlertView_Button1,
-                                                 @"Button2Colour": self.Colour_AlertView_Button2,
-                                                 @"Panel1Colour": self.Colour_AlertView_Panel1,
-                                                 @"Panel2Colour": self.Colour_AlertView_Panel2,
-                                                 @"BackgroundImage": [self.delegate backgroundImageNameForDialogs]};
+                    NSDictionary* appearance = @{kICLButton1Colour: self.Colour_AlertView_Button1,
+                                                 kICLButton2Colour: self.Colour_AlertView_Button2,
+                                                 kICLPanel1Colour: self.Colour_AlertView_Panel1,
+                                                 kICLPanel2Colour: self.Colour_AlertView_Panel2,
+                                                 kICLBackgroundImage: [self.delegate backgroundImageNameForDialogs]};
                     
                     self.migrateFromCloudView = [ICLAlertViewController create:msgTitle
                                                                    optionNames:@[option_Migrate, option_NoMigrate]

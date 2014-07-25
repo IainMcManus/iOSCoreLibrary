@@ -14,4 +14,6 @@
     #define Using_iPad (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     #define Using_iPhone (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
 
+    extern NSString* const kICLBackgroundImage;
+
 #endif

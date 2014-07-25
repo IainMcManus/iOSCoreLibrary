@@ -9,8 +9,13 @@
 #import <UIKit/UIKit.h>
 
 #import "BuildFlags.h"
+#import "iOSCoreLibraryCommon.h"
 
 #if ICL_Using_Dropbox
+
+extern NSString* const kICLMeterColourForSuccess;
+extern NSString* const kICLMeterColour;
+extern NSString* const kICLMeterColourForFailure;
 
 @class DBRestClient;
 
@@ -32,7 +37,7 @@
 
 @property (nonatomic, strong) DBRestClient* restClient;
 
-+ (id) create:(NSString*) title sourceFile:(NSString*) sourceFile destinationPath:(NSString*) destinationPath appearanceOptions:(NSDictionary*) appearanceOptions errorTitle:(NSString*) errorTitle errorMessage:(NSString*) errorMessage retryText:(NSString*) retryText cancelText:(NSString*) cancelText;
++ (id) create:(NSString*) sourceFile destinationPath:(NSString*) destinationPath appearanceOptions:(NSDictionary*) appearanceOptions;
 - (void) show;
 
 - (void) cancelUpload;

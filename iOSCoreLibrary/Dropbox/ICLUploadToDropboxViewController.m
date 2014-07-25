@@ -12,8 +12,13 @@
 
 #import "UIButton+applyGlassStyle.h"
 #import "UIViewController+Extensions.h"
+#import "NSBundle+InternalExtensions.h"
 
 #import <DropboxSDK/DropboxSDK.h>
+
+NSString* const kICLMeterColourForSuccess = @"MeterColourForSuccess";
+NSString* const kICLMeterColour = @"MeterColour";
+NSString* const kICLMeterColourForFailure = @"MeterColourForFailure";
 
 @interface ICLUploadToDropboxViewController () <DBRestClientDelegate, UIPopoverControllerDelegate, UIAlertViewDelegate>
 
@@ -37,7 +42,7 @@
     BOOL _downloadFailed;
 }
 
-+ (id) create:(NSString*) title sourceFile:(NSString*) sourceFile destinationPath:(NSString*) destinationPath appearanceOptions:(NSDictionary*) appearanceOptions errorTitle:(NSString*) errorTitle errorMessage:(NSString*) errorMessage retryText:(NSString*) retryText cancelText:(NSString*) cancelText {
++ (id) create:(NSString*) sourceFile destinationPath:(NSString*) destinationPath appearanceOptions:(NSDictionary*) appearanceOptions {
     NSBundle* libBundle = [NSBundle bundleWithURL:[[NSBundle mainBundle] URLForResource:@"iOSCoreLibraryBundle" withExtension:@"bundle"]];
     
     ICLUploadToDropboxViewController* viewController = nil;
@@ -51,12 +56,8 @@
     
     NSMutableDictionary* updatedAppearanceOptions = appearanceOptions ? [appearanceOptions mutableCopy] : [[NSMutableDictionary alloc] init];
     
-    updatedAppearanceOptions[@"errorTitle"] = errorTitle;
-    updatedAppearanceOptions[@"errorMessage"] = errorMessage;
-    updatedAppearanceOptions[@"retryText"] = retryText;
-    updatedAppearanceOptions[@"cancelText"] = cancelText;
+    viewController.title = NSLocalizedStringFromTableInBundle(@"Uploading.General", @"ICL_Dropbox", [NSBundle localisationBundle], @"Uploading to Dropbox");
     
-    viewController.title = title;
     viewController.appearanceOptions = updatedAppearanceOptions;
     viewController.sourceFile = sourceFile;
     viewController.destinationPath = destinationPath;
@@ -126,8 +127,8 @@
     // check if the file is already present
     [self.restClient loadMetadata:[self.destinationPath stringByAppendingPathComponent:self.filename]];
     
-    if (self.appearanceOptions[@"BackgroundImage"]) {
-        UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:self.appearanceOptions[@"BackgroundImage"]]];
+    if (self.appearanceOptions[kICLBackgroundImage]) {
+        UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:self.appearanceOptions[kICLBackgroundImage]]];
         
         imgView.frame = self.view.bounds;
         imgView.contentMode = UIViewContentModeTopLeft;
@@ -186,14 +187,14 @@
     
     if (!_downloadFailed) {
         if (_downloadFinished) {
-            colour = self.appearanceOptions[@"MeterColourForSuccess"];
+            colour = self.appearanceOptions[kICLMeterColourForSuccess];
         }
         else {
-            colour = self.appearanceOptions[@"MeterColour"];
+            colour = self.appearanceOptions[kICLMeterColour];
         }
     }
     else {
-        colour = self.appearanceOptions[@"MeterColourForFailure"];
+        colour = self.appearanceOptions[kICLMeterColourForFailure];
     }
     
     if (!colour) {
@@ -343,11 +344,18 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self updateProgressImage];
         
-        [[[UIAlertView alloc] initWithTitle:self.appearanceOptions[@"errorTitle"]
-                                    message:[NSString stringWithFormat:self.appearanceOptions[@"errorMessage"], [error localizedDescription]]
+        NSBundle* bundle = [NSBundle localisationBundle];
+        
+        NSString* errorTitle = NSLocalizedStringFromTableInBundle(@"Error.UploadFailedTitle", @"ICL_Dropbox", bundle, @"Upload Failed");
+        NSString* errorMsg = NSLocalizedStringFromTableInBundle(@"Error.UploadFailedMessage", @"ICL_Dropbox", bundle, @"The file failed to upload to Dropbox. (%@)");
+        NSString* retryText = NSLocalizedStringFromTableInBundle(@"Retry", @"ICL_Common", bundle, @"Retry");
+        NSString* cancelText = NSLocalizedStringFromTableInBundle(@"Cancel", @"ICL_Common", bundle, @"Cancel");
+        
+        [[[UIAlertView alloc] initWithTitle:errorTitle
+                                    message:[NSString stringWithFormat:errorMsg, [error localizedDescription]]
                                    delegate:self
-                          cancelButtonTitle:self.appearanceOptions[@"retryText"]
-                          otherButtonTitles:self.appearanceOptions[@"cancelText"], nil] show];
+                          cancelButtonTitle:retryText
+                          otherButtonTitles:cancelText, nil] show];
     });
 }
 

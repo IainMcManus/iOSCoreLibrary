@@ -157,19 +157,14 @@ Usage
 
     #import <iOSCoreLibrary/ICLUploadToDropboxViewController.h>
 
-    NSDictionary* appearance = @{@"MeterColour": [UIColor colorWithHue:240.0f/360.0f saturation:0.5f brightness:0.95f alpha:1.0f],
-                                 @"MeterColourForFailure": [UIColor colorWithHue:0.0f/360.0f saturation:0.5f brightness:0.95f alpha:1.0f],
-                                 @"MeterColourForSuccess": [UIColor colorWithHue:120.0f/360.0f saturation:0.5f brightness:0.95f alpha:1.0f]};
+    NSDictionary* appearance = @{kICLMeterColour: [UIColor colorWithHue:240.0f/360.0f saturation:0.5f brightness:0.95f alpha:1.0f],
+                                 kICLMeterColourForFailure: [UIColor colorWithHue:0.0f/360.0f saturation:0.5f brightness:0.95f alpha:1.0f],
+                                 kICLMeterColourForSuccess: [UIColor colorWithHue:120.0f/360.0f saturation:0.5f brightness:0.95f alpha:1.0f]};
 
     ICLUploadToDropboxViewController* uploadController = nil;
-    uploadController = [ICLUploadToDropboxViewController create:@"Upload to Dropbox"
-                                                     sourceFile:@"sourceFile.zip"
+    uploadController = [ICLUploadToDropboxViewController create:@"sourceFile.zip"
                                                 destinationPath:@"/Backup/"
-                                              appearanceOptions:appearance
-                                                     errorTitle:@"Upload Error"
-                                                   errorMessage:@"Upload failed!"
-                                                      retryText:@"Retry"
-                                                     cancelText:@"Cancel"];
+                                              appearanceOptions:appearance];
 
 ![Dropbox Upload in Progress (iPad)](/Screenshots/iPad_DropboxUpload_InProgress.png?raw=true "Dropbox Upload in Progress (iPad)") 
 ![Dropbox Upload Successful (iPad)](/Screenshots/iPad_DropboxUpload_Success.png?raw=true "Dropbox Upload Successful (iPad)")
@@ -178,6 +173,57 @@ Usage
 
 Alert View
 ===============
+
+The Alert View (ICLAlertViewController) is a larger version of the UIAlertView which supports some visual customisation. It is intended for cases where you need a user to make a choice where the different options require a longer explanation. For example, I use the ICLAlertViewController in the Core Data stack when prompting the user if they want to use iCloud or Local storage.
+
+Currently the ICLAlertViewController supports:
+ * iPhone and iPad
+ * iOS 6 and above
+ * 2 or 3 options (1 option or more than 3 options are not currently supported)
+ * Customising the panel and button colour
+ 
+To construct the alert view you must provide:
+ * The title for the view
+ * 2 or 3 option names (provided as an array of strings)
+ * 2 or 3 option descriptions (provided as an array of strings)
+ * A dictionary of customisation options, the settings you can customise are:
+   * Button1Colour - UIColor to use for the button for the first option
+   * Button2Colour - UIColor to use for the button for the second option
+   * Button3Colour - UIColor to use for the button for the third option
+   * Panel1Colour - UIColor to use for the panel for the first option
+   * Panel2Colour - UIColor to use for the panel for the second option
+   * Panel3Colour - UIColor to use for the panel for the third option
+   * BackgroundImage - Name of the image to use for the background (or an empty string for no image)
+ 
+Example of setting up the ICLAlertViewController
+
+ 	// Setup the colours for use with the alert view
+	UIColor* button1Colour = [UIColor colorWithHue:220.0f/360.0f saturation:0.5f brightness:0.5f alpha:1.0f];
+	UIColor* button2Colour = [UIColor colorWithHue:110.0f/360.0f saturation:0.5f brightness:0.5f alpha:1.0f];
+	UIColor* panel1Colour = [UIColor colorWithHue:210.0f/360.0f saturation:0.5f brightness:1.0f alpha:0.25f];
+	UIColor* panel2Colour = [UIColor colorWithHue:110.0f/360.0f saturation:0.5f brightness:1.0f alpha:0.25f];
+	
+	// Construct the alert view
+	ICLAlertViewController* alertView = [ICLAlertViewController create:@"Alert View Title"
+							  				   			   optionNames:@[@"Option 1", @"Option 2"]
+													optionDescriptions:@[@"Option 1 Description", @"Option 2 Description"]
+										 		 	 appearanceOptions:@{kICLButton1Colour: button1Colour,
+																		 kICLButton2Colour: button2Colour,
+																		 kICLPanel1Colour: panel1Colour,
+																		 kICLPanel2Colour: panel2Colour,
+																		 kICLBackgroundImage: @""}];
+	
+	// Set this object as the delegate which conforms to the ICLAlertViewControllerDelegate protocol											 
+	alertView.delegate = self;
+	
+	// Show the alert view
+	[alertView show];
+
+The ICLAlertViewController will call the alertViewControllerDidFinish method on the provided delegate after the view is dismissed. alertViewControllerDidFinish provides both the alertView which finished and the option (1, 2 or 3) that the user selected.
+
+	- (void)alertViewControllerDidFinish:(ICLAlertViewController *)alertView selectedOption:(NSUInteger)option {
+		NSLog(@"User selected option %d for %@", option, alertView);
+	}
 
 Colour Picker
 ===============
