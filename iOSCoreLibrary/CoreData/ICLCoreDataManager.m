@@ -290,7 +290,7 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
             return _managedObjectContext;
         }
         
-        if (self.currentState == essReadyToLoadStore) {
+        if (self.currentState >= essReadyToLoadStore) {
             _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
             [_managedObjectContext setPersistentStoreCoordinator:coordinator];
             [_managedObjectContext setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
