@@ -18,10 +18,6 @@
     NSCalendar* gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents* dateComponents = [gregorian components:(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:self];
     
-    [dateComponents setHour:0];
-    [dateComponents setMinute:0];
-    [dateComponents setSecond:0];
-    
     return [gregorian dateFromComponents:dateComponents];
 }
 
@@ -41,9 +37,7 @@
     
     NSDateComponents* components = [calendar components:NSWeekdayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self];
     
-    NSUInteger dayOfWeek = [[[NSCalendar currentCalendar] components:NSWeekdayCalendarUnit fromDate:self] weekday];
-    
-    [components setDay:([components day] - (dayOfWeek - 1))];
+    [components setDay:([components day] - ([components weekday] - 1))];
     
     return [calendar dateFromComponents:components];
 }
@@ -53,9 +47,7 @@
     
     NSDateComponents* components = [calendar components:NSWeekdayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self];
     
-    NSUInteger dayOfWeek = [[[NSCalendar currentCalendar] components:NSWeekdayCalendarUnit fromDate:self] weekday];
-    
-    [components setDay:([components day] + (7 - dayOfWeek))];
+    [components setDay:([components day] + (7 - [components weekday]))];
     [components setHour:23];
     [components setMinute:59];
     [components setSecond:59];
@@ -87,23 +79,11 @@
 }
 
 - (NSDate*) previousWeek {
-    NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    
-    NSDateComponents* components = [calendar components:NSWeekdayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self];
-    
-    [components setDay:([components day] - 7)];
-    
-    return [calendar dateFromComponents:components];
+    return [self dateByAddingTimeInterval:-(86400*7)];
 }
 
 - (NSDate*) nextWeek {
-    NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    
-    NSDateComponents* components = [calendar components:NSWeekdayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self];
-    
-    [components setDay:([components day] + 7)];
-    
-    return [calendar dateFromComponents:components];
+    return [self dateByAddingTimeInterval:+(86400*7)];
 }
 
 - (NSDate*) previousMonth {
