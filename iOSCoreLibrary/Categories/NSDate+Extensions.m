@@ -112,16 +112,16 @@
     NSDateComponents* components = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self];
     
     NSInteger dayInMonth = [components day];
-
+    
     // Update the components, initially setting the day in month to 0
     NSInteger newMonth = ([components month] - 1);
-    [components setDay:0];
+    [components setDay:1];
     [components setMonth:newMonth];
     
     // Determine the valid day range for that month
     NSDate* workingDate = [calendar dateFromComponents:components];
     NSRange dayRange = [calendar rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:workingDate];
-
+    
     // Set the day clamping to the maximum number of days in that month
     [components setDay:MIN(dayInMonth, dayRange.length)];
     
@@ -137,7 +137,7 @@
     
     // Update the components, initially setting the day in month to 0
     NSInteger newMonth = ([components month] + 1);
-    [components setDay:0];
+    [components setDay:1];
     [components setMonth:newMonth];
     
     // Determine the valid day range for that month
