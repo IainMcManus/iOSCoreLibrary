@@ -119,6 +119,10 @@ The methods required by the ICLCoreDataManagerDelegate are shown below:
 		// TODO - Add any custom handling for deleted, added or modified objects
 	}
 	
+	- (void) prepareForMigration {
+		// TODO - Perform any required changes to the current data before the migration is performed
+	}
+	
 It is very important that when using the library any calls you make using the managed object context are executed on the context's queue. To do that use performBlock/performBlockAndWait. For example:
 
     // Synchronously execute code that uses the context
