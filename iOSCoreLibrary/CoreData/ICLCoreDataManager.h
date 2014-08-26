@@ -30,6 +30,8 @@ typedef enum {
 
 @protocol ICLCoreDataManagerDelegate;
 
+#define ICLCoreDataManagerInstance [ICLCoreDataManager Instance]
+
 @interface ICLCoreDataManager : NSObject
 
 @property (weak, nonatomic) id <ICLCoreDataManagerDelegate> delegate;
@@ -99,6 +101,7 @@ typedef enum {
 - (void) storeDidImportUbiquitousContentChangesNotification:(NSNotification*) notification;
 - (void) storeWillChangeNotification;
 - (void) storeDidChangeNotification;
+- (void) prepareForMigration;
 
 @end;
 

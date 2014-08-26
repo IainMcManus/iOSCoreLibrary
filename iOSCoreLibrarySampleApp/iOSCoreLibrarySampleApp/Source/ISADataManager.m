@@ -202,9 +202,40 @@ UIColor* Colour_AlertView_Panel2 = nil;
         }
     }
     
+    // Save the data at this point to flush any pending changes
+    [ICLCoreDataManagerInstance saveContext];
+    
     // Run the de-duplication. This MUST NOT be run before processing deletes.
     // If it is then none of the objects will be found.
     [self performDataDeduplication];
+}
+
+- (void) prepareForMigration {
+    // Update the creation date on all data that is being migrated.
+    // This ensures the migrated data is always seen as being newer (which it is).
+    
+    NSDate* newDate = [NSDate date];
+    
+    NSArray* allOwners = [Owner allObjects];
+    for (Owner* owner in allOwners) {
+        owner.creationDate = newDate;
+    }
+    
+    NSArray* allPets = [Pet allObjects];
+    for (Pet* pet in allPets) {
+        pet.creationDate = newDate;
+    }
+    
+    NSArray* allClassifications = [Classification allObjects];
+    for (Classification* classification in allClassifications) {
+        classification.creationDate = newDate;
+    }
+    
+    // Flush the changes by saving
+    [ICLCoreDataManagerInstance saveContext];
+    
+    // Reset any current references
+    [ICLCoreDataManagerInstance.managedObjectContext reset];
 }
 
 - (void) eventStoreWillChange {
