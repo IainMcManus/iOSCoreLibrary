@@ -246,7 +246,7 @@ NSString* const kICLButton3Colour = @"Button3Colour";
         }
     }
     
-    if (self.appearanceOptions[kICLBackgroundImage]) {
+    if (self.appearanceOptions[kICLBackgroundImage] && ([self.appearanceOptions[kICLBackgroundImage] length] > 0)) {
         UIImage* image = [UIImage imageNamed:self.appearanceOptions[kICLBackgroundImage]];
         
         if (image) {

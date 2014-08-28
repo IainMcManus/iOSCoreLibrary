@@ -127,7 +127,7 @@ NSString* const kICLMeterColourForFailure = @"MeterColourForFailure";
     // check if the file is already present
     [self.restClient loadMetadata:[self.destinationPath stringByAppendingPathComponent:self.filename]];
     
-    if (self.appearanceOptions[kICLBackgroundImage]) {
+    if (self.appearanceOptions[kICLBackgroundImage] && ([self.appearanceOptions[kICLBackgroundImage] length] > 0)) {
         UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:self.appearanceOptions[kICLBackgroundImage]]];
         
         imgView.frame = self.view.bounds;
@@ -148,6 +148,10 @@ NSString* const kICLMeterColourForFailure = @"MeterColourForFailure";
                                    options:NSLayoutFormatDirectionLeadingToTrailing
                                    metrics:nil
                                    views:NSDictionaryOfVariableBindings(imgView)]];
+    }
+    
+    if (self.appearanceOptions[kICLBackgroundColour]) {
+        [self.view setBackgroundColor:self.appearanceOptions[kICLBackgroundColour]];
     }
     
     _downloadFailed = NO;

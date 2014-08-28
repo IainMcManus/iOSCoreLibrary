@@ -461,7 +461,7 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
     // Give the UI a chance to prepare for the change
     [self.delegate storeWillChangeNotification];
     
-    // Set the state machine to ready to initialise - it will handle migration
+    // Set the state machine to Checking for iCloud Store - it will handle migration
     self.currentState = essCheckingForiCloudStore;
     
     // Enter the FSM
@@ -968,7 +968,9 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
     [self.managedObjectContext performBlockAndWait:^{
         [self.delegate prepareForMigration];
         
-        [self deleteLocalStore];
+        if (overwrite) {
+            [self deleteLocalStore];
+        }
         
         NSPersistentStoreCoordinator* coordinator = [self persistentStoreCoordinator];
         

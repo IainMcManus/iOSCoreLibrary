@@ -114,7 +114,7 @@ typedef struct
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     // Set safe defaults
     _colourWheelRadius = 1.0f;
     _colourWheelImageScale = 1.0f;
@@ -184,7 +184,7 @@ typedef struct
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
     // Add the background image if one was provided
-    if (self.BackgroundImage != nil) {
+    if (self.BackgroundImage && ([self.BackgroundImage length] > 0)) {
         UIImage* image = [UIImage imageNamed:self.BackgroundImage];
         
         if (image) {
@@ -292,7 +292,7 @@ typedef struct
     // We traverse each pixel in the bitmap
     for (int y = 0; y < height; ++y) {
         int pixelY = y - centreY;
-        
+
         for (int x = 0; x < width; ++x) {
             PixelRGBA* currentPixel = &imageData[x + (y * width)];
             
@@ -315,7 +315,7 @@ typedef struct
     CGColorSpaceRef colourSpace = CGColorSpaceCreateDeviceRGB();
     CGContextRef context = CGBitmapContextCreate(imageData, width, height, 8, bytesPerRow, colourSpace, kCGBitmapAlphaInfoMask & kCGImageAlphaPremultipliedLast);
     CGColorSpaceRelease(colourSpace);
-    
+   
     // Extract a UIImage from the bitmap context
     CGImageRef imageRef = CGBitmapContextCreateImage(context);
     UIImage* image = [UIImage imageWithCGImage:imageRef];
@@ -553,18 +553,18 @@ typedef struct
     CGRect imageFrame = CGRectMake(0, 0, width, height);
     
     CGPoint wheelPoint = [self pointFromHueAndSaturation:inCurrentHue saturation:inCurrentSaturation wheelRect:imageFrame wheelRadius:_colourWheelRadius * _colourWheelImageScale];
-    
+
     // setup the context so we can modify the image
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(width, height), NO, 1.0);
     CGContextRef context = UIGraphicsGetCurrentContext();
     UIGraphicsPushContext(context);
-    
+  
     // draw the base version of the wheel
     [_colourWheelImage drawInRect:imageFrame];
     
     CGContextSetLineWidth(context, 3.0f);
     CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
-    
+   
     const int circleRadius = 10.0f * _colourWheelImageScale;
     CGRect circleRect = CGRectMake(wheelPoint.x - (circleRadius * 0.5f),
                                    wheelPoint.y - (circleRadius * 0.5f),
@@ -577,7 +577,7 @@ typedef struct
     CGFloat halfHeight = height * 0.5f;
     CGFloat maxDiagonal = 0.75f * (sqrtf((halfWidth * halfWidth) + (halfHeight * halfHeight)) - (_colourWheelRadius * _colourWheelImageScale));
     CGFloat rectSize = maxDiagonal / sqrtf(2.0f);
-    
+
     // overlay a border
     CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
     CGContextSetLineWidth(context, 2.0f);

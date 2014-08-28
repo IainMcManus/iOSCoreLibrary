@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1552" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -20,7 +20,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pn6-US-ODp">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="6iD-th-yhq"/>
@@ -33,11 +33,11 @@
                     </items>
                 </navigationBar>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XxM-AL-Lmp">
-                    <rect key="frame" x="0.0" y="44" width="320" height="436"/>
+                    <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oFl-AO-z6B">
-                            <rect key="frame" x="20" y="382" width="280" height="34"/>
+                            <rect key="frame" x="20" y="362" width="280" height="34"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="0.28772392870000002" green="0.83563190700000001" blue="0.3031537533" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
@@ -51,7 +51,7 @@
                             </connections>
                         </button>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9Kn-tJ-4NX">
-                            <rect key="frame" x="20" y="20" width="280" height="342"/>
+                            <rect key="frame" x="20" y="20" width="280" height="322"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
                     </subviews>
@@ -70,7 +70,7 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="Pn6-US-ODp" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="OkJ-0n-E8x"/>
-                <constraint firstItem="Pn6-US-ODp" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Svo-da-UFX"/>
+                <constraint firstItem="Pn6-US-ODp" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="Svo-da-UFX"/>
                 <constraint firstItem="XxM-AL-Lmp" firstAttribute="top" secondItem="Pn6-US-ODp" secondAttribute="bottom" id="Tgz-nf-emy"/>
                 <constraint firstAttribute="trailing" secondItem="Pn6-US-ODp" secondAttribute="trailing" id="kka-Re-LeP"/>
                 <constraint firstItem="XxM-AL-Lmp" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="l5Z-3Z-l0x"/>
