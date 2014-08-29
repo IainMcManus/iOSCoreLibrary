@@ -15,7 +15,7 @@
 
 #import <iOSCoreLibrary/ICLCoreDataManager.h>
 
-@interface ISAPetsTabViewController () <StoreChangedDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, PetChangedDelegate, OwnerChangedDelegate, ClassificationChangedDelegate>
+@interface ISAPetsTabViewController () <StoreChangedDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, DataChangedDelegate>
 
 @end
 
@@ -39,9 +39,7 @@
     [super viewDidLoad];
     
     [[ISADataManager Instance] registerStoreChangedDelegate:self];
-    [[ISADataManager Instance] registerPetChangedDelegate:self];
-    [[ISADataManager Instance] registerOwnerChangedDelegate:self];
-    [[ISADataManager Instance] registerClassificationChangedDelegate:self];
+    [[ISADataManager Instance] registerDataChangedDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -169,90 +167,17 @@
     }
 }
 
-#pragma PetChangedDelegate support
+#pragma DataChangedDelegate support
 
-- (void) petAdded:(Pet *)pet remoteChange:(BOOL)isRemoteChange {
-    // Nothing fancy is required. If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
-    if ([[ISADataManager Instance] currentViewController] == self) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self refreshDisplay];
-        });
-    }
-}
-
-- (void) petDeleted:(Pet *)pet remoteChange:(BOOL)isRemoteChange {
-    // Nothing fancy is required. If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
-    if ([[ISADataManager Instance] currentViewController] == self) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self refreshDisplay];
-        });
-    }
-}
-
-- (void) petUpdated:(Pet *)pet remoteChange:(BOOL)isRemoteChange {
-    // Nothing fancy is required. If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
-    if ([[ISADataManager Instance] currentViewController] == self) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self refreshDisplay];
-        });
-    }
-}
-
-#pragma ClassificationChangedDelegate support
-
-- (void) classificationAdded:(Classification *)classification remoteChange:(BOOL)isRemoteChange {
-    // Nothing fancy is required. If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
-    if ([[ISADataManager Instance] currentViewController] == self) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self refreshDisplay];
-        });
-    }
-}
-
-- (void) classificationDeleted:(Classification *)classification remoteChange:(BOOL)isRemoteChange {
-    // Nothing fancy is required. If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
-    if ([[ISADataManager Instance] currentViewController] == self) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self refreshDisplay];
-        });
-    }
-}
-
-- (void) classificationUpdated:(Classification *)classification remoteChange:(BOOL)isRemoteChange {
-    // Nothing fancy is required. If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
-    if ([[ISADataManager Instance] currentViewController] == self) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self refreshDisplay];
-        });
-    }
-}
-
-#pragma OwnerChangedDelegate support
-
-- (void) ownerAdded:(Owner *)owner remoteChange:(BOOL)isRemoteChange {
-    // Nothing fancy is required. If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
-    if ([[ISADataManager Instance] currentViewController] == self) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self refreshDisplay];
-        });
-    }
-}
-
-- (void) ownerDeleted:(Owner *)owner remoteChange:(BOOL)isRemoteChange {
-    // Nothing fancy is required. If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
-    if ([[ISADataManager Instance] currentViewController] == self) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self refreshDisplay];
-        });
-    }
-}
-
-- (void) ownerUpdated:(Owner *)owner remoteChange:(BOOL)isRemoteChange {
-    // Nothing fancy is required. If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
-    if ([[ISADataManager Instance] currentViewController] == self) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self refreshDisplay];
-        });
+- (void) dataChanged:(NSDictionary *)changeInfo remoteChange:(BOOL)isRemoteChange {
+    // Has a change to pets, owners or classifications happened?
+    if (changeInfo[@(emtPet)] || changeInfo[@(emtOwner)] || changeInfo[@(emtClassification)]) {
+        // Nothing fancy is required. If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
+        if ([[ISADataManager Instance] currentViewController] == self) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self refreshDisplay];
+            });
+        }
     }
 }
 

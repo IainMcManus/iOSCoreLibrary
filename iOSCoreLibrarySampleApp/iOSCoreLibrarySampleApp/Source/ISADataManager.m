@@ -36,6 +36,7 @@ UIColor* Colour_AlertView_Panel2 = nil;
     NSMutableArray* petChangedDelegates;
     NSMutableArray* ownerChangedDelegates;
     NSMutableArray* classificationChangedDelegates;
+    NSMutableArray* dataChangedDelegates;
 }
 
 - (id) initInstance {
@@ -49,6 +50,7 @@ UIColor* Colour_AlertView_Panel2 = nil;
         petChangedDelegates = [[NSMutableArray alloc] init];
         ownerChangedDelegates = [[NSMutableArray alloc] init];
         classificationChangedDelegates = [[NSMutableArray alloc] init];
+        dataChangedDelegates = [[NSMutableArray alloc] init];
     }
     
     return self;
@@ -136,6 +138,7 @@ UIColor* Colour_AlertView_Panel2 = nil;
 }
 
 - (void) contextSaveNotification:(NSNotification*) notification {
+    [self sendDataChangedNotifications:notification.userInfo remoteChange:NO];
 }
 
 - (void) storeWillChangeNotification {
@@ -153,54 +156,8 @@ UIColor* Colour_AlertView_Panel2 = nil;
 }
 
 - (void) storeDidImportUbiquitousContentChangesNotification:(NSNotification*) notification {
-    NSManagedObjectContext* context = [[ICLCoreDataManager Instance] managedObjectContext];
-    
-    NSDictionary* changes = notification.userInfo;
-
-    // Notify any registered listeners that an object was deleted.
-    for (NSManagedObjectID* deletedObjectId in changes[NSDeletedObjectsKey]) {
-        NSManagedObject* deletedObject = [context existingObjectWithID:deletedObjectId error:nil];
-        
-        if ([deletedObject isKindOfClass:[Pet class]]) {
-            [self eventPetDeleted:(Pet*)deletedObject remoteChange:YES];
-        }
-        else if ([deletedObject isKindOfClass:[Owner class]]) {
-            [self eventOwnerDeleted:(Owner*)deletedObject remoteChange:YES];
-        }
-        else if ([deletedObject isKindOfClass:[Classification class]]) {
-            [self eventClassificationDeleted:(Classification*)deletedObject remoteChange:YES];
-        }
-    }
-
-    // Notify any registered listeners that a new object was added.
-    for (NSManagedObjectID* addedObjectId in changes[NSInsertedObjectsKey]) {
-        NSManagedObject* addedObject = [context existingObjectWithID:addedObjectId error:nil];
-        
-        if ([addedObject isKindOfClass:[Pet class]]) {
-            [self eventPetAdded:(Pet*)addedObject remoteChange:YES];
-        }
-        else if ([addedObject isKindOfClass:[Owner class]]) {
-            [self eventOwnerAdded:(Owner*)addedObject remoteChange:YES];
-        }
-        else if ([addedObject isKindOfClass:[Classification class]]) {
-            [self eventClassificationAdded:(Classification*)addedObject remoteChange:YES];
-        }
-    }
-    
-    // Notify any registered listeners that an existing object was modified.
-    for (NSManagedObjectID* updatedObjectId in changes[NSUpdatedObjectsKey]) {
-        NSManagedObject* updatedObject = [context existingObjectWithID:updatedObjectId error:nil];
-        
-        if ([updatedObject isKindOfClass:[Pet class]]) {
-            [self eventPetUpdated:(Pet*)updatedObject remoteChange:YES];
-        }
-        else if ([updatedObject isKindOfClass:[Owner class]]) {
-            [self eventOwnerUpdated:(Owner*)updatedObject remoteChange:YES];
-        }
-        else if ([updatedObject isKindOfClass:[Classification class]]) {
-            [self eventClassificationUpdated:(Classification*)updatedObject remoteChange:YES];
-        }
-    }
+    // Send all of the notifications for the data changing
+    [self sendDataChangedNotifications:notification.userInfo remoteChange:YES];
     
     // Save the data at this point to flush any pending changes
     [ICLCoreDataManagerInstance saveContext];
@@ -208,6 +165,77 @@ UIColor* Colour_AlertView_Panel2 = nil;
     // Run the de-duplication. This MUST NOT be run before processing deletes.
     // If it is then none of the objects will be found.
     [self performDataDeduplication];
+}
+
+- (void) sendDataChangedNotifications:(NSDictionary*) changes remoteChange:(BOOL) remoteChange {
+    NSManagedObjectContext* context = [[ICLCoreDataManager Instance] managedObjectContext];
+    
+    NSMutableDictionary* changeInfo = [[NSMutableDictionary alloc] init];
+    
+    // Notify any registered listeners that an object was deleted.
+    for (NSObject* object in changes[NSDeletedObjectsKey]) {
+        NSManagedObject* deletedObject = remoteChange ? [context existingObjectWithID:(NSManagedObjectID*) object error:nil] : (NSManagedObject*)object;
+        
+        if ([deletedObject isKindOfClass:[Pet class]]) {
+            [self eventPetDeleted:(Pet*)deletedObject remoteChange:remoteChange];
+            
+            changeInfo[@(emtPet)] = @([changeInfo[@(emtPet)] integerValue] | ectDelete);
+        }
+        else if ([deletedObject isKindOfClass:[Owner class]]) {
+            [self eventOwnerDeleted:(Owner*)deletedObject remoteChange:remoteChange];
+            
+            changeInfo[@(emtOwner)] = @([changeInfo[@(emtOwner)] integerValue] | ectDelete);
+        }
+        else if ([deletedObject isKindOfClass:[Classification class]]) {
+            [self eventClassificationDeleted:(Classification*)deletedObject remoteChange:remoteChange];
+            
+            changeInfo[@(emtClassification)] = @([changeInfo[@(emtClassification)] integerValue] | ectDelete);
+        }
+    }
+    
+    // Notify any registered listeners that a new object was added.
+    for (NSObject* object in changes[NSInsertedObjectsKey]) {
+        NSManagedObject* addedObject = remoteChange ? [context existingObjectWithID:(NSManagedObjectID*) object error:nil] : (NSManagedObject*)object;
+        
+        if ([addedObject isKindOfClass:[Pet class]]) {
+            [self eventPetAdded:(Pet*)addedObject remoteChange:remoteChange];
+            
+            changeInfo[@(emtPet)] = @([changeInfo[@(emtPet)] integerValue] | ectAdd);
+        }
+        else if ([addedObject isKindOfClass:[Owner class]]) {
+            [self eventOwnerAdded:(Owner*)addedObject remoteChange:remoteChange];
+            
+            changeInfo[@(emtOwner)] = @([changeInfo[@(emtOwner)] integerValue] | ectAdd);
+        }
+        else if ([addedObject isKindOfClass:[Classification class]]) {
+            [self eventClassificationAdded:(Classification*)addedObject remoteChange:remoteChange];
+            
+            changeInfo[@(emtClassification)] = @([changeInfo[@(emtClassification)] integerValue] | ectAdd);
+        }
+    }
+    
+    // Notify any registered listeners that an existing object was modified.
+    for (NSObject* object in changes[NSUpdatedObjectsKey]) {
+        NSManagedObject* updatedObject = remoteChange ? [context existingObjectWithID:(NSManagedObjectID*) object error:nil] : (NSManagedObject*)object;
+        
+        if ([updatedObject isKindOfClass:[Pet class]]) {
+            [self eventPetUpdated:(Pet*)updatedObject remoteChange:remoteChange];
+            
+            changeInfo[@(emtPet)] = @([changeInfo[@(emtPet)] integerValue] | ectUpdate);
+        }
+        else if ([updatedObject isKindOfClass:[Owner class]]) {
+            [self eventOwnerUpdated:(Owner*)updatedObject remoteChange:remoteChange];
+            
+            changeInfo[@(emtOwner)] = @([changeInfo[@(emtOwner)] integerValue] | ectUpdate);
+        }
+        else if ([updatedObject isKindOfClass:[Classification class]]) {
+            [self eventClassificationUpdated:(Classification*)updatedObject remoteChange:remoteChange];
+            
+            changeInfo[@(emtClassification)] = @([changeInfo[@(emtClassification)] integerValue] | ectUpdate);
+        }
+    }
+    
+    [self eventDataChanged:changeInfo remoteChange:remoteChange];
 }
 
 - (void) prepareForMigration {
@@ -266,6 +294,7 @@ UIColor* Colour_AlertView_Panel2 = nil;
             [petChangedDelegates removeAllObjects];
             [ownerChangedDelegates removeAllObjects];
             [classificationChangedDelegates removeAllObjects];
+            [dataChangedDelegates removeAllObjects];
             
             // Load the main storyboard
             UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -320,6 +349,14 @@ UIColor* Colour_AlertView_Panel2 = nil;
     [classificationChangedDelegates removeObject:inHandler];
 }
 
+- (void) registerDataChangedDelegate:(id) inHandler {
+    [dataChangedDelegates addObject:inHandler];
+}
+
+- (void) unregisterDataChangedDelegate:(id) inHandler {
+    [dataChangedDelegates removeObject:inHandler];
+}
+
 - (void) eventPetAdded:(Pet*) pet remoteChange:(BOOL) isRemoteChange {
     for (id eventHandler in petChangedDelegates) {
         [eventHandler petAdded:pet remoteChange:isRemoteChange];
@@ -371,6 +408,12 @@ UIColor* Colour_AlertView_Panel2 = nil;
 - (void) eventClassificationDeleted:(Classification*) classification remoteChange:(BOOL) isRemoteChange {
     for (id eventHandler in classificationChangedDelegates) {
         [eventHandler classificationDeleted:classification remoteChange:isRemoteChange];
+    }
+}
+
+- (void) eventDataChanged:(NSDictionary *)changeInfo remoteChange:(BOOL)isRemoteChange {
+    for (id eventHandler in dataChangedDelegates) {
+        [eventHandler dataChanged:changeInfo remoteChange:isRemoteChange];
     }
 }
 

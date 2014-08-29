@@ -18,6 +18,18 @@ extern UIColor* Colour_AlertView_Button2;
 extern UIColor* Colour_AlertView_Panel1;
 extern UIColor* Colour_AlertView_Panel2;
 
+typedef enum {
+    emtPet              = 0x01,
+    emtOwner            = 0x02,
+    emtClassification   = 0x04
+} ModelType;
+
+typedef enum {
+    ectAdd      = 0x01,
+    ectUpdate   = 0x02,
+    ectDelete   = 0x04
+} ChangeType;
+
 @class Pet;
 @class Owner;
 @class Classification;
@@ -40,6 +52,9 @@ extern UIColor* Colour_AlertView_Panel2;
 
 - (void) registerClassificationChangedDelegate:(id) inHandler;
 - (void) unregisterClassificationChangedDelegate:(id) inHandler;
+
+- (void) registerDataChangedDelegate:(id) inHandler;
+- (void) unregisterDataChangedDelegate:(id) inHandler;
 
 @end
 
@@ -71,5 +86,11 @@ extern UIColor* Colour_AlertView_Panel2;
 - (void) classificationDeleted:(Classification*) classification remoteChange:(BOOL) isRemoteChange;
 - (void) classificationAdded:(Classification*) classification remoteChange:(BOOL) isRemoteChange;
 - (void) classificationUpdated:(Classification*) classification remoteChange:(BOOL) isRemoteChange;
+
+@end;
+
+@protocol DataChangedDelegate <NSObject>
+
+- (void) dataChanged:(NSDictionary*) changeInfo remoteChange:(BOOL) isRemoteChange;
 
 @end;

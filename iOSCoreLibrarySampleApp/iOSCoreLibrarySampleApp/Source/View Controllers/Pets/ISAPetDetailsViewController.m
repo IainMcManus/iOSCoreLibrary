@@ -14,7 +14,7 @@
 
 #import <iOSCoreLibrary/ICLCoreDataManager.h>
 
-@interface ISAPetDetailsViewController () <StoreChangedDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, PetChangedDelegate, OwnerChangedDelegate, ClassificationChangedDelegate>
+@interface ISAPetDetailsViewController () <StoreChangedDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, PetChangedDelegate, OwnerChangedDelegate, ClassificationChangedDelegate, DataChangedDelegate>
 
 @end
 
@@ -98,6 +98,7 @@
     [[ISADataManager Instance] registerPetChangedDelegate:self];
     [[ISADataManager Instance] registerOwnerChangedDelegate:self];
     [[ISADataManager Instance] registerClassificationChangedDelegate:self];
+    [[ISADataManager Instance] registerDataChangedDelegate:self];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -107,6 +108,7 @@
     [[ISADataManager Instance] unregisterPetChangedDelegate:self];
     [[ISADataManager Instance] unregisterOwnerChangedDelegate:self];
     [[ISADataManager Instance] unregisterClassificationChangedDelegate:self];
+    [[ISADataManager Instance] unregisterDataChangedDelegate:self];
 }
 
 - (IBAction)cancel:(id)sender {
@@ -268,29 +270,37 @@
     }
 }
 
+#pragma DataChangedDelegate support
+
+- (void) dataChanged:(NSDictionary *)changeInfo remoteChange:(BOOL)isRemoteChange {
+    // Has a change to classifications happened?
+    if (changeInfo[@(emtClassification)]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self refreshClassificationTable];
+        });
+    }
+    
+    // Has a change to owners happened?
+    if (changeInfo[@(emtOwner)]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self refreshOwnerTable];
+        });
+    }
+}
+
 #pragma ClassificationChangedDelegate support
 
 - (void) classificationAdded:(Classification *)classification remoteChange:(BOOL)isRemoteChange {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self refreshClassificationTable];
-    });
 }
 
 - (void) classificationDeleted:(Classification *)classification remoteChange:(BOOL)isRemoteChange {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        // if the selected classification was deleted then clear it
-        if (selectedClassification == classification) {
-            selectedClassification = nil;
-        }
-        
-        [self refreshClassificationTable];
-    });
+    // if the selected classification was deleted then clear it
+    if (selectedClassification == classification) {
+        selectedClassification = nil;
+    }
 }
 
 - (void) classificationUpdated:(Classification *)classification remoteChange:(BOOL)isRemoteChange {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self refreshClassificationTable];
-    });
 }
 
 - (void) refreshClassificationTable {
@@ -309,26 +319,16 @@
 #pragma OwnerChangedDelegate support
 
 - (void) ownerAdded:(Owner *)owner remoteChange:(BOOL)isRemoteChange {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self refreshOwnerTable];
-    });
 }
 
 - (void) ownerDeleted:(Owner *)owner remoteChange:(BOOL)isRemoteChange {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        // if the selected owner was deleted then clear it
-        if (selectedOwner == owner) {
-            selectedOwner = nil;
-        }
-        
-        [self refreshOwnerTable];
-    });
+    // if the selected owner was deleted then clear it
+    if (selectedOwner == owner) {
+        selectedOwner = nil;
+    }
 }
 
 - (void) ownerUpdated:(Owner *)owner remoteChange:(BOOL)isRemoteChange {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self refreshOwnerTable];
-    });
 }
 
 - (void) refreshOwnerTable {

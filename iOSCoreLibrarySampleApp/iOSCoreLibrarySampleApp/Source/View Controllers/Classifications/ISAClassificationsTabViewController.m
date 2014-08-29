@@ -13,7 +13,7 @@
 
 #import <iOSCoreLibrary/ICLCoreDataManager.h>
 
-@interface ISAClassificationsTabViewController () <StoreChangedDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, ClassificationChangedDelegate>
+@interface ISAClassificationsTabViewController () <StoreChangedDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, DataChangedDelegate>
 
 @end
 
@@ -37,7 +37,7 @@
     [super viewDidLoad];
     
     [[ISADataManager Instance] registerStoreChangedDelegate:self];
-    [[ISADataManager Instance] registerClassificationChangedDelegate:self];
+    [[ISADataManager Instance] registerDataChangedDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -153,32 +153,17 @@
     }
 }
 
-#pragma ClassificationChangedDelegate support
+#pragma DataChangedDelegate support
 
-- (void) classificationAdded:(Classification *)classification remoteChange:(BOOL)isRemoteChange {
-    // Nothing fancy is required. If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
-    if ([[ISADataManager Instance] currentViewController] == self) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self refreshDisplay];
-        });
-    }
-}
-
-- (void) classificationDeleted:(Classification *)classification remoteChange:(BOOL)isRemoteChange {
-    // Nothing fancy is required. If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
-    if ([[ISADataManager Instance] currentViewController] == self) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self refreshDisplay];
-        });
-    }
-}
-
-- (void) classificationUpdated:(Classification *)classification remoteChange:(BOOL)isRemoteChange {
-    // Nothing fancy is required. If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
-    if ([[ISADataManager Instance] currentViewController] == self) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self refreshDisplay];
-        });
+- (void) dataChanged:(NSDictionary *)changeInfo remoteChange:(BOOL)isRemoteChange {
+    // Has a change to classifications happened?
+    if (changeInfo[@(emtClassification)]) {
+        // Nothing fancy is required. If we are the active VC then refresh the data. Otherwise it will be refreshed when we appear.
+        if ([[ISADataManager Instance] currentViewController] == self) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self refreshDisplay];
+            });
+        }
     }
 }
 
