@@ -906,7 +906,7 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
     [self switchStoreToLocal];
     
     [self.managedObjectContext performBlockAndWait:^{
-        [self.delegate prepareForMigration];
+        [self.delegate prepareForMigration:YES];
         
         NSError* error = nil;
         NSPersistentStoreCoordinator* coordinator = [self persistentStoreCoordinator];
@@ -966,7 +966,7 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
     [self switchStoreToiCloud];
     
     [self.managedObjectContext performBlockAndWait:^{
-        [self.delegate prepareForMigration];
+        [self.delegate prepareForMigration:NO];
         
         if (overwrite) {
             [self deleteLocalStore];

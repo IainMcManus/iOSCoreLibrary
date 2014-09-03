@@ -238,32 +238,31 @@ UIColor* Colour_AlertView_Panel2 = nil;
     [self eventDataChanged:changeInfo remoteChange:remoteChange];
 }
 
-- (void) prepareForMigration {
-    // Update the creation date on all data that is being migrated.
-    // This ensures the migrated data is always seen as being newer (which it is).
-    
-    NSDate* newDate = [NSDate date];
-    
-    NSArray* allOwners = [Owner allObjects];
-    for (Owner* owner in allOwners) {
-        owner.creationDate = newDate;
+- (void) prepareForMigration:(BOOL) isLocalToiCloud {
+    if (isLocalToiCloud) {
+        // Update the creation date on all data that is being migrated.
+        // This ensures the migrated data is always seen as being newer (which it is).
+        
+        NSDate* newDate = [NSDate date];
+        
+        NSArray* allOwners = [Owner allObjects];
+        for (Owner* owner in allOwners) {
+            owner.creationDate = newDate;
+        }
+        
+        NSArray* allPets = [Pet allObjects];
+        for (Pet* pet in allPets) {
+            pet.creationDate = newDate;
+        }
+        
+        NSArray* allClassifications = [Classification allObjects];
+        for (Classification* classification in allClassifications) {
+            classification.creationDate = newDate;
+        }
+        
+        // Flush the changes by saving
+        [ICLCoreDataManagerInstance saveContext];
     }
-    
-    NSArray* allPets = [Pet allObjects];
-    for (Pet* pet in allPets) {
-        pet.creationDate = newDate;
-    }
-    
-    NSArray* allClassifications = [Classification allObjects];
-    for (Classification* classification in allClassifications) {
-        classification.creationDate = newDate;
-    }
-    
-    // Flush the changes by saving
-    [ICLCoreDataManagerInstance saveContext];
-    
-    // Reset any current references
-    [ICLCoreDataManagerInstance.managedObjectContext reset];
 }
 
 - (void) eventStoreWillChange {

@@ -101,7 +101,7 @@ typedef enum {
 - (void) storeDidImportUbiquitousContentChangesNotification:(NSNotification*) notification;
 - (void) storeWillChangeNotification;
 - (void) storeDidChangeNotification;
-- (void) prepareForMigration;
+- (void) prepareForMigration:(BOOL) isLocalToiCloud;
 
 @end;
 
