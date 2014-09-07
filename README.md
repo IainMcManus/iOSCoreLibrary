@@ -89,7 +89,7 @@ The methods required by the ICLCoreDataManagerDelegate are shown below:
 		return @"MyAppName_iCloud";
 	}
 
-	- (NSURL*) modelURL {
+	- (NSURL*) coreDataModelURL {
 		// Return the URL for the Core Data model. Replace MyAppCoreData with the name of your model.
 		return [[NSBundle mainBundle] URLForResource:@"MyAppCoreData" withExtension:@"momd"];
 	}
