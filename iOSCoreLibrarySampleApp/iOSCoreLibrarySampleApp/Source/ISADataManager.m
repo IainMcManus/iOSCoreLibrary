@@ -129,7 +129,7 @@ UIColor* Colour_AlertView_Panel2 = nil;
     return @"ISAStore_iCloud";
 }
 
-- (NSURL*) modelURL {
+- (NSURL*) coreDataModelURL {
     return [[NSBundle mainBundle] URLForResource:@"CoreData" withExtension:@"momd"];
 }
 

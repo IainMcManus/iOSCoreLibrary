@@ -93,7 +93,7 @@ typedef enum {
 - (NSString*) storeName_Local;
 - (NSString*) storeName_iCloud;
 
-- (NSURL*) modelURL;
+- (NSURL*) coreDataModelURL;
 
 - (NSString*) backgroundImageNameForDialogs;
 

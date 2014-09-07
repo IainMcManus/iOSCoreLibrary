@@ -323,7 +323,7 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
         return _managedObjectModel;
     }
     
-    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:[self.delegate modelURL]];
+    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:[self.delegate coreDataModelURL]];
     [_managedObjectModel kc_generateOrderedSetAccessors];
     return _managedObjectModel;
 }
