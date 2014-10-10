@@ -12,6 +12,8 @@
 
 - (NSString*) hexString;
 
+- (NSString*) htmlHexString;
+
 + (UIColor*) fromHexString:(NSString*) inHexString;
 
 - (CGFloat) perceivedBrightness;

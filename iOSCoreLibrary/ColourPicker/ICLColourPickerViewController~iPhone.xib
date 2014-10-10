@@ -33,7 +33,7 @@
                         <constraint firstAttribute="height" constant="44" id="9Rs-jG-32x"/>
                     </constraints>
                     <textAttributes key="titleTextAttributes">
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
                     </textAttributes>
                     <items>
                         <navigationItem title="Select Colour" id="tKk-vd-ycG">
@@ -75,7 +75,7 @@
                                 <constraint firstAttribute="height" constant="21" id="XQ7-4X-vZV"/>
                                 <constraint firstAttribute="width" constant="97" id="glI-6k-ChM"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dtx-SO-M6Z">
@@ -86,7 +86,7 @@
                                 <constraint firstAttribute="height" constant="30" id="7Aj-LQ-WBN"/>
                                 <constraint firstAttribute="width" constant="97" id="Eio-Qv-dPd"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="20"/>
                             <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                         </textField>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8pp-Ct-3aK" customClass="UIImageView">
@@ -104,7 +104,7 @@
                                 <constraint firstAttribute="height" constant="21" id="0RF-in-BiV"/>
                                 <constraint firstAttribute="width" constant="97" id="Thg-jS-4zN"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8Zk-dJ-adp">
@@ -115,7 +115,7 @@
                                 <constraint firstAttribute="height" constant="30" id="V6O-dL-O2b"/>
                                 <constraint firstAttribute="width" constant="97" id="VqY-Kd-wQ6"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="20"/>
                             <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                         </textField>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="crk-Oc-O9S" customClass="UIImageView">
@@ -133,7 +133,7 @@
                                 <constraint firstAttribute="width" constant="97" id="UHM-Az-NxM"/>
                                 <constraint firstAttribute="height" constant="21" id="k5T-vg-hWq"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FQW-SW-4Qo">
@@ -144,7 +144,7 @@
                                 <constraint firstAttribute="width" constant="97" id="5l0-WC-QuW"/>
                                 <constraint firstAttribute="height" constant="30" id="7iT-00-ddw"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="20"/>
                             <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                         </textField>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rHz-rs-8EG" customClass="UIImageView">

@@ -19,6 +19,7 @@
 NSString* const kICLMeterColourForSuccess = @"MeterColourForSuccess";
 NSString* const kICLMeterColour = @"MeterColour";
 NSString* const kICLMeterColourForFailure = @"MeterColourForFailure";
+NSString* const kICLMeterGlow = @"MeterGlow";
 
 @interface ICLUploadToDropboxViewController () <DBRestClientDelegate, UIPopoverControllerDelegate, UIAlertViewDelegate>
 
@@ -83,7 +84,12 @@ NSString* const kICLMeterColourForFailure = @"MeterColourForFailure";
         
         [_popoverViewController presentPopoverFromRect:centeredRect inView:activeVC.view permittedArrowDirections:0 animated:YES];
         
-        [self.view setBackgroundColor:[UIColor clearColor]];
+        if (self.appearanceOptions[kICLBackgroundColour]) {
+            [self.view setBackgroundColor:self.appearanceOptions[kICLBackgroundColour]];
+        }
+        else {
+            [self.view setBackgroundColor:[UIColor clearColor]];
+        }
     }
     else {
         [activeVC presentViewController:_navigationViewController animated:YES completion:nil];
@@ -162,7 +168,7 @@ NSString* const kICLMeterColourForFailure = @"MeterColourForFailure";
     _gaussianBlurFilter = nil;
     _blendFilter = nil;
     
-    [self.doneButton applyGlassStyle:egbsSmall colour:self.doneButton.backgroundColor];
+    [self.doneButton applyGlassStyle:egbsNone colour:self.doneButton.backgroundColor autoColourText:YES];
     [self.doneButton setHidden:YES];
     
     _newProgress = 0;
@@ -238,7 +244,7 @@ NSString* const kICLMeterColourForFailure = @"MeterColourForFailure";
         CGContextFillPath(context);
         CGPathRelease(shape);
         
-        UIFont* textFont = [UIFont systemFontOfSize:40.0f];
+        UIFont* textFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:40];
         NSString* workingText = [NSString stringWithFormat:@"%3ld%%", (long)progressPercentage];
         CGSize textSize = [workingText sizeWithFont:textFont];
         CGFloat xOffset = (width - textSize.width) / 2;
@@ -290,21 +296,28 @@ NSString* const kICLMeterColourForFailure = @"MeterColourForFailure";
     UIImage* outputImage = nil;
     
     @autoreleasepool {
-        UIImage* largeMeter = [self generateProgressArc:progressPercentage imageSize:imageSize meterWidth:50.0f radiusOffset:0.0f];
-        UIImage* smallMeter = [self generateProgressArc:progressPercentage imageSize:imageSize meterWidth:30.0f radiusOffset:10.0f];
+        BOOL enableMeterGlow = self.appearanceOptions[kICLMeterGlow] ? [self.appearanceOptions[kICLMeterGlow] boolValue] : YES;
         
-        [_gaussianBlurFilter setValue:[CIImage imageWithCGImage:largeMeter.CGImage] forKey:kCIInputImageKey];
-        
-        [_blendFilter setValue:[_gaussianBlurFilter valueForKey:kCIOutputImageKey] forKey:kCIInputBackgroundImageKey];
-        [_blendFilter setValue:[CIImage imageWithCGImage:smallMeter.CGImage] forKey:kCIInputImageKey];
-        
-        CIImage* blendedImage = [_blendFilter valueForKey:kCIOutputImageKey];
-        
-        CGRect extent = [blendedImage extent];
-        CGImageRef blendedCGImage = [_coreImageContext createCGImage:blendedImage fromRect:extent];
-        
-        outputImage = [UIImage imageWithCGImage:blendedCGImage];
-        CGImageRelease(blendedCGImage);
+        if (enableMeterGlow) {
+            UIImage* largeMeter = [self generateProgressArc:progressPercentage imageSize:imageSize meterWidth:50.0f radiusOffset:0.0f];
+            UIImage* smallMeter = [self generateProgressArc:progressPercentage imageSize:imageSize meterWidth:30.0f radiusOffset:10.0f];
+            
+            [_gaussianBlurFilter setValue:[CIImage imageWithCGImage:largeMeter.CGImage] forKey:kCIInputImageKey];
+            
+            [_blendFilter setValue:[_gaussianBlurFilter valueForKey:kCIOutputImageKey] forKey:kCIInputBackgroundImageKey];
+            [_blendFilter setValue:[CIImage imageWithCGImage:smallMeter.CGImage] forKey:kCIInputImageKey];
+            
+            CIImage* blendedImage = [_blendFilter valueForKey:kCIOutputImageKey];
+            
+            CGRect extent = [blendedImage extent];
+            CGImageRef blendedCGImage = [_coreImageContext createCGImage:blendedImage fromRect:extent];
+            
+            outputImage = [UIImage imageWithCGImage:blendedCGImage];
+            CGImageRelease(blendedCGImage);
+        }
+        else {
+            outputImage = [self generateProgressArc:progressPercentage imageSize:imageSize meterWidth:50.0f radiusOffset:0.0f];
+        }
     }
     
     return outputImage;

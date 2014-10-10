@@ -11,7 +11,8 @@
 typedef enum {
     egbsSmall = 0,
     egbsMedium,
-    egbsLarge
+    egbsLarge,
+    egbsNone
 } GlassButtonSize;
 
 @interface UIButton (applyGlassStyle)

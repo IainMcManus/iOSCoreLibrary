@@ -233,19 +233,6 @@ NSString* const kICLButton3Colour = @"Button3Colour";
         }
     }
     
-    // autoset the button text colour
-    if ([button1Colour perceivedBrightness] < 0.5f) {
-        [self.option1Button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    }
-    if ([button2Colour perceivedBrightness] < 0.5f) {
-        [self.option2Button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    }
-    if ([self.optionNames count] == 3) {
-        if ([button3Colour perceivedBrightness] < 0.5f) {
-            [self.option3Button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        }
-    }
-    
     if (self.appearanceOptions[kICLBackgroundImage] && ([self.appearanceOptions[kICLBackgroundImage] length] > 0)) {
         UIImage* image = [UIImage imageNamed:self.appearanceOptions[kICLBackgroundImage]];
         
@@ -278,10 +265,10 @@ NSString* const kICLButton3Colour = @"Button3Colour";
     [super viewDidAppear:animated];
     
     // Apply the glass style to the buttons
-    [self.option1Button applyGlassStyle:egbsSmall colour:self.option1Button.backgroundColor autoColourText:YES];
-    [self.option2Button applyGlassStyle:egbsSmall colour:self.option2Button.backgroundColor autoColourText:YES];
+    [self.option1Button applyGlassStyle:egbsNone colour:self.option1Button.backgroundColor autoColourText:YES];
+    [self.option2Button applyGlassStyle:egbsNone colour:self.option2Button.backgroundColor autoColourText:YES];
     if ([self.optionNames count] == 3) {
-        [self.option3Button applyGlassStyle:egbsSmall colour:self.option3Button.backgroundColor autoColourText:YES];
+        [self.option3Button applyGlassStyle:egbsNone colour:self.option3Button.backgroundColor autoColourText:YES];
     }
 }
 
@@ -304,7 +291,7 @@ NSString* const kICLButton3Colour = @"Button3Colour";
 
 - (void) dismissAlertView:(NSUInteger) selectedOption {
     if (Using_iPad) {
-        [_alertViewPopoverController dismissPopoverAnimated:YES];
+        [_alertViewPopoverController dismissPopoverAnimated:NO];
         
         _alertViewNavController = nil;
         _alertViewPopoverController = nil;

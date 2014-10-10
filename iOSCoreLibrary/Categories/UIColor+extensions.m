@@ -17,6 +17,13 @@
     return [NSString stringWithFormat:@"#%02X%02X%02X%02X", (int)(red * 255), (int)(green * 255), (int)(blue * 255), (int)(alpha * 255)];
 }
 
+- (NSString*) htmlHexString {
+    CGFloat red, green, blue, alpha;
+    [self getRed:&red green:&green blue:&blue alpha:&alpha];
+    
+    return [NSString stringWithFormat:@"#%02X%02X%02X", (int)(red * 255), (int)(green * 255), (int)(blue * 255)];
+}
+
 + (UIColor*) fromHexString:(NSString*) inHexString {
     if ([inHexString length] == 0) {
         return [UIColor magentaColor];

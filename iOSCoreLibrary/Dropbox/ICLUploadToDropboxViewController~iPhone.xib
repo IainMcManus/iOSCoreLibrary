@@ -26,7 +26,7 @@
                         <constraint firstAttribute="height" constant="44" id="6iD-th-yhq"/>
                     </constraints>
                     <textAttributes key="titleTextAttributes">
-                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="26"/>
                     </textAttributes>
                     <items>
                         <navigationItem title="Title" id="vaw-sm-W36"/>
@@ -43,6 +43,7 @@
                             <constraints>
                                 <constraint firstAttribute="height" constant="34" id="EUF-JE-IWU"/>
                             </constraints>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
                             <state key="normal" title="Done">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>

@@ -21,10 +21,18 @@
 - (NSDate*) startOfMonth;
 - (NSDate*) endOfMonth;
 
+- (NSDate*) startOfYear;
+- (NSDate*) endOfYear;
+
+- (NSDate*) previousDay;
+- (NSDate*) nextDay;
+
 - (NSDate*) previousWeek;
 - (NSDate*) nextWeek;
 
 - (NSDate*) previousMonth;
+- (NSDate*) previousMonth:(NSUInteger) monthsToMove;
 - (NSDate*) nextMonth;
+- (NSDate*) nextMonth:(NSUInteger) monthsToMove;
 
 @end

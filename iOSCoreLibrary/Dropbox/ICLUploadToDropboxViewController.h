@@ -16,6 +16,7 @@
 extern NSString* const kICLMeterColourForSuccess;
 extern NSString* const kICLMeterColour;
 extern NSString* const kICLMeterColourForFailure;
+extern NSString* const kICLMeterGlow;
 
 @class DBRestClient;
 

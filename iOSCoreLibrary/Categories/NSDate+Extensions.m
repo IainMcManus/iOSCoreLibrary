@@ -78,6 +78,36 @@
     return [calendar dateFromComponents:components];
 }
 
+- (NSDate*) startOfYear {
+    NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    
+    NSDateComponents* components = [calendar components:NSYearCalendarUnit fromDate:self];
+    
+    return [calendar dateFromComponents:components];
+}
+
+- (NSDate*) endOfYear {
+    NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    
+    NSDateComponents* components = [calendar components:NSYearCalendarUnit fromDate:self];
+    
+    [components setDay:31];
+    [components setMonth:12];
+    [components setHour:23];
+    [components setMinute:59];
+    [components setSecond:59];
+    
+    return [calendar dateFromComponents:components];
+}
+
+- (NSDate*) previousDay {
+    return [self dateByAddingTimeInterval:-86400];
+}
+
+- (NSDate*) nextDay {
+    return [self dateByAddingTimeInterval:86400];
+}
+
 - (NSDate*) previousWeek {
     return [self dateByAddingTimeInterval:-(86400*7)];
 }
@@ -87,6 +117,10 @@
 }
 
 - (NSDate*) previousMonth {
+    return [self previousMonth:1];
+}
+
+- (NSDate*) previousMonth:(NSUInteger) monthsToMove {
     NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     
     NSDateComponents* components = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self];
@@ -94,7 +128,7 @@
     NSInteger dayInMonth = [components day];
     
     // Update the components, initially setting the day in month to 0
-    NSInteger newMonth = ([components month] - 1);
+    NSInteger newMonth = ([components month] - monthsToMove);
     [components setDay:1];
     [components setMonth:newMonth];
     
@@ -109,6 +143,10 @@
 }
 
 - (NSDate*) nextMonth {
+    return [self nextMonth:1];
+}
+
+- (NSDate*) nextMonth:(NSUInteger) monthsToMove {
     NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     
     NSDateComponents* components = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self];
@@ -116,7 +154,7 @@
     NSInteger dayInMonth = [components day];
     
     // Update the components, initially setting the day in month to 0
-    NSInteger newMonth = ([components month] + 1);
+    NSInteger newMonth = ([components month] + monthsToMove);
     [components setDay:1];
     [components setMonth:newMonth];
     

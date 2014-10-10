@@ -9,6 +9,7 @@
 #import "iOSCoreLibrary.h"
 
 NSString* const kICLBackgroundImage = @"BackgroundImage";
+NSString* const kICLBackgroundColour = @"BackgroundColour";
 
 @implementation iOSCoreLibrary
 
