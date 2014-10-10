@@ -276,6 +276,12 @@ Usage
 	// Returns an NSDate for 1 week after the provided date
 	NSDate* nextWeek = [currentDate nextWeek];
 	
+	// Returns an NSDate for the day before the provided day
+	NSDate* previousDay = [currentDate previousDay];
+	
+	// Returns an NSDate for the day after the provided date
+	NSDate* nextDay = [currentDate nextDay];
+	
 	// Returns an NSDate for 1 month before the provided date
 	// The day component will be clamped to lie within the valid range for that month
 	NSDate* previousMonth = [currentDate previousMonth];
@@ -283,6 +289,20 @@ Usage
 	// Returns an NSDate for 1 month after the provided date
 	// The day component will be clamped to lie within the valid range for that month
 	NSDate* nextMonth = [currentDate nextMonth];
+	
+	// Returns an NSDate for 2 months before the provided date
+	// The day component will be clamped to lie within the valid range for that month
+	NSDate* previousMonth = [currentDate previousMonth:2];
+	
+	// Returns an NSDate for 2 months after the provided date
+	// The day component will be clamped to lie within the valid range for that month
+	NSDate* nextMonth = [currentDate nextMonth:2];
+	
+	// Returns an NSDate for January 1st in the year of the provided date
+	NSDate* startOfYear = [currentDate startOfYear];
+	
+	// Returns an NSDate for December 31st in the year of the provided date
+	NSDate* endOfYear = [currentDate endOfYear];
 	
 	// Returns YES if the provided date is between the two provided dates
 	if ([currentDate isBetweenDates:startOfWeek endDate:endOfWeek]) {
@@ -313,8 +333,11 @@ Usage
     
     UIColor* buttonColour = [UIColor colorWithHue:240.0f/360.0f saturation:0.5f brightness:0.95f alpha:1.0f];
     
-    // Generates a HTML style hex string (#RRGGBBAA) representation of the colour
+    // Generates a hex string (#RRGGBBAA) representation of the colour
     NSString* hexButtonColour = [buttonColour hexString];
+    
+    // Generates a HTML style hex string (#RRGGBB) representation of the colour
+    NSString* hexButtonColour = [buttonColour htmlHexString];
     
     // Converts from a hex string to a UIColor
     UIColor* buttonColour2 = [UIColor fromHexString:hexButtonColour];
