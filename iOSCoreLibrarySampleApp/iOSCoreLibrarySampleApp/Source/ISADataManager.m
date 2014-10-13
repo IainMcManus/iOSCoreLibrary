@@ -51,6 +51,18 @@ UIColor* Colour_AlertView_Panel2 = nil;
         ownerChangedDelegates = [[NSMutableArray alloc] init];
         classificationChangedDelegates = [[NSMutableArray alloc] init];
         dataChangedDelegates = [[NSMutableArray alloc] init];
+        
+        // Setup the style sheets to use with the training overlays
+        [ICLTrainingOverlayInstance setBaseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
+        if (Using_iPad) {
+            [ICLTrainingOverlayInstance setCSSName:@"ICLTrainingOverlay_iPad.css"];
+        }
+        else if (Using_4InchOrHigherPhone) {
+            [ICLTrainingOverlayInstance setCSSName:@"ICLTrainingOverlay_iPhone.css"];
+        }
+        else {
+            [ICLTrainingOverlayInstance setCSSName:@"ICLTrainingOverlay_iPhone_3_5.css"];
+        }
     }
     
     return self;

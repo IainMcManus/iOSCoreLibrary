@@ -1,0 +1,88 @@
+html,body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+html {
+    display: table;
+}
+
+body {
+    font-family: "Chalkduster", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    background-color: transparent;
+    color: black;
+    font-size: 1em;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.TrainingOverlay {
+    margin-top: 20px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+
+.OverlayTitle {
+    margin-top: 2px;
+    margin-left: 2px;
+    margin-bottom: 5px;
+    margin-right: 2px;
+
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.OverlayTapToClose {
+    margin-top: 5px;
+    margin-left: 2px;
+    margin-bottom: 10px;
+    margin-right: 2px;
+
+    text-align: center;
+    font-size: 0.6em;
+}
+
+.OverlayDescription {
+    margin-top: 2px;
+    margin-left: 2px;
+    margin-bottom: 5px;
+    margin-right: 2px;
+
+    text-align: center;
+    font-size: 0.7em;
+}
+
+.ElementList {
+    margin-left:auto; 
+    margin-right:auto;
+    margin-top:auto;
+    margin-bottom:auto;
+}
+
+.Element {
+    margin-top: 2px;
+    margin-left: 2px;
+    margin-bottom: 2px;
+    margin-right: 2px;
+}
+
+.ElementBullet {
+    margin-top: 2px;
+    margin-left: 2px;
+    margin-bottom: 2px;
+    margin-right: 2px;
+
+    font-size: 0.9em;
+}
+
+.ElementDescription {
+    margin-top: 2px;
+    margin-left: 2px;
+    margin-bottom: 2px;
+    margin-right: 2px;
+
+    font-size: 0.7em;
+}

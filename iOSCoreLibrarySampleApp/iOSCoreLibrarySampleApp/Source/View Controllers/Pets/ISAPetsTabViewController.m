@@ -63,6 +63,52 @@
 - (void) refreshDisplay {
     cachedPets = [Pet allObjects];
     [self.petsTable reloadData];
+    
+    // We dispatch to the main queue here to allow a slight delay for the pets table to reload
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (![ICLTrainingOverlayInstance isScreenRegistered:@"PetsTab1"]) {
+            ICLTrainingOverlayData* overlay = nil;
+            
+            // Register the overlay
+            overlay = [ICLTrainingOverlayInstance registerScreen:@"PetsTab1"
+                                                       titleText:@"Pets Overview"
+                                                     description:@"This screen lists all of the pets. From here you can add, update or remove a pet entry."];
+            
+            [overlay addElement:@[self.mainNavigationBar, self.addPetButton]
+                    description:@"Tap here to add a new pet."];
+            
+            [ICLTrainingOverlayInstance showScreen:@"PetsTab1" currentViewController:self displayPosition:edpNone];
+        }
+        
+        if (![ICLTrainingOverlayInstance isScreenRegistered:@"PetsTab2"] &&
+            ([self.petsTable.visibleCells count] > 0)) {
+            ICLTrainingOverlayData* overlay = nil;
+            
+            // Register the overlay
+            overlay = [ICLTrainingOverlayInstance registerScreen:@"PetsTab2"
+                                                       titleText:@"Pets Overview"
+                                                     description:@""];
+            
+            UITableViewCell* cell = self.petsTable.visibleCells[0];
+            
+            // If there are multiple cells then the first cell may not be visible
+            if ([[self.petsTable visibleCells] count] > 1) {
+                NSArray* indexPaths = self.petsTable.indexPathsForVisibleRows;
+                
+                CGRect firstCellRect = [self.petsTable rectForRowAtIndexPath:indexPaths[0]];
+                firstCellRect = [self.petsTable convertRect:firstCellRect toView:self.petsTable.superview];
+                
+                if (!CGRectContainsRect(self.petsTable.frame, firstCellRect)) {
+                    cell = self.petsTable.visibleCells[1];
+                }
+            }
+            
+            [overlay addElement:cell
+                    description:@"Tap here to edit the pet details. Swipe left to delete the pet."];
+            
+            [ICLTrainingOverlayInstance showScreen:@"PetsTab2" currentViewController:self displayPosition:edpNone];
+        }
+    });
 }
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

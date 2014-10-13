@@ -26,6 +26,14 @@
 		AE21AFDA1980919000EE7644 /* UIViewController+Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = AE21AFD41980919000EE7644 /* UIViewController+Extensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AE21AFDB1980919000EE7644 /* UIViewController+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AE21AFD51980919000EE7644 /* UIViewController+Extensions.m */; };
 		AE23413E19735B8400CE6E38 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE23413D19735B8400CE6E38 /* DropboxSDK.framework */; };
+		AE42AEBD19EB519C005C3172 /* ICLTrainingOverlay.h in Headers */ = {isa = PBXBuildFile; fileRef = AE42AEB819EB519C005C3172 /* ICLTrainingOverlay.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AE42AEBE19EB519C005C3172 /* ICLTrainingOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = AE42AEB919EB519C005C3172 /* ICLTrainingOverlay.m */; };
+		AE42AEBF19EB519C005C3172 /* ICLTrainingOverlayCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = AE42AEBA19EB519C005C3172 /* ICLTrainingOverlayCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AE42AEC019EB519C005C3172 /* ICLTrainingOverlayData.h in Headers */ = {isa = PBXBuildFile; fileRef = AE42AEBB19EB519C005C3172 /* ICLTrainingOverlayData.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AE42AEC119EB519C005C3172 /* ICLTrainingOverlayData.m in Sources */ = {isa = PBXBuildFile; fileRef = AE42AEBC19EB519C005C3172 /* ICLTrainingOverlayData.m */; };
+		AE42AEC419EB534F005C3172 /* UIImageEffects.h in Headers */ = {isa = PBXBuildFile; fileRef = AE42AEC219EB534F005C3172 /* UIImageEffects.h */; };
+		AE42AEC519EB534F005C3172 /* UIImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = AE42AEC319EB534F005C3172 /* UIImageEffects.m */; };
+		AE42AED019EB5967005C3172 /* ICL_TrainingOverlay.strings in Resources */ = {isa = PBXBuildFile; fileRef = AE42AECE19EB5967005C3172 /* ICL_TrainingOverlay.strings */; };
 		AE57F7CE1980F16900B5B3FC /* iOSCoreLibraryCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = AE57F7CD1980F16900B5B3FC /* iOSCoreLibraryCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AE65B08B197B7D3900DB2172 /* BuildFlags.h in Headers */ = {isa = PBXBuildFile; fileRef = AE65B08A197B7D3900DB2172 /* BuildFlags.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AE7FF7531981CE09002D3F9E /* UITextField+matchesRegex.h in Headers */ = {isa = PBXBuildFile; fileRef = AE7FF7511981CE09002D3F9E /* UITextField+matchesRegex.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -110,6 +118,14 @@
 		AE21AFD41980919000EE7644 /* UIViewController+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Extensions.h"; sourceTree = "<group>"; };
 		AE21AFD51980919000EE7644 /* UIViewController+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Extensions.m"; sourceTree = "<group>"; };
 		AE23413D19735B8400CE6E38 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DropboxSDK.framework; path = ThirdParty/DropboxSDK/DropboxSDK.framework; sourceTree = "<group>"; };
+		AE42AEB819EB519C005C3172 /* ICLTrainingOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICLTrainingOverlay.h; sourceTree = "<group>"; };
+		AE42AEB919EB519C005C3172 /* ICLTrainingOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICLTrainingOverlay.m; sourceTree = "<group>"; };
+		AE42AEBA19EB519C005C3172 /* ICLTrainingOverlayCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICLTrainingOverlayCommon.h; sourceTree = "<group>"; };
+		AE42AEBB19EB519C005C3172 /* ICLTrainingOverlayData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICLTrainingOverlayData.h; sourceTree = "<group>"; };
+		AE42AEBC19EB519C005C3172 /* ICLTrainingOverlayData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICLTrainingOverlayData.m; sourceTree = "<group>"; };
+		AE42AEC219EB534F005C3172 /* UIImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIImageEffects.h; path = UIImageEffects/UIImageEffects/UIImageEffects.h; sourceTree = "<group>"; };
+		AE42AEC319EB534F005C3172 /* UIImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIImageEffects.m; path = UIImageEffects/UIImageEffects/UIImageEffects.m; sourceTree = "<group>"; };
+		AE42AECF19EB5967005C3172 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = ICL_TrainingOverlay.strings; sourceTree = "<group>"; };
 		AE57F7CD1980F16900B5B3FC /* iOSCoreLibraryCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSCoreLibraryCommon.h; sourceTree = "<group>"; };
 		AE65B08A197B7D3900DB2172 /* BuildFlags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuildFlags.h; sourceTree = "<group>"; };
 		AE7FF7511981CE09002D3F9E /* UITextField+matchesRegex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+matchesRegex.h"; sourceTree = "<group>"; };
@@ -201,17 +217,18 @@
 		AE1744C917755777007051FF /* iOSCoreLibrary */ = {
 			isa = PBXGroup;
 			children = (
-				AE21AFC11980909C00EE7644 /* ColourPicker */,
-				AEE765D6196A6DC100D8AAA4 /* External */,
-				AEE765B7196A6DA600D8AAA4 /* AlertView */,
-				AEE765BE196A6DA600D8AAA4 /* CoreData */,
-				AEE765C3196A6DA600D8AAA4 /* InternalCategories */,
-				AE9629841919FE5300A9AAC3 /* Dropbox */,
-				AEA38046179A4A2200A1CAD2 /* Categories */,
 				AE65B08A197B7D3900DB2172 /* BuildFlags.h */,
 				AE1744CC17755777007051FF /* iOSCoreLibrary.h */,
 				AE1744CE17755777007051FF /* iOSCoreLibrary.m */,
+				AEE765B7196A6DA600D8AAA4 /* AlertView */,
+				AEA38046179A4A2200A1CAD2 /* Categories */,
+				AE21AFC11980909C00EE7644 /* ColourPicker */,
+				AEE765BE196A6DA600D8AAA4 /* CoreData */,
+				AE9629841919FE5300A9AAC3 /* Dropbox */,
+				AEE765D6196A6DC100D8AAA4 /* External */,
+				AEE765C3196A6DA600D8AAA4 /* InternalCategories */,
 				AE1744CA17755777007051FF /* Supporting Files */,
+				AE42AEB719EB519C005C3172 /* TrainingOverlay */,
 			);
 			path = iOSCoreLibrary;
 			sourceTree = "<group>";
@@ -253,6 +270,27 @@
 				AE21AFC51980909C00EE7644 /* ICLColourPickerViewController~iPhone.xib */,
 			);
 			path = ColourPicker;
+			sourceTree = "<group>";
+		};
+		AE42AEB719EB519C005C3172 /* TrainingOverlay */ = {
+			isa = PBXGroup;
+			children = (
+				AE42AEB819EB519C005C3172 /* ICLTrainingOverlay.h */,
+				AE42AEB919EB519C005C3172 /* ICLTrainingOverlay.m */,
+				AE42AEBA19EB519C005C3172 /* ICLTrainingOverlayCommon.h */,
+				AE42AEBB19EB519C005C3172 /* ICLTrainingOverlayData.h */,
+				AE42AEBC19EB519C005C3172 /* ICLTrainingOverlayData.m */,
+			);
+			path = TrainingOverlay;
+			sourceTree = "<group>";
+		};
+		AE42AEC619EB5353005C3172 /* UIImageEffects */ = {
+			isa = PBXGroup;
+			children = (
+				AE42AEC219EB534F005C3172 /* UIImageEffects.h */,
+				AE42AEC319EB534F005C3172 /* UIImageEffects.m */,
+			);
+			name = UIImageEffects;
 			sourceTree = "<group>";
 		};
 		AE9629841919FE5300A9AAC3 /* Dropbox */ = {
@@ -321,6 +359,7 @@
 		AEE765D6196A6DC100D8AAA4 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				AE42AEC619EB5353005C3172 /* UIImageEffects */,
 				AEE765D7196A6DC100D8AAA4 /* KCOrderedAccessorFix */,
 				AEE765DB196A6DC100D8AAA4 /* Reachability */,
 			);
@@ -366,6 +405,7 @@
 		AEE7660A196A6E1300D8AAA4 /* en.lproj */ = {
 			isa = PBXGroup;
 			children = (
+				AE42AECE19EB5967005C3172 /* ICL_TrainingOverlay.strings */,
 				AE9E91AC198232DD00C8179E /* ICL_Dropbox.strings */,
 				AEE7660B196A6E1300D8AAA4 /* ICL_Common.strings */,
 				AEE7660D196A6E1300D8AAA4 /* ICL_iCloud.strings */,
@@ -383,8 +423,12 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE42AEBD19EB519C005C3172 /* ICLTrainingOverlay.h in Headers */,
 				AEE76602196A6DC100D8AAA4 /* Reachability.h in Headers */,
 				AEE765C8196A6DA600D8AAA4 /* ICLAlertViewController.h in Headers */,
+				AE42AEC419EB534F005C3172 /* UIImageEffects.h in Headers */,
+				AE42AEBF19EB519C005C3172 /* ICLTrainingOverlayCommon.h in Headers */,
+				AE42AEC019EB519C005C3172 /* ICLTrainingOverlayData.h in Headers */,
 				AE7FF7531981CE09002D3F9E /* UITextField+matchesRegex.h in Headers */,
 				AE21AFD61980919000EE7644 /* UIButton+applyGlassStyle.h in Headers */,
 				AEE765D2196A6DA600D8AAA4 /* NSBundle+InternalExtensions.h in Headers */,
@@ -504,6 +548,7 @@
 				AEE76621196A6E9100D8AAA4 /* ICLAlertViewController2~iPhone.xib in Resources */,
 				AEE76618196A6E1300D8AAA4 /* Localizable.strings in Resources */,
 				AE9629901919FF5E00A9AAC3 /* ICLUploadToDropboxViewController~iPhone.xib in Resources */,
+				AE42AED019EB5967005C3172 /* ICL_TrainingOverlay.strings in Resources */,
 				AEE76619196A6E1300D8AAA4 /* UI_Autogenerated.strings in Resources */,
 				AEE76622196A6E9400D8AAA4 /* ICLAlertViewController3.xib in Resources */,
 				AEE76615196A6E1300D8AAA4 /* ICL_Common.strings in Resources */,
@@ -526,6 +571,7 @@
 				AEE765F4196A6DC100D8AAA4 /* NSManagedObjectModel+KCOrderedAccessorFix.m in Sources */,
 				AE21AFD71980919000EE7644 /* UIButton+applyGlassStyle.m in Sources */,
 				AE21AFCF1980912F00EE7644 /* NSDate+Extensions.m in Sources */,
+				AE42AEBE19EB519C005C3172 /* ICLTrainingOverlay.m in Sources */,
 				AE21AFD91980919000EE7644 /* UIColor+extensions.m in Sources */,
 				AEE765D3196A6DA600D8AAA4 /* NSBundle+InternalExtensions.m in Sources */,
 				AEE765CF196A6DA600D8AAA4 /* ICLCoreDataDeviceList.m in Sources */,
@@ -533,6 +579,8 @@
 				AE7FF7541981CE09002D3F9E /* UITextField+matchesRegex.m in Sources */,
 				AEE76603196A6DC100D8AAA4 /* Reachability.m in Sources */,
 				AE21AFDB1980919000EE7644 /* UIViewController+Extensions.m in Sources */,
+				AE42AEC119EB519C005C3172 /* ICLTrainingOverlayData.m in Sources */,
+				AE42AEC519EB534F005C3172 /* UIImageEffects.m in Sources */,
 				AEE765D1196A6DA600D8AAA4 /* ICLCoreDataManager.m in Sources */,
 				AE9629891919FE9600A9AAC3 /* ICLUploadToDropboxViewController.m in Sources */,
 				AE21AFC71980909C00EE7644 /* ICLColourPickerViewController.m in Sources */,
@@ -555,6 +603,14 @@
 				AE174530177579F8007051FF /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		AE42AECE19EB5967005C3172 /* ICL_TrainingOverlay.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AE42AECF19EB5967005C3172 /* en */,
+			);
+			name = ICL_TrainingOverlay.strings;
 			sourceTree = "<group>";
 		};
 		AE9E91AC198232DD00C8179E /* ICL_Dropbox.strings */ = {
@@ -614,6 +670,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -645,6 +702,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;

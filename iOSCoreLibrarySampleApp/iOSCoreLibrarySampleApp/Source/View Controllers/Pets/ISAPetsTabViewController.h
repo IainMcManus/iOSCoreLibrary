@@ -12,4 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *petsTable;
 
+@property (weak, nonatomic) IBOutlet UINavigationBar *mainNavigationBar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *addPetButton;
+
 @end

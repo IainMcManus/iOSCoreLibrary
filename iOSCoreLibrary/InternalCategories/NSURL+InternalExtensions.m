@@ -14,8 +14,9 @@
     NSError* error;
     
     // Query if the file has been downloaded. We can exit if the query succeeds and the file is reported as downloaded.
-    NSNumber* isDownloaded;
-    if ([self getResourceValue:&isDownloaded forKey:NSURLUbiquitousItemIsDownloadedKey error:&error] && [isDownloaded boolValue]) {
+    NSString* isDownloaded;
+    if ([self getResourceValue:&isDownloaded forKey:NSURLUbiquitousItemDownloadingStatusKey error:&error] &&
+        [isDownloaded isEqualToString:NSURLUbiquitousItemDownloadingStatusCurrent]) {
         completionHandler(YES, nil);
         return;
     }

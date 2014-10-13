@@ -39,6 +39,7 @@
     workingColour = [UIColor colorWithHue:227.0f/360.0f saturation:0.63f brightness:0.75f alpha:1.0f];
     
     [self.selectColourButton applyGlassStyle:egbsSmall colour:workingColour autoColourText:YES];
+    [self.resetTrainingButton applyGlassStyle:egbsSmall colour:workingColour autoColourText:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -76,6 +77,12 @@
         // show the colour selector
         [self presentViewController:colourSelectorNavController animated:YES completion:nil];
     }
+}
+
+- (IBAction)resetTraining:(id)sender {
+    [ICLTrainingOverlayInstance debug_ClearPreviouslyShownFlags];
+    
+    [[[UIAlertView alloc] initWithTitle:@"Overlays Reset" message:@"All training overlays will now reshow when you restart the app." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
 }
 
 #pragma mark UIPopoverControllerDelegate Support

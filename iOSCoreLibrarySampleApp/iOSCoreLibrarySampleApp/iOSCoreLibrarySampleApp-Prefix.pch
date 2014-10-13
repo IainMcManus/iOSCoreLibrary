@@ -16,10 +16,15 @@
 
     #import <CoreData/CoreData.h>
 
+    #import <iOSCoreLibrary/ICLTrainingOverlay.h>
+    #import <iOSCoreLibrary/ICLTrainingOverlayData.h>
+
     #import "ISADataManager.h"
 
     #define Using_iOS6 (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1)
     #define Using_iOS7OrAbove (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
     #define Using_iPad (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     #define Using_iPhone (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+
+    #define Using_4InchOrHigherPhone ([[UIScreen mainScreen] bounds].size.height >= ((double)568 - DBL_EPSILON))
 #endif
