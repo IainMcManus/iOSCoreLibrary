@@ -5,6 +5,7 @@ The iOS Core Library is a collection of useful screens and categories for iOS ap
 
 The library contains the following:
  * Core Data Stack - Complete iCloud + Core Data stack with sample application.
+ * Training Overlay - App training system which overlays the training information onto the UI.
  * Dropbox Uploader - Simple wrapper for the Dropbox upload process that provides a progress indicator.
  * Alert View - Custom UI Alert View control.
  * Colour Picker - iPad/iPhone compatible colour picker.
@@ -28,6 +29,7 @@ The library contains the following:
  * Sample application showing how to use the Core Data stack and some selected other code
  * Third Party Code
    * Reachability code from Apple. The code is provided in full without modifications. Copyright for the code belongs to Apple. Please read and abide by their license.
+   * UIImageEffects code from Apple. The code is provided in full without modifications. Copyright for the code belongs to Apple. Please read and abide by their license.
    * KCOrderedAccessorFix from https://github.com/CFKevinRef/KCOrderedAccessorFix. Copyright for the code belongs to Kevin Cassidy Jr. Please read and abide by their license.
 
 Core Data Stack
@@ -136,6 +138,157 @@ It is very important that when using the library any calls you make using the ma
     }];
 
 
+Training Overlays
+===============
+
+The Training Overlay system creates and draws one or more training overlays for a screen. The training overlay can highlight specific portions of the user interface (eg. a button). You can see an example overlay in the screenshot below:
+
+![Training Overlay (iPad)](/Screenshots/TrainingOverlay_iPad.png?raw=true "Training Overlay (iPad)")
+
+The Training Overlay system automatically tracks which screens have been displayed (based on their name) and will not attempt to show a previously shown screen.
+
+## Setting up the Training Overlay System
+
+The text for the training overlay screens is handled by generating HTML. It uses a style sheet (CSS) to handle the majority of the per-device differences.
+
+Before you can use the Training Overlays you must provide both the location and name of the style sheet. An example of this (from the sample app) is shown below:
+
+    // Let the training system know where the CSS files are stored. In this case in the main bundle for the app.
+    [ICLTrainingOverlayInstance setBaseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
+    
+    // If we are running on an iPad load the iPad specific style sheet
+    if (Using_iPad) {
+    	[ICLTrainingOverlayInstance setCSSName:@"ICLTrainingOverlay_iPad.css"];
+    } // Otherwise load the iPhone specific style sheet
+    else {
+    	[ICLTrainingOverlayInstance setCSSName:@"ICLTrainingOverlay_iPhone.css"];
+    }
+
+The code above must be performed before you attempt to show an overlay. Otherwise, the overlay will not generate correctly.
+
+## Registering an Overlay
+
+For each overlay that you wish to display you need to create an ICLTrainingOverlayData object by calling the registerScreen method on ICLTrainingOverlayInstance.
+
+The registration sets up a unique screen instance (based on the supplied name) and sets the title and description text. 
+
+The syntax for the registerScreen method is:
+
+	- (ICLTrainingOverlayData*) registerScreen:(NSString*) screen
+									 titleText:(NSString*) titleText
+								   description:(NSString*) descriptionText;
+
+ * **screen** is a string which uniquely identifies the particular overlay. Each overlay must have a unique identifier.
+ * **titleText** is a string to display as the title of the overlay. It can be empty but cannot be nil.
+ * **descriptionText** is a string to display under the title. eg. an explanation of what the screen does. It can be empty but cannot be nil.
+ 
+An example, from the sample app is shown below:
+
+	ICLTrainingOverlayData* overlay = nil;
+
+	// Register the overlay
+	overlay = [ICLTrainingOverlayInstance registerScreen:@"PetsTab1"
+											   titleText:@"Pets Overview"
+											 description:@"This screen lists all of the pets. From here you can add, update or remove a pet entry."];
+
+	[overlay addElement:@[self.mainNavigationBar, self.addPetButton]
+			description:@"Tap here to add a new pet."];
+
+## Adding Elements to an Overlay
+
+Once you have registered an overlay then, if required, you can add elements to the overlay. An element is one or more UI elements and an associated description.
+
+The currently supported elements are:
+ * Any control based off of UIView (eg. UILabel, UIButton, UISwitch, UITableViewCell etc)
+ * UITabBarItem
+ * UINavigationItem
+ * UIBarButtonItem
+ 
+Elements are added using the method (on ICLTrainingOverlayData) below:
+
+	- (void) addElement:(NSObject*) element description:(NSString*) elementDescription;
+
+ * **element** must be one of:
+   * A control based off of UIView
+   * An array a pair of controls both of which are based off of UIView
+   * An array where the first element is a UITabBar, UIToolBar or UINavigationBar and the second item is a UITabBarItem, UIBarButtonItem or UINavigationItem
+ * **elementDescription** is the text to associate with the element
+
+The code below (from the sample app) shows how to add an element that is an item in a navigation bar
+
+	[overlay addElement:@[self.mainNavigationBar, self.addPetButton]
+			description:@"Tap here to add a new pet."];
+
+## Showing an Overlay
+
+Once you are ready to show an overlay you can use one of these two methods:
+
+	- (BOOL) showScreen:(NSString*) screen currentViewController:(UIViewController*) currentVC displayPosition:(DisplayPosition) displayPosition;
+	- (BOOL) showScreen:(NSString*) screen currentViewController:(UIViewController*) currentVC webViewRect:(NSValue*) webViewRect;
+
+The first (and recommended) method allows you to specific the location of the text using one of the values in the DisplayPosition enumeration. The second method allows you to specific the exact bounding rectangle for the overlay text.
+
+ * **screen** is the name of the screen to show. It is the same as the unique name you provide when you register the screen.
+ * **currentVC** is the current view controller that is requesting the display of the overlay.
+ * **webViewRect** is the bounding rectangle to use as the frame of the overlay text.
+ * **displayPosition** is one of the following values:
+   * *edpNone* - the overlay will be centred on the screen.
+   * *edpLeft* - the overlay will use the full height of the left half of the screen.
+   * *edpLeft_TwoThirds* - the overlay will use the full height of the left 2/3 of the screen.
+   * *edpLeft_ThreeQuarters* - the overlay will use the full height of the left 3/4 of the screen.
+   * *edpRight* - the overlay will use the full height of the right half of the screen.
+   * *edpRight_TwoThirds* - the overlay will use the full height of the right 2/3 of the screen.
+   * *edpRight_ThreeQuarters* - the overlay will use the full height of the right 3/4 of the screen.
+   * *edpTop* - the overlay will use the full width of the top half of the screen.
+   * *edpTop_TwoThirds* - the overlay will use the full width of the top 2/3 of the screen.
+   * *edpTop_ThreeQuarters* - the overlay will use the full width of the top 3/4 of the screen.
+   * *edpBottom* - the overlay will use the full width of the bottom half of the screen.
+   * *edpBottom_TwoThirds* - the overlay will use the full width of the bottom 2/3 of the screen.
+   * *edpBottom_ThreeQuarters* - the overlay will use the full width of the bottom 3/4 of the screen.
+   
+Multiple screens can be requested to show at the same time. If a screen is already being shown then any other screens will be queued and automatically displayed when the previous ones in the queue are shown.
+
+## Clearing all Previously Shown Flags
+
+The Training Overlay system automatically keeps track of which screens have been shown and saves this information to the user defaults.
+
+If you need to clear any previously shown flags for any reason then you can do so by calling this method:
+
+	[ICLTrainingOverlayInstance debug_ClearPreviouslyShownFlags];
+	
+You may need to restart the app for the method to take effect if it has already attempted to show a screen.
+
+## Testing if a Screen Already Exists
+
+If you need to determine if a screen has already been registered (sometimes necessary for more dynamic overlays) then you can use the method below:
+
+	- (BOOL) isScreenRegistered:(NSString*) screen;
+
+ * **screen** is the unique name (provided in registerScreen) for the screen. If that screen has already been registered then it will return YES, otherwise it will return NO.
+ 
+## Pausing/Resuming Overlay Display
+
+Sometimes it is necessary to be able to pause (and resume) the display of overlays. For example if you are waiting for remote data to synchronise to update the UI.
+
+The Training Overlay system supports a delegate (shown below) which makes this possible:
+
+	@protocol ICLTrainingOverlayDelegate <NSObject>
+
+	@required
+
+	- (void) currentOverlaySequenceComplete;
+	- (BOOL) readyToShowOverlays;
+
+	@end;
+
+The **readyToShowOverlays** method will be called before any attempt to show a screen. If it returns YES then the overlay will be displayed, otherwise it will be queued.
+
+To resume displaying queued overlays you must call **resumeShowingOverlays** on the ICLTrainingOverlayInstance. That will immediately start showing overlay screens and the first queued screen will be shown.
+
+Once all queued overlays have been shown and dismissed (or if none were queued after the current overlay is dismissed) then the **currentOverlaySequenceComplete** method on the delegate will be called.
+
+To provide a delegate to the Training Overlay system you need to assign a compatible class (one that implements ICLTrainingOverlayDelegate) to the **delegate** variable on ICLTrainingOverlayInstance.
+
 Dropbox Uploader
 ===============
 
@@ -171,9 +324,7 @@ Usage
                                               appearanceOptions:appearance];
 
 ![Dropbox Upload in Progress (iPad)](/Screenshots/iPad_DropboxUpload_InProgress.png?raw=true "Dropbox Upload in Progress (iPad)") 
-![Dropbox Upload Successful (iPad)](/Screenshots/iPad_DropboxUpload_Success.png?raw=true "Dropbox Upload Successful (iPad)")
 ![Dropbox Upload in Progress (iPhone)](/Screenshots/iPhone_DropboxUpload_InProgress.png?raw=true "Dropbox Upload in Progress (iPhone)")
-![Dropbox Upload Successful (iPhone)](/Screenshots/iPhone_DropboxUpload_Success.png?raw=true "Dropbox Upload Successful (iPhone)") 
 
 Alert View
 ===============
