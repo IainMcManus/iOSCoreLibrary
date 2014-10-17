@@ -185,8 +185,10 @@ NSString* const kICLOverlayKeyBase = @"ICLTrainingOverlay.Shown";
     if (!activeOverlay && ([queuedOverlays count] > 0)) {
         NSDictionary* showScreenRequest = [queuedOverlays firstObject];
         [queuedOverlays removeObjectAtIndex:0];
-        
-        [self showScreen_Internal:showScreenRequest[kICLTrainingOverlay_Screen]
+
+        ICLTrainingOverlayData* overlayData = registeredScreens[showScreenRequest[kICLTrainingOverlay_Screen]];
+
+        [self showScreen_Internal:overlayData
             currentViewController:showScreenRequest[kICLTrainingOverlay_CurrentViewController]
                       webViewRect:showScreenRequest[kICLTrainingOverlay_WebViewRect]
                   displayPosition:(DisplayPosition)[showScreenRequest[kICLTrainingOverlay_DisplayPosition] integerValue]];
@@ -229,7 +231,7 @@ NSString* const kICLOverlayKeyBase = @"ICLTrainingOverlay.Shown";
     // If we already have an active overlay then add the requested one to the queue
     // OR, if we have a delegate and we are not yet ready to show an overlay
     if (activeOverlay || ([queuedOverlays count] > 0) || (self.delegate && ![self.delegate readyToShowOverlays])) {
-        [queuedOverlays addObject:@{kICLTrainingOverlay_Screen: overlayData,
+        [queuedOverlays addObject:@{kICLTrainingOverlay_Screen: screen,
                                     kICLTrainingOverlay_CurrentViewController: currentVC,
                                     kICLTrainingOverlay_WebViewRect: webViewRect ? webViewRect : [NSNull null],
                                     kICLTrainingOverlay_DisplayPosition: @(displayPosition)}];
