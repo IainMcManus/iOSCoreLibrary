@@ -231,10 +231,21 @@ NSString* const kICLOverlayKeyBase = @"ICLTrainingOverlay.Shown";
     // If we already have an active overlay then add the requested one to the queue
     // OR, if we have a delegate and we are not yet ready to show an overlay
     if (activeOverlay || ([queuedOverlays count] > 0) || (self.delegate && ![self.delegate readyToShowOverlays])) {
-        [queuedOverlays addObject:@{kICLTrainingOverlay_Screen: screen,
-                                    kICLTrainingOverlay_CurrentViewController: currentVC,
-                                    kICLTrainingOverlay_WebViewRect: webViewRect ? webViewRect : [NSNull null],
-                                    kICLTrainingOverlay_DisplayPosition: @(displayPosition)}];
+        // Check if the overlay has already been queued
+        BOOL alreadyExists = NO;
+        for (NSDictionary* queuedOverlay in queuedOverlays) {
+            if ([queuedOverlay[kICLTrainingOverlay_Screen] isEqualToString:screen]) {
+                alreadyExists = YES;
+                break;
+            }
+        }
+        
+        if (!alreadyExists) {
+            [queuedOverlays addObject:@{kICLTrainingOverlay_Screen: screen,
+                                        kICLTrainingOverlay_CurrentViewController: currentVC,
+                                        kICLTrainingOverlay_WebViewRect: webViewRect ? webViewRect : [NSNull null],
+                                        kICLTrainingOverlay_DisplayPosition: @(displayPosition)}];
+        }
     } // Otherwise show the overlay immediately
     else {
         activeOverlay = overlayData;
