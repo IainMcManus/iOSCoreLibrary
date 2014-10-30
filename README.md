@@ -223,12 +223,13 @@ The code below (from the sample app) shows how to add an element that is an item
 
 Once you are ready to show an overlay you can use one of these two methods:
 
-	- (BOOL) showScreen:(NSString*) screen currentViewController:(UIViewController*) currentVC displayPosition:(DisplayPosition) displayPosition;
-	- (BOOL) showScreen:(NSString*) screen currentViewController:(UIViewController*) currentVC webViewRect:(NSValue*) webViewRect;
+	- (BOOL) showScreen:(NSString*) screen forceReshow:(BOOL) forceReshow currentViewController:(UIViewController*) currentVC displayPosition:(DisplayPosition) displayPosition;
+	- (BOOL) showScreen:(NSString*) screen forceReshow:(BOOL) forceReshow currentViewController:(UIViewController*) currentVC webViewRect:(NSValue*) webViewRect;
 
 The first (and recommended) method allows you to specific the location of the text using one of the values in the DisplayPosition enumeration. The second method allows you to specific the exact bounding rectangle for the overlay text.
 
  * **screen** is the name of the screen to show. It is the same as the unique name you provide when you register the screen.
+ * **forceReshow** should be YES if you want to reshow the screen even if it has already been shown. Otherwise set it to NO.
  * **currentVC** is the current view controller that is requesting the display of the overlay.
  * **webViewRect** is the bounding rectangle to use as the frame of the overlay text.
  * **displayPosition** is one of the following values:
