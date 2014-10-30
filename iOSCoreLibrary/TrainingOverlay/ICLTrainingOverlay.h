@@ -37,8 +37,8 @@
 
 - (BOOL) resumeShowingOverlays;
 
-- (BOOL) showScreen:(NSString*) screen currentViewController:(UIViewController*) currentVC displayPosition:(DisplayPosition) displayPosition;
-- (BOOL) showScreen:(NSString*) screen currentViewController:(UIViewController*) currentVC webViewRect:(NSValue*) webViewRect;
+- (BOOL) showScreen:(NSString*) screen forceReshow:(BOOL) forceReshow currentViewController:(UIViewController*) currentVC displayPosition:(DisplayPosition) displayPosition;
+- (BOOL) showScreen:(NSString*) screen forceReshow:(BOOL) forceReshow currentViewController:(UIViewController*) currentVC webViewRect:(NSValue*) webViewRect;
 
 @end
 

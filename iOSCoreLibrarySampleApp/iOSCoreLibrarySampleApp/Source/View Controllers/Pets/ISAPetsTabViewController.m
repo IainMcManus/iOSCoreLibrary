@@ -77,7 +77,7 @@
             [overlay addElement:@[self.mainNavigationBar, self.addPetButton]
                     description:@"Tap here to add a new pet."];
             
-            [ICLTrainingOverlayInstance showScreen:@"PetsTab1" currentViewController:self displayPosition:edpNone];
+            [ICLTrainingOverlayInstance showScreen:@"PetsTab1" forceReshow:NO currentViewController:self displayPosition:edpNone];
         }
         
         if (![ICLTrainingOverlayInstance isScreenRegistered:@"PetsTab2"] &&
@@ -106,7 +106,7 @@
             [overlay addElement:cell
                     description:@"Tap here to edit the pet details. Swipe left to delete the pet."];
             
-            [ICLTrainingOverlayInstance showScreen:@"PetsTab2" currentViewController:self displayPosition:edpNone];
+            [ICLTrainingOverlayInstance showScreen:@"PetsTab2" forceReshow:NO currentViewController:self displayPosition:edpNone];
         }
     });
 }

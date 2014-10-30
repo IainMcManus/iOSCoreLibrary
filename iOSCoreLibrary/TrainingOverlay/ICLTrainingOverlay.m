@@ -121,9 +121,12 @@ NSString* const kICLOverlayKeyBase = @"ICLTrainingOverlay.Shown";
     // Don't allow double registrations of the same screen
     if (registeredScreens[screen]) {
         if (activeOverlay == registeredScreens[screen]) {
-            NSLog(@"The new screen is currently active and will not be regenerated");
-            return activeOverlay;
+            NSLog(@"Attempting to register a screen while it is still active.");
         }
+        
+        [registeredScreens[screen] removeAllElements];
+        
+        return registeredScreens[screen];
     }
     
     registeredScreens[screen] = [[ICLTrainingOverlayData alloc] init];
@@ -199,15 +202,16 @@ NSString* const kICLOverlayKeyBase = @"ICLTrainingOverlay.Shown";
     return NO;
 }
 
-- (BOOL) showScreen:(NSString*) screen currentViewController:(UIViewController*) currentVC displayPosition:(DisplayPosition) displayPosition {
-    return [self showScreen_Wrapper:screen currentViewController:currentVC webViewRect:nil displayPosition:displayPosition];
+- (BOOL) showScreen:(NSString*) screen forceReshow:(BOOL) forceReshow currentViewController:(UIViewController*) currentVC displayPosition:(DisplayPosition) displayPosition {
+    return [self showScreen_Wrapper:screen forceReshow:forceReshow currentViewController:currentVC webViewRect:nil displayPosition:displayPosition];
 }
 
-- (BOOL) showScreen:(NSString*) screen currentViewController:(UIViewController*) currentVC webViewRect:(NSValue*) webViewRect {
-    return [self showScreen_Wrapper:screen currentViewController:currentVC webViewRect:webViewRect displayPosition:edpNone];
+- (BOOL) showScreen:(NSString*) screen forceReshow:(BOOL) forceReshow currentViewController:(UIViewController*) currentVC webViewRect:(NSValue*) webViewRect {
+    return [self showScreen_Wrapper:screen forceReshow:forceReshow currentViewController:currentVC webViewRect:webViewRect displayPosition:edpNone];
 }
 
 - (BOOL) showScreen_Wrapper:(NSString*) screen
+                forceReshow:(BOOL) forceReshow
       currentViewController:(UIViewController*) currentVC
                 webViewRect:(NSValue*) webViewRect
             displayPosition:(DisplayPosition) displayPosition {
@@ -224,7 +228,7 @@ NSString* const kICLOverlayKeyBase = @"ICLTrainingOverlay.Shown";
     NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
     
     // Don't show if the user defaults say we have already been shown
-    if (!ignorePreviouslyShownChecks && [userDefaults boolForKey:overlayData.screenShownKey]) {
+    if (!ignorePreviouslyShownChecks && !forceReshow && [userDefaults boolForKey:overlayData.screenShownKey]) {
         return NO;
     }
     
@@ -533,19 +537,23 @@ NSString* const kICLOverlayKeyBase = @"ICLTrainingOverlay.Shown";
                          colour:(UIColor*) colour
                          bounds:(CGRect) overlayBounds {
     CGFloat cornerRadius = MIN(MIN(elementRect.size.width, elementRect.size.height) * 0.25f, 10);
-    CGFloat buffer = 5.0f;
+    CGFloat buffer = 3.0f;
     
     CGRect workingRect = CGRectMake(elementRect.origin.x - buffer * 0.5f,
                                     elementRect.origin.y - buffer * 0.5f,
                                     elementRect.size.width + buffer,
                                     elementRect.size.height + buffer);
     
-    workingRect = CGRectIntersection(workingRect, overlayBounds);
+    CGRect intersectedRect = CGRectIntersection(workingRect, overlayBounds);
+    
+    if (!CGRectIsNull(intersectedRect)) {
+        workingRect = intersectedRect;
+    }
     
     UIBezierPath* bezeirPath = [UIBezierPath bezierPathWithRoundedRect:workingRect cornerRadius:cornerRadius];
     
     CGContextSetStrokeColorWithColor(context, colour.CGColor);
-    [bezeirPath setLineWidth:4.0f];
+    [bezeirPath setLineWidth:2.0f];
     [bezeirPath stroke];
 }
 
@@ -627,13 +635,17 @@ NSString* const kICLOverlayKeyBase = @"ICLTrainingOverlay.Shown";
                           elementRect:(CGRect) elementRect
                                bounds:(CGRect) overlayBounds {
     CGFloat cornerRadius = MIN(MIN(elementRect.size.width, elementRect.size.height) * 0.25f, 10);
-    CGFloat buffer = 6.0f;
+    CGFloat buffer = 4.0f;
     
     CGRect workingRect = CGRectMake(elementRect.origin.x - buffer * 0.5f,
                                     elementRect.origin.y - buffer * 0.5f,
                                     elementRect.size.width + buffer,
                                     elementRect.size.height + buffer);
-    workingRect = CGRectIntersection(workingRect, overlayBounds);
+    CGRect intersectedRect = CGRectIntersection(workingRect, overlayBounds);
+    
+    if (!CGRectIsNull(intersectedRect)) {
+        workingRect = intersectedRect;
+    }
     
     [[UIBezierPath bezierPathWithRoundedRect:workingRect cornerRadius:cornerRadius] addClip];
     
@@ -686,7 +698,12 @@ NSString* const kICLOverlayKeyBase = @"ICLTrainingOverlay.Shown";
                            elementRect:(CGRect) elementRect
                                 bounds:(CGRect) overlayBounds {
     CGFloat cornerRadius = MIN(MIN(elementRect.size.width, elementRect.size.height) * 0.25f, 10);
-    CGRect workingRect = CGRectIntersection(elementRect, overlayBounds);
+    CGRect workingRect = elementRect;
+    CGRect intersectedRect = CGRectIntersection(workingRect, overlayBounds);
+    
+    if (!CGRectIsNull(intersectedRect)) {
+        workingRect = intersectedRect;
+    }
     
     [[UIBezierPath bezierPathWithRoundedRect:workingRect cornerRadius:cornerRadius] addClip];
     

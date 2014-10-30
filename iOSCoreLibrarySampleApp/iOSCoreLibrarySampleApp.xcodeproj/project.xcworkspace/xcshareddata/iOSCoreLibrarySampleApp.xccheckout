@@ -14,7 +14,7 @@
 		<string>https://github.com/IainMcManus/iOSCoreLibrary.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>iOSCoreLibrarySampleApp/iOSCoreLibrarySampleApp.xcodeproj/project.xcworkspace</string>
+	<string>iOSCoreLibrarySampleApp/iOSCoreLibrarySampleApp.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>0C168D03F5748916CAEB7A709803E5ECCB2007F6</key>

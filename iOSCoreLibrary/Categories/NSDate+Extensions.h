@@ -10,6 +10,8 @@
 
 @interface NSDate (Extensions)
 
++ (NSCalendar*) gregorianCalendar;
+
 - (BOOL) isBetweenDates:(NSDate*) inStartDate endDate:(NSDate*) inEndDate;
 
 - (NSDate*) dateFloor;

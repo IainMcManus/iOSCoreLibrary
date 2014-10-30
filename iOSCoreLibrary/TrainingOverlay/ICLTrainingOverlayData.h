@@ -22,6 +22,8 @@
 @property (nonatomic, strong) NSValue* webViewBounds;
 @property (nonatomic, strong) NSMutableArray* elementsMetadata;
 
+- (void) removeAllElements;
+
 - (void) addElement:(NSObject*) element description:(NSString*) elementDescription;
 
 - (void) refreshInternalData:(TrainingOverlayStyle) overlayStyle;

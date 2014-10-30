@@ -54,6 +54,11 @@ NSString* const kICLTrainingOverlay_ElementDescription = @"ElementDescription";
                                kICLTrainingOverlay_ElementDescription: elementDescription}];
 }
 
+- (void) removeAllElements {
+    self.elements = nil;
+    self.elementsMetadata = nil;
+}
+
 - (void) refreshInternalData:(TrainingOverlayStyle) overlayStyle {
     const NSUInteger numElements = [self numElements];
     self.elementsMetadata = [[NSMutableArray alloc] initWithCapacity:numElements];
