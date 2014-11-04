@@ -24,6 +24,8 @@
     
     Pet* petToDelete;
     UIAlertView* deleteConfirmation;
+    
+    UIScreenEdgePanGestureRecognizer* edgePanGesture;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -58,30 +60,45 @@
     if ([[ICLCoreDataManager Instance] isDataStoreOnline]) {
         [self refreshDisplay];
     }
+    
+    // Detect left edge pan
+    edgePanGesture = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(edgePanGesture:)];
+    edgePanGesture.edges = UIRectEdgeLeft;
+    edgePanGesture.cancelsTouchesInView = YES;
+    [self.view addGestureRecognizer:edgePanGesture];
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self.view removeGestureRecognizer:edgePanGesture];
+    
+    edgePanGesture = nil;
 }
 
 - (void) refreshDisplay {
     cachedPets = [Pet allObjects];
     [self.petsTable reloadData];
     
+    [self showOverlay:NO];
+}
+
+- (void) showOverlay:(BOOL) forceReshow {
     // We dispatch to the main queue here to allow a slight delay for the pets table to reload
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (![ICLTrainingOverlayInstance isScreenRegistered:@"PetsTab1"]) {
-            ICLTrainingOverlayData* overlay = nil;
-            
-            // Register the overlay
-            overlay = [ICLTrainingOverlayInstance registerScreen:@"PetsTab1"
-                                                       titleText:@"Pets Overview"
-                                                     description:@"This screen lists all of the pets. From here you can add, update or remove a pet entry."];
-            
-            [overlay addElement:@[self.mainNavigationBar, self.addPetButton]
-                    description:@"Tap here to add a new pet."];
-            
-            [ICLTrainingOverlayInstance showScreen:@"PetsTab1" forceReshow:NO currentViewController:self displayPosition:edpNone];
-        }
+        ICLTrainingOverlayData* overlay = nil;
         
-        if (![ICLTrainingOverlayInstance isScreenRegistered:@"PetsTab2"] &&
-            ([self.petsTable.visibleCells count] > 0)) {
+        // Register the overlay
+        overlay = [ICLTrainingOverlayInstance registerScreen:@"PetsTab1"
+                                                   titleText:@"Pets Overview"
+                                                 description:@"This screen lists all of the pets. From here you can add, update or remove a pet entry."];
+        
+        [overlay addElement:@[self.mainNavigationBar, self.addPetButton]
+                description:@"Tap here to add a new pet."];
+        
+        [ICLTrainingOverlayInstance showScreen:@"PetsTab1" forceReshow:forceReshow currentViewController:self displayPosition:edpNone];
+        
+        if ([self.petsTable.visibleCells count] > 0) {
             ICLTrainingOverlayData* overlay = nil;
             
             // Register the overlay
@@ -106,7 +123,7 @@
             [overlay addElement:cell
                     description:@"Tap here to edit the pet details. Swipe left to delete the pet."];
             
-            [ICLTrainingOverlayInstance showScreen:@"PetsTab2" forceReshow:NO currentViewController:self displayPosition:edpNone];
+            [ICLTrainingOverlayInstance showScreen:@"PetsTab2" forceReshow:forceReshow currentViewController:self displayPosition:edpNone];
         }
     });
 }
@@ -224,6 +241,15 @@
                 [self refreshDisplay];
             });
         }
+    }
+}
+
+#pragma mark Overlay Reshow Handling
+
+- (void) edgePanGesture:(UIGestureRecognizer*) recognizer {
+    if (recognizer.state == UIGestureRecognizerStateEnded) {
+        // Force the overlay to be reshown
+        [self showOverlay:YES];
     }
 }
 

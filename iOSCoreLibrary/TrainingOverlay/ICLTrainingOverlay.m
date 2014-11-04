@@ -373,6 +373,9 @@ NSString* const kICLOverlayKeyBase = @"ICLTrainingOverlay.Shown";
         topVC = [topVC parentViewController];
     }
     
+    // Dismiss the keyboard
+    [currentVC.view endEditing:YES];
+    
     CGRect overlayBounds = topVC.view.bounds;
     
     // Instantiate the overlay view
