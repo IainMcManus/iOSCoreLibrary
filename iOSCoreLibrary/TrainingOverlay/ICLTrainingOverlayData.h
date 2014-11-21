@@ -13,6 +13,7 @@
 
 @interface ICLTrainingOverlayData : NSObject
 
+@property (nonatomic, strong) NSString* overlayId;
 @property (nonatomic, strong) NSString* screenShownKey;
 @property (nonatomic, strong) UIView* overlayView;
 @property (nonatomic, strong) NSString* titleText;
@@ -25,6 +26,7 @@
 - (void) removeAllElements;
 
 - (void) addElement:(NSObject*) element description:(NSString*) elementDescription;
+- (void) addUnhighlightedElement:(NSObject*) element;
 
 - (void) refreshInternalData:(TrainingOverlayStyle) overlayStyle;
 
@@ -32,5 +34,6 @@
 - (CGRect) rectForElement:(NSUInteger) elementIndex;
 - (UIColor*) colourForElement:(NSUInteger) elementIndex;
 - (NSString*) descriptionForElement:(NSUInteger) elementIndex;
+- (BOOL) doesElementHaveHighlight:(NSUInteger) elementIndex;
 
 @end

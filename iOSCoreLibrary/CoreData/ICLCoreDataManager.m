@@ -80,23 +80,16 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
         return _instance;
     }
     
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_4_0
     // allocate with the GCD - thread safe
     static dispatch_once_t dispatch;
     dispatch_once(&dispatch, ^(void) {
         _instance = [[ICLCoreDataManager alloc] initInstance];
     });
-#else
-    // allocate using old approach - thread safe but slower
-    @synchronized([ICLCoreDataManager class]) {
-        if (_instance == nil) {
-            _instance = [[ICLCoreDataManager alloc] initInstance];
-        }
-    }
-#endif
     
     return _instance;
 }
+
+#pragma mark Device List Handling
 
 - (void) setupDeviceList {
     // device list is not relevant if iCloud is not supported
@@ -207,73 +200,30 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
     }];
 }
 
-- (void) resetCoreDataInterfaces {
-    if (_managedObjectContext) {
-        [_managedObjectContext lock];
-        
-        __block NSError *error;
-        __block BOOL savedOK = NO;
-        [_managedObjectContext performBlockAndWait:^{
-            savedOK = [_managedObjectContext save:&error];
+#pragma mark Main Core Data Interfaces
+
+- (void) performBlock:(void (^)())block {
+    if ((self.managedObjectContext.concurrencyType == NSMainQueueConcurrencyType) &&
+        [NSThread currentThread].isMainThread) {
+        block();
+    }
+    else {
+        [self.managedObjectContext performBlock:^{
+            block();
         }];
-        
-        [_managedObjectContext unlock];
-        
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextDidSaveNotification object:_managedObjectContext];
-    }
-    
-    if (_persistentStoreCoordinator) {
-        [self CoreData_UnregisterForNotifications];
-        
-        for (NSPersistentStore* store in _persistentStoreCoordinator.persistentStores) {
-            [_persistentStoreCoordinator removePersistentStore:store error:nil];
-        }
-    }
-    
-    _persistentStoreCoordinator = nil;
-    
-    _managedObjectContext = nil;
-}
-
-- (BOOL) isDataStoreOnline {
-    return self.currentState == essDataStoreOnline;
-}
-
-- (BOOL) iCloudAvailable {
-    return [self ubiquityIdentityToken] != nil;
-}
-
-- (BOOL) iCloudIsEnabled {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:Setting_iCloudEnabled];
-}
-
-- (void) requestBeginLoadingDataStore {
-    assert(self.currentState == essUninitialised);
-    
-    self.requestFinishLoadingDataStoreReceived = NO;
-    
-    [self setupDeviceList];
-    
-    [self requestLoadDataStore];
-}
-
-- (void) requestFinishLoadingDataStore {
-    if (![[UIApplication sharedApplication] isIgnoringInteractionEvents]) {
-        [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
-    }
-    
-    if (!self.requestFinishLoadingDataStoreReceived) {
-        [self.canFinishLoadingDataStore signal];
-        self.requestFinishLoadingDataStoreReceived = YES;
     }
 }
 
-- (void) minimalDataImportWasPerformed {
-    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
-    
-    [userDefaults setBool:YES forKey:Setting_MinimalDataImportPerformed];
-    
-    [userDefaults synchronize];
+- (void) performBlockAndWait:(void (^)())block {
+    if ((self.managedObjectContext.concurrencyType == NSMainQueueConcurrencyType) &&
+        [NSThread currentThread].isMainThread) {
+        block();
+    }
+    else {
+        [self.managedObjectContext performBlockAndWait:^{
+            block();
+        }];
+    }
 }
 
 // Returns the managed object context for the application.
@@ -312,10 +262,6 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
     return _managedObjectContext;
 }
 
-- (void) contextSaveNotification:(NSNotification*) notification {
-    [self.delegate contextSaveNotification:notification];
-}
-
 // Returns the managed object model for the application.
 // If the model doesn't already exist, it is created from the application's model.
 - (NSManagedObjectModel *)managedObjectModel {
@@ -352,23 +298,52 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
     return _persistentStoreCoordinator;
 }
 
-- (void) switchStoreToiCloud {
-    if (![self.storeURL isEqual:[self storeURL_iCloud]]) {
-        self.storeURL = [self storeURL_iCloud];
-        self.storeOptions = [self storeOptions_iCloud];
-        
-        [self resetCoreDataInterfaces];
+- (void) contextSaveNotification:(NSNotification*) notification {
+    [self.delegate contextSaveNotification:notification];
+}
+
+- (void) saveContext {
+    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
+    
+    if (managedObjectContext != nil) {
+        [ICLCoreDataManagerInstance performBlockAndWait:^{
+            NSError *error = nil;
+            if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
+                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            }
+        }];
     }
 }
 
-- (void) switchStoreToLocal {
-    if (![self.storeURL isEqual:[self storeURL_Local]]) {
-        self.storeURL = [self storeURL_Local];
-        self.storeOptions = [self storeOptions_Local];
+- (void) resetCoreDataInterfaces {
+    if (_managedObjectContext) {
+        [_managedObjectContext lock];
         
-        [self resetCoreDataInterfaces];
+        __block NSError *error;
+        __block BOOL savedOK = NO;
+        [ICLCoreDataManagerInstance performBlockAndWait:^{
+            savedOK = [_managedObjectContext save:&error];
+        }];
+        
+        [_managedObjectContext unlock];
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextDidSaveNotification object:_managedObjectContext];
     }
+    
+    if (_persistentStoreCoordinator) {
+        [self CoreData_UnregisterForNotifications];
+        
+        for (NSPersistentStore* store in _persistentStoreCoordinator.persistentStores) {
+            [_persistentStoreCoordinator removePersistentStore:store error:nil];
+        }
+    }
+    
+    _persistentStoreCoordinator = nil;
+    
+    _managedObjectContext = nil;
 }
+
+#pragma mark Information Retrieval Methods
 
 - (NSString*) storeName_Local {
     return [self.delegate storeName_Local];
@@ -407,12 +382,34 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
              NSSQLitePragmasOption: @{@"journal_mode" : @"DELETE"}};
 }
 
+- (BOOL) isDataStoreOnline {
+    return self.currentState == essDataStoreOnline;
+}
+
+- (BOOL) iCloudAvailable {
+    return ([self ubiquityIdentityToken] != nil) &&
+    ([[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil] != nil);
+}
+
+- (BOOL) iCloudIsEnabled {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:Setting_iCloudEnabled];
+}
+
+- (void) minimalDataImportWasPerformed {
+    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    [userDefaults setBool:YES forKey:Setting_MinimalDataImportPerformed];
+    
+    [userDefaults synchronize];
+}
+
 - (NSURL *)applicationDocumentsDirectory {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
 - (id) ubiquityIdentityToken {
-    if (Using_iOS7OrAbove) {
+    if (Using_iOS7OrAbove &&
+        ([[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil] != nil)) {
         return [[NSFileManager defaultManager] ubiquityIdentityToken];
     }
     else {
@@ -428,11 +425,7 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
     return _iCloudStoreExists;
 }
 
-- (void) requestLoadDataStore {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self requestLoadDataStore_Internal];
-    });
-}
+#pragma mark iCloud Enable/Disable
 
 - (void) toggleiCloud:(BOOL) iCloudEnabled_New {
     NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
@@ -468,6 +461,55 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
     [self requestLoadDataStore];
 }
 
+#pragma mark iCloud Enable/Disable Internal
+
+- (void) switchStoreToiCloud {
+    if (![self.storeURL isEqual:[self storeURL_iCloud]]) {
+        self.storeURL = [self storeURL_iCloud];
+        self.storeOptions = [self storeOptions_iCloud];
+        
+        [self resetCoreDataInterfaces];
+    }
+}
+
+- (void) switchStoreToLocal {
+    if (![self.storeURL isEqual:[self storeURL_Local]]) {
+        self.storeURL = [self storeURL_Local];
+        self.storeOptions = [self storeOptions_Local];
+        
+        [self resetCoreDataInterfaces];
+    }
+}
+
+#pragma mark Finite State Machine Main Loop
+
+- (void) requestBeginLoadingDataStore {
+    assert(self.currentState == essUninitialised);
+    
+    self.requestFinishLoadingDataStoreReceived = NO;
+    
+    [self setupDeviceList];
+    
+    [self requestLoadDataStore];
+}
+
+- (void) requestFinishLoadingDataStore {
+    if (![[UIApplication sharedApplication] isIgnoringInteractionEvents]) {
+        [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+    }
+    
+    if (!self.requestFinishLoadingDataStoreReceived) {
+        [self.canFinishLoadingDataStore signal];
+        self.requestFinishLoadingDataStoreReceived = YES;
+    }
+}
+
+- (void) requestLoadDataStore {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self requestLoadDataStore_Internal];
+    });
+}
+
 - (void) requestLoadDataStore_Internal {
     NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
     
@@ -493,7 +535,7 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
             self.currentState = essConvertingLegacyDataToCoreData;
             
             // Perform the legacy data import and save the results
-            [self.managedObjectContext performBlockAndWait:^{
+            [ICLCoreDataManagerInstance performBlockAndWait:^{
                 // if the legacy conversion returned YES then we must now have a local store
                 isLocalStorePresent |= [self.delegate performLegacyDataConversionIfRequired];
                 
@@ -523,7 +565,7 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
             self.currentState = essImportingMinimalDataSet;
             
             // Load the bare minimum of data required to function
-            [self.managedObjectContext performBlockAndWait:^{
+            [ICLCoreDataManagerInstance performBlockAndWait:^{
                 [self.delegate loadMinimalDataSet];
                 [self saveContext];
             }];
@@ -813,13 +855,36 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
                 }];
             });
         }
-        
+
+        [self resetCoreDataInterfaces];
+
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self resetCoreDataInterfaces];
             [self managedObjectContext];
         });
     }
 }
+
+#pragma mark Local Store Methods
+
+- (void) deleteLocalStore {
+    // file does not exist
+    if (![[NSFileManager defaultManager] fileExistsAtPath:[[self storeURL_Local] path]]) {
+        return;
+    }
+    
+    [[NSFileManager defaultManager] removeItemAtPath:[[self storeURL_Local] path] error:nil];
+}
+
+- (void) forceLocalStoreAndDisableiCloud {
+    // force disable the iCloud store
+    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:NO forKey:Setting_iCloudEnabled];
+    [userDefaults synchronize];
+    
+    [self switchStoreToLocal];
+}
+
+#pragma mark Alert View Handlers
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     // No additional logic is required for the account changed view.
@@ -880,23 +945,7 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
     }
 }
 
-- (void) deleteLocalStore {
-    // file does not exist
-    if (![[NSFileManager defaultManager] fileExistsAtPath:[[self storeURL_Local] path]]) {
-        return;
-    }
-    
-    [[NSFileManager defaultManager] removeItemAtPath:[[self storeURL_Local] path] error:nil];
-}
-
-- (void) forceLocalStoreAndDisableiCloud {
-    // force disable the iCloud store
-    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setBool:NO forKey:Setting_iCloudEnabled];
-    [userDefaults synchronize];
-    
-    [self switchStoreToLocal];
-}
+#pragma mark Data Migration
 
 - (void) migrateLocalStoreToCloud {
     if (![[UIApplication sharedApplication] isIgnoringInteractionEvents]) {
@@ -905,7 +954,7 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
     
     [self switchStoreToLocal];
     
-    [self.managedObjectContext performBlockAndWait:^{
+    [ICLCoreDataManagerInstance performBlockAndWait:^{
         [self.delegate prepareForMigration:YES];
         
         NSError* error = nil;
@@ -953,9 +1002,9 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
                 [warning show];
             });
         }
+        
+        [self requestLoadDataStore];
     }];
-    
-    [self requestLoadDataStore];
 }
 
 - (void) migrateCloudStoreToLocal:(BOOL) overwrite {
@@ -965,7 +1014,7 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
     
     [self switchStoreToiCloud];
     
-    [self.managedObjectContext performBlockAndWait:^{
+    [ICLCoreDataManagerInstance performBlockAndWait:^{
         [self.delegate prepareForMigration:NO];
         
         if (overwrite) {
@@ -1010,12 +1059,14 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
         }
         
         [self switchStoreToLocal];
+        
+        self.currentState = essReadyToLoadStore;
+        
+        [self requestLoadDataStore];
     }];
-    
-    self.currentState = essReadyToLoadStore;
-    
-    [self requestLoadDataStore];
 }
+
+#pragma mark Notification Registration
 
 - (void)CoreData_RegisterForNotifications:(NSPersistentStoreCoordinator*) coordinator {
     NSNotificationCenter* notificationCentre = [NSNotificationCenter defaultCenter];
@@ -1054,18 +1105,7 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
                                 object:self.persistentStoreCoordinator];
 }
 
-- (void) saveContext {
-    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
-    
-    if (managedObjectContext != nil) {
-        [managedObjectContext performBlockAndWait:^{
-            NSError *error = nil;
-            if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            }
-        }];
-    }
-}
+#pragma mark Notification Handlers
 
 - (void) iCloudAccountChanged:(NSNotification*) notification {
     // already processing an account changed notification
@@ -1111,9 +1151,18 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
         return;
     }
     
+//    BOOL dataStoreIsFullyReady = NO;
+//    
+//    NSDictionary* userInfo = notification.userInfo;
+//    if (userInfo[NSPersistentStoreUbiquitousTransitionTypeKey]) {
+//        NSPersistentStoreUbiquitousTransitionType transitionType = (NSPersistentStoreUbiquitousTransitionType)[userInfo[NSPersistentStoreUbiquitousTransitionTypeKey] integerValue];
+//        
+//        dataStoreIsFullyReady = transitionType == NSPersistentStoreUbiquitousTransitionTypeInitialImportCompleted;
+//    }
+    
     NSManagedObjectContext *context = self.managedObjectContext;
     
-    [context performBlockAndWait:^{
+    [ICLCoreDataManagerInstance performBlockAndWait:^{
         NSError *error = nil;
         
         [self abandonUndoGroups];
@@ -1125,10 +1174,19 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
         [context reset];
     }];
     
-    [self.delegate storeWillChangeNotification];
+    void(^willChangeblock)() = ^() {
+        [self.delegate storeWillChangeNotification];
+        
+        if (!_accountChanged) {
+            self.currentState = essReadyToLoadStore;
+        }
+    };
     
-    if (!_accountChanged) {
-        self.currentState = essReadyToLoadStore;
+    if ([NSThread currentThread].isMainThread) {
+        willChangeblock();
+    }
+    else {
+        dispatch_sync(dispatch_get_main_queue(), willChangeblock);
     }
 }
 
@@ -1137,6 +1195,15 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
     if ((self.currentState == essMigrateCloudDataToLocal) || (self.currentState == essMigrateLocalDataToCloud)) {
         return;
     }
+    
+//    BOOL dataStoreIsFullyReady = NO;
+//    
+//    NSDictionary* userInfo = notification.userInfo;
+//    if (userInfo[NSPersistentStoreUbiquitousTransitionTypeKey]) {
+//        NSPersistentStoreUbiquitousTransitionType transitionType = (NSPersistentStoreUbiquitousTransitionType)[userInfo[NSPersistentStoreUbiquitousTransitionTypeKey] integerValue];
+//        
+//        dataStoreIsFullyReady = transitionType == NSPersistentStoreUbiquitousTransitionTypeInitialImportCompleted;
+//    }
     
     // iOS 6 and below do not support the StoresWillChange notification
     if (!Using_iOS7OrAbove) {
@@ -1155,7 +1222,16 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
             [self managedObjectContext];
         }
         
-        [self.delegate storeDidChangeNotification];
+        void(^didChangeBlock)() = ^() {
+            [self.delegate storeDidChangeNotification];
+        };
+        
+        if ([NSThread currentThread].isMainThread) {
+            didChangeBlock();
+        }
+        else {
+            dispatch_sync(dispatch_get_main_queue(), didChangeBlock);
+        }
         
         // listen for iCloud account changes
         if (_firstTimeOnline) {
@@ -1172,14 +1248,25 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
 - (void)CoreData_StoreDidImportUbiquitousContentChanges:(NSNotification*) notification {
     NSManagedObjectContext* context = self.managedObjectContext;
     
-    [context performBlock:^{
+    [ICLCoreDataManagerInstance performBlock:^{
         [self abandonUndoGroups];
         
         [context mergeChangesFromContextDidSaveNotification:notification];
         
-        [self.delegate storeDidImportUbiquitousContentChangesNotification:notification];
+        void(^didImportBlock)() = ^() {
+            [self.delegate storeDidImportUbiquitousContentChangesNotification:notification];
+        };
+        
+        if ([NSThread currentThread].isMainThread) {
+            didImportBlock();
+        }
+        else {
+            dispatch_sync(dispatch_get_main_queue(), didImportBlock);
+        }
     }];
 }
+
+#pragma mark Undo Handling
 
 - (void) beginUndoGroup {
     @synchronized(self) {

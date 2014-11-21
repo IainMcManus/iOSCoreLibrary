@@ -62,6 +62,9 @@ typedef enum {
 
 - (void) deviceListChanged:(NSNotification*) notification;
 
+- (void) performBlock:(void (^)())block;
+- (void) performBlockAndWait:(void (^)())block;
+
 - (void) resetCoreDataInterfaces;
 - (BOOL) isDataStoreOnline;
 - (BOOL) iCloudAvailable;

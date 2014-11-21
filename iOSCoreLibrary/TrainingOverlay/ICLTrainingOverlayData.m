@@ -12,11 +12,16 @@ NSString* const kICLTrainingOverlay_ElementColour = @"ElementColour";
 NSString* const kICLTrainingOverlay_ElementRect = @"ElementRect";
 NSString* const kICLTrainingOverlay_ElementControls = @"ElementControls";
 NSString* const kICLTrainingOverlay_ElementDescription = @"ElementDescription";
+NSString* const kICLTrainingOverlay_ElementHasHighlight = @"ElementHighlight";
 
 @implementation ICLTrainingOverlayData
 
-- (void) addElement:(NSObject*) element description:(NSString*) elementDescription {
-    if ([element isKindOfClass:[UIView class]]) {
+- (void) addElement_Internal:(NSObject*) element description:(NSString*) elementDescription hasHighlight:(BOOL) hasHighlight {
+    // null permitted
+    if ([element isEqual:[NSNull null]]) {
+        
+    }
+    else if ([element isKindOfClass:[UIView class]]) {
         
     }
     else if ([element isKindOfClass:[NSArray class]]) {
@@ -29,6 +34,8 @@ NSString* const kICLTrainingOverlay_ElementDescription = @"ElementDescription";
         else if ([child isKindOfClass:[UITabBarItem class]]) {
         }
         else if ([child isKindOfClass:[UINavigationItem class]]) {
+        }
+        else if ([parent isKindOfClass:[UISegmentedControl class]] && [child isKindOfClass:[NSNumber class]]) {
         }
         else if ([parent isKindOfClass:[UIView class]] && [child isKindOfClass:[UIView class]]) {
         }
@@ -51,7 +58,16 @@ NSString* const kICLTrainingOverlay_ElementDescription = @"ElementDescription";
     }
     
     [self.elements addObject:@{kICLTrainingOverlay_ElementControls: element,
-                               kICLTrainingOverlay_ElementDescription: elementDescription}];
+                               kICLTrainingOverlay_ElementDescription: elementDescription,
+                               kICLTrainingOverlay_ElementHasHighlight: @(hasHighlight)}];
+}
+
+- (void) addElement:(NSObject*) element description:(NSString*) elementDescription {
+    [self addElement_Internal:element description:elementDescription hasHighlight:YES];
+}
+
+- (void) addUnhighlightedElement:(NSObject*) element {
+    [self addElement_Internal:element description:@"" hasHighlight:NO];
 }
 
 - (void) removeAllElements {
@@ -71,18 +87,27 @@ NSString* const kICLTrainingOverlay_ElementDescription = @"ElementDescription";
         CGRect elementRect = [self buildRectForElement:elementIndex];
         
         UIColor* elementColour = nil;
-        if (overlayStyle == etsDarken) {
-            elementColour = [UIColor colorWithHue:currentHue saturation:0.75f brightness:0.95f alpha:0.95f];
+        if ([self doesElementHaveHighlight:elementIndex]) {
+            if (overlayStyle == etsDarken) {
+                elementColour = [UIColor colorWithHue:currentHue saturation:0.75f brightness:0.95f alpha:0.95f];
+            }
+            else {
+                elementColour = [UIColor colorWithHue:currentHue saturation:0.75f brightness:0.75f alpha:1.0f];
+            }
+            
+            currentHue += hueIncrement;
         }
         else {
-            elementColour = [UIColor colorWithHue:currentHue saturation:0.75f brightness:0.75f alpha:1.0f];
+            elementColour = [UIColor clearColor];
         }
-        
-        currentHue += hueIncrement;
         
         [self.elementsMetadata addObject:@{kICLTrainingOverlay_ElementColour: elementColour,
                                            kICLTrainingOverlay_ElementRect: [NSValue valueWithCGRect:elementRect]}];
     }
+}
+
+- (BOOL) doesElementHaveHighlight:(NSUInteger) elementIndex {
+    return [(self.elements[elementIndex])[kICLTrainingOverlay_ElementHasHighlight] boolValue];
 }
 
 - (CGRect) buildRectForElement:(NSUInteger) elementIndex {
@@ -90,8 +115,11 @@ NSString* const kICLTrainingOverlay_ElementDescription = @"ElementDescription";
     
     NSObject* element = (self.elements[elementIndex])[kICLTrainingOverlay_ElementControls];
 
-    // Element is a UIView
-    if ([element isKindOfClass:[UIView class]]) {
+    // Element is null
+    if ([element isEqual:[NSNull null]]) {
+        
+    } // Element is a UIView
+    else if ([element isKindOfClass:[UIView class]]) {
         UIView* elementAsView = (UIView*) element;
         
         elementRect = [elementAsView convertRect:elementAsView.bounds toView:self.overlayView];
@@ -189,6 +217,56 @@ NSString* const kICLTrainingOverlay_ElementDescription = @"ElementDescription";
             
             if (control) {
                 elementRect = [control convertRect:control.bounds toView:self.overlayView];
+            }
+        }
+        else if ([parent isKindOfClass:[UISegmentedControl class]] && [child isKindOfClass:[NSNumber class]]) {
+            UISegmentedControl* parentAsSegmentedControl = (UISegmentedControl*) parent;
+            
+            NSUInteger numSegments = [parentAsSegmentedControl numberOfSegments];
+            NSMutableArray* segmentWidths = [[NSMutableArray alloc] initWithCapacity:numSegments];
+            
+            NSUInteger numAutosizedSegments = 0;
+            CGFloat availableWidthToAutosizing = CGRectGetWidth(parentAsSegmentedControl.bounds);
+            
+            // Populate the width info for any fixed width segments. Gather information about autosized segments if present.
+            for (NSUInteger segmentIndex = 0; segmentIndex < numSegments; ++segmentIndex) {
+                CGFloat segmentWidth = [parentAsSegmentedControl widthForSegmentAtIndex:segmentIndex];
+                
+                if (segmentWidth < FLT_EPSILON) {
+                    ++numAutosizedSegments;
+                }
+                else {
+                    availableWidthToAutosizing -= segmentWidth;
+                }
+                
+                [segmentWidths addObject:@(segmentWidth)];
+            }
+            
+            // Need to populate the info for autosized segments
+            if (numAutosizedSegments > 0) {
+                CGFloat autosizedSegmentWidth = availableWidthToAutosizing / (CGFloat)numAutosizedSegments;
+                
+                for (NSUInteger segmentIndex = 0; segmentIndex < numSegments; ++segmentIndex) {
+                    if ([segmentWidths[segmentIndex] floatValue] < FLT_EPSILON) {
+                        segmentWidths[segmentIndex] = @(autosizedSegmentWidth);
+                    }
+                }
+            }
+            
+            NSUInteger segmentIndex = [((NSNumber*)child) integerValue];
+            
+            // If the segment is valid generate the rect
+            if (segmentIndex < numSegments) {
+                CGFloat segmentWidth = [segmentWidths[segmentIndex] floatValue];
+                
+                // Calculate the offset by summing the previous widths
+                CGFloat segmentOffset = 0;
+                for (NSUInteger index = 0; index < segmentIndex; ++index) {
+                    segmentOffset += [segmentWidths[index] floatValue];
+                }
+                
+                CGRect segmentRect = CGRectMake(segmentOffset, 0, segmentWidth, CGRectGetHeight(parentAsSegmentedControl.bounds));
+                elementRect = [parentAsSegmentedControl convertRect:segmentRect toView:self.overlayView];
             }
         }
         else if ([parent isKindOfClass:[UIView class]] && [child isKindOfClass:[UIView class]]) {

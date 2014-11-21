@@ -101,6 +101,28 @@ NSString* const kICLOverlayKeyBase = @"ICLTrainingOverlay.Shown";
     [userDefaults synchronize];
 }
 
+- (void) flagAsShown:(NSArray*) screenNames {
+    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    for (NSString* screenName in screenNames) {
+        NSString* shownKeyName = [NSString stringWithFormat:@"%@.%@", kICLOverlayKeyBase, screenName];
+        [userDefaults setBool:YES forKey:shownKeyName];
+    }
+    
+    [userDefaults synchronize];
+}
+
+- (void) flagAsNotShown:(NSArray*) screenNames {
+    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    for (NSString* screenName in screenNames) {
+        NSString* shownKeyName = [NSString stringWithFormat:@"%@.%@", kICLOverlayKeyBase, screenName];
+        [userDefaults removeObjectForKey:shownKeyName];
+    }
+    
+    [userDefaults synchronize];
+}
+
 #pragma mark Setting Configuration
 
 - (void) setOverlayStyle:(TrainingOverlayStyle) newOverlayStyle {
@@ -132,6 +154,7 @@ NSString* const kICLOverlayKeyBase = @"ICLTrainingOverlay.Shown";
     registeredScreens[screen] = [[ICLTrainingOverlayData alloc] init];
     
     ICLTrainingOverlayData* overlay = registeredScreens[screen];
+    overlay.overlayId = screen;
     overlay.screenShownKey = [NSString stringWithFormat:@"%@.%@", kICLOverlayKeyBase, screen];
     overlay.titleText = titleText;
     overlay.descriptionText = descriptionText;
@@ -478,10 +501,12 @@ NSString* const kICLOverlayKeyBase = @"ICLTrainingOverlay.Shown";
         UIColor* elementColour = [overlay colourForElement:elementIndex];
         NSString* elementDescription = [overlay descriptionForElement:elementIndex];
         
-        [html appendString:@"                <p class=\"Element\">"];
-        [html appendFormat:@"                    <span class=\"ElementBullet\" style=\"color: %@\">&#x25B6;</span>", [elementColour htmlHexString]];
-        [html appendFormat:@"                    <span class=\"ElementDescription\">%@</span>", elementDescription];
-        [html appendString:@"                </p>"];
+        if ([overlay doesElementHaveHighlight:elementIndex] && ([elementDescription length] > 0)) {
+            [html appendString:@"                <p class=\"Element\">"];
+            [html appendFormat:@"                    <span class=\"ElementBullet\" style=\"color: %@\">&#x25B6;</span>", [elementColour htmlHexString]];
+            [html appendFormat:@"                    <span class=\"ElementDescription\">%@</span>", elementDescription];
+            [html appendString:@"                </p>"];
+        }
     }
     
     [html appendString:@"            </div>"];
@@ -512,13 +537,15 @@ NSString* const kICLOverlayKeyBase = @"ICLTrainingOverlay.Shown";
             CGRect elementRect = [overlay rectForElement:elementIndex];
             UIColor* elementColour = [overlay colourForElement:elementIndex];
             
-            CGContextSaveGState(context);
-
-            [self addElementToHighlights:context elementRect:elementRect colour:elementColour bounds:overlayBounds];
-            
-            CGContextFlush(context);
-            
-            CGContextRestoreGState(context);
+            if ([overlay doesElementHaveHighlight:elementIndex] && !CGRectIsEmpty(elementRect)) {
+                CGContextSaveGState(context);
+                
+                [self addElementToHighlights:context elementRect:elementRect colour:elementColour bounds:overlayBounds];
+                
+                CGContextFlush(context);
+                
+                CGContextRestoreGState(context);
+            }
         }
         
         // Flush the context and clear any state changes
@@ -589,7 +616,7 @@ NSString* const kICLOverlayKeyBase = @"ICLTrainingOverlay.Shown";
             // Blur the image
             image = [UIImageEffects imageByApplyingBlurToImage:image
                                                     withRadius:10
-                                                     tintColor:[UIColor colorWithWhite:1.0 alpha:0.3]
+                                                     tintColor:[UIColor colorWithWhite:1.0 alpha:0.5]
                                          saturationDeltaFactor:1.2
                                                      maskImage:nil];
             
@@ -611,13 +638,15 @@ NSString* const kICLOverlayKeyBase = @"ICLTrainingOverlay.Shown";
         for (NSUInteger elementIndex = 0; elementIndex < [overlay numElements]; ++elementIndex) {
             CGRect elementRect = [overlay rectForElement:elementIndex];
             
-            CGContextSaveGState(context);
-            
-            [self addElementToBackground_Glass:context elementRect:elementRect bounds:overlayBounds];
-            
-            CGContextFlush(context);
-            
-            CGContextRestoreGState(context);
+            if (!CGRectIsEmpty(elementRect)) {
+                CGContextSaveGState(context);
+                
+                [self addElementToBackground_Glass:context elementRect:elementRect bounds:overlayBounds];
+                
+                CGContextFlush(context);
+                
+                CGContextRestoreGState(context);
+            }
         }
         
         // Flush the context and clear any state changes
@@ -674,13 +703,15 @@ NSString* const kICLOverlayKeyBase = @"ICLTrainingOverlay.Shown";
         for (NSUInteger elementIndex = 0; elementIndex < [overlay numElements]; ++elementIndex) {
             CGRect elementRect = [overlay rectForElement:elementIndex];
             
-            CGContextSaveGState(context);
-            
-            [self addElementToBackground_Darken:context elementRect:elementRect bounds:overlayBounds];
-            
-            CGContextFlush(context);
-            
-            CGContextRestoreGState(context);
+            if (!CGRectIsEmpty(elementRect)) {
+                CGContextSaveGState(context);
+                
+                [self addElementToBackground_Darken:context elementRect:elementRect bounds:overlayBounds];
+                
+                CGContextFlush(context);
+                
+                CGContextRestoreGState(context);
+            }
         }
         
         // Flush the context and clear any state changes

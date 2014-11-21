@@ -125,15 +125,15 @@ The methods required by the ICLCoreDataManagerDelegate are shown below:
 		// TODO - Perform any required changes to the current data before the migration is performed
 	}
 	
-It is very important that when using the library any calls you make using the managed object context are executed on the context's queue. To do that use performBlock/performBlockAndWait. For example:
+It is very important that when using the library any calls you make using the managed object context are executed on the context's queue. To do that use performBlock/performBlockAndWait. The core data stack provides wrappers for these methods which you should always use. For example:
 
     // Synchronously execute code that uses the context
-    [[[ICLCoreDataManager Instance] managedObjectContext] performBlockAndWait:^{
+    [[ICLCoreDataManager Instance] performBlockAndWait:^{
         // Insert your code here
     }];
     
     // Asynchronously execute code that uses the context
-    [[[ICLCoreDataManager Instance] managedObjectContext] performBlock:^{
+    [[ICLCoreDataManager Instance] performBlock:^{
         // Insert your code here
     }];
 
@@ -196,13 +196,14 @@ An example, from the sample app is shown below:
 
 ## Adding Elements to an Overlay
 
-Once you have registered an overlay then, if required, you can add elements to the overlay. An element is one or more UI elements and an associated description.
+Once you have registered an overlay then, if required, you can add elements to the overlay. An element is one or more UI elements and an associated description. 
 
 The currently supported elements are:
  * Any control based off of UIView (eg. UILabel, UIButton, UISwitch, UITableViewCell etc)
  * UITabBarItem
  * UINavigationItem
  * UIBarButtonItem
+ * UISegmentedControl
  
 Elements are added using the method (on ICLTrainingOverlayData) below:
 
@@ -212,12 +213,25 @@ Elements are added using the method (on ICLTrainingOverlayData) below:
    * A control based off of UIView
    * An array a pair of controls both of which are based off of UIView
    * An array where the first element is a UITabBar, UIToolBar or UINavigationBar and the second item is a UITabBarItem, UIBarButtonItem or UINavigationItem
+   * An array where the first element is a UISegmentedControl and the second element is a NSNumber of the segment index (0 based) to highlight.
+   * [NSNull null] **(not nil)** to add an element that will have a description and a colour associated with it but will not highlight an area.
  * **elementDescription** is the text to associate with the element
 
 The code below (from the sample app) shows how to add an element that is an item in a navigation bar
 
 	[overlay addElement:@[self.mainNavigationBar, self.addPetButton]
 			description:@"Tap here to add a new pet."];
+
+You can also add an unhighlighted element. An unhighlighted element does not have a colour or description but it will cut out the background. To add an unhighlighted element use this method:
+
+	- (void) addUnhighlightedElement:(NSObject*) element;
+
+ * **element** follows the same rules as for the addElement method:
+   * A control based off of UIView
+   * An array a pair of controls both of which are based off of UIView
+   * An array where the first element is a UITabBar, UIToolBar or UINavigationBar and the second item is a UITabBarItem, UIBarButtonItem or UINavigationItem
+   * An array where the first element is a UISegmentedControl and the second element is a NSNumber of the segment index (0 based) to highlight.
+   * [NSNull null] **(not nil)** to add an element that will have a description and a colour associated with it but will not highlight an area.
 
 ## Showing an Overlay
 
@@ -248,6 +262,15 @@ The first (and recommended) method allows you to specific the location of the te
    * *edpBottom_ThreeQuarters* - the overlay will use the full width of the bottom 3/4 of the screen.
    
 Multiple screens can be requested to show at the same time. If a screen is already being shown then any other screens will be queued and automatically displayed when the previous ones in the queue are shown.
+
+## Flagging Individual Screens as Shown or Not Shown
+
+The Training Overlay system provides two methods (flagAsShown and flagAsNotShown) which can flag individual screens as shown or not shown. The syntax for these methods is:
+
+	- (void) flagAsShown:(NSArray*) screenNames;
+	- (void) flagAsNotShown:(NSArray*) screenNames;
+	
+ * **screenNames** is an array of the unique screen names to flag as shown or not shown.
 
 ## Clearing all Previously Shown Flags
 

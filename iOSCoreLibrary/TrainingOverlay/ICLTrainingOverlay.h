@@ -26,6 +26,9 @@
 - (void) debug_IgnorePreviouslyShownChecks:(BOOL) shouldIgnore;
 - (void) debug_ClearPreviouslyShownFlags;
 
+- (void) flagAsShown:(NSArray*) screenNames;
+- (void) flagAsNotShown:(NSArray*) screenNames;
+
 - (void) setOverlayStyle:(TrainingOverlayStyle) newOverlayStyle;
 - (void) setCSSName:(NSString*) newCSSName;
 - (void) setBaseURL:(NSURL*) newBaseURL;
