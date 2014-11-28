@@ -210,9 +210,9 @@ Elements are added using the method (on ICLTrainingOverlayData) below:
 	- (void) addElement:(NSObject*) element description:(NSString*) elementDescription;
 
  * **element** must be one of:
-   * A control based off of UIView
-   * An array a pair of controls both of which are based off of UIView
-   * An array where the first element is a UITabBar, UIToolBar or UINavigationBar and the second item is a UITabBarItem, UIBarButtonItem or UINavigationItem
+   * A control based off of UIView.
+   * An array with 2 or more controls based off of UIView.
+   * An array where the first element is a UITabBar, UIToolBar or UINavigationBar and the second item is a UITabBarItem, UIBarButtonItem or UINavigationItem.
    * An array where the first element is a UISegmentedControl and the second element is a NSNumber of the segment index (0 based) to highlight.
    * [NSNull null] **(not nil)** to add an element that will have a description and a colour associated with it but will not highlight an area.
  * **elementDescription** is the text to associate with the element
@@ -227,9 +227,9 @@ You can also add an unhighlighted element. An unhighlighted element does not hav
 	- (void) addUnhighlightedElement:(NSObject*) element;
 
  * **element** follows the same rules as for the addElement method:
-   * A control based off of UIView
-   * An array a pair of controls both of which are based off of UIView
-   * An array where the first element is a UITabBar, UIToolBar or UINavigationBar and the second item is a UITabBarItem, UIBarButtonItem or UINavigationItem
+   * A control based off of UIView.
+   * An array with 2 or more controls based off of UIView.
+   * An array where the first element is a UITabBar, UIToolBar or UINavigationBar and the second item is a UITabBarItem, UIBarButtonItem or UINavigationItem.
    * An array where the first element is a UISegmentedControl and the second element is a NSNumber of the segment index (0 based) to highlight.
    * [NSNull null] **(not nil)** to add an element that will have a description and a colour associated with it but will not highlight an area.
 
@@ -249,15 +249,23 @@ The first (and recommended) method allows you to specific the location of the te
  * **displayPosition** is one of the following values:
    * *edpNone* - the overlay will be centred on the screen.
    * *edpLeft* - the overlay will use the full height of the left half of the screen.
+   * *edpLeft_Quarter* - the overlay will use the full height of the left 1/4 of the screen.
+   * *edpLeft_Third* - the overlay will use the full height of the left 1/3 of the screen.
    * *edpLeft_TwoThirds* - the overlay will use the full height of the left 2/3 of the screen.
    * *edpLeft_ThreeQuarters* - the overlay will use the full height of the left 3/4 of the screen.
    * *edpRight* - the overlay will use the full height of the right half of the screen.
+   * *edpRight_Quarter* - the overlay will use the full height of the right 1/4 of the screen.
+   * *edpRight_Third* - the overlay will use the full height of the right 1/3 of the screen.
    * *edpRight_TwoThirds* - the overlay will use the full height of the right 2/3 of the screen.
    * *edpRight_ThreeQuarters* - the overlay will use the full height of the right 3/4 of the screen.
    * *edpTop* - the overlay will use the full width of the top half of the screen.
+   * *edpTop_Quarter* - the overlay will use the full width of the top 1/4 of the screen.
+   * *edpTop_Third* - the overlay will use the full width of the top 1/3 of the screen.
    * *edpTop_TwoThirds* - the overlay will use the full width of the top 2/3 of the screen.
    * *edpTop_ThreeQuarters* - the overlay will use the full width of the top 3/4 of the screen.
    * *edpBottom* - the overlay will use the full width of the bottom half of the screen.
+   * *edpBottom_Quarter* - the overlay will use the full width of the bottom 1/4 of the screen.
+   * *edpBottom_Third* - the overlay will use the full width of the bottom 1/3 of the screen.
    * *edpBottom_TwoThirds* - the overlay will use the full width of the bottom 2/3 of the screen.
    * *edpBottom_ThreeQuarters* - the overlay will use the full width of the bottom 3/4 of the screen.
    
