@@ -25,6 +25,8 @@ NSString* const kICLTrainingOverlay_DisplayPosition = @"DisplayPosition";
 
 NSString* const kICLOverlayKeyBase = @"ICLTrainingOverlay.Shown";
 
+float const kICLHighlightRectSizeAdjustment = 2.0f;
+
 @interface ICLTrainingOverlay()
 
 - (id)initInstance;
@@ -293,6 +295,18 @@ NSString* const kICLOverlayKeyBase = @"ICLTrainingOverlay.Shown";
                                  overlayBounds.size.width * 0.5f,
                                  overlayBounds.size.height);
     }
+    else if (displayPosition == edpLeft_Quarter) {
+        webViewRect = CGRectMake(0,
+                                 0,
+                                 overlayBounds.size.width * 0.25f,
+                                 overlayBounds.size.height);
+    }
+    else if (displayPosition == edpLeft_Third) {
+        webViewRect = CGRectMake(0,
+                                 0,
+                                 overlayBounds.size.width * 0.33f,
+                                 overlayBounds.size.height);
+    }
     else if (displayPosition == edpLeft_TwoThirds) {
         webViewRect = CGRectMake(0,
                                  0,
@@ -309,6 +323,18 @@ NSString* const kICLOverlayKeyBase = @"ICLTrainingOverlay.Shown";
         webViewRect = CGRectMake(overlayBounds.size.width * 0.5f,
                                  0,
                                  overlayBounds.size.width * 0.5f,
+                                 overlayBounds.size.height);
+    }
+    else if (displayPosition == edpRight_Quarter) {
+        webViewRect = CGRectMake(overlayBounds.size.width * 0.75f,
+                                 0,
+                                 overlayBounds.size.width * 0.25f,
+                                 overlayBounds.size.height);
+    }
+    else if (displayPosition == edpRight_Third) {
+        webViewRect = CGRectMake(overlayBounds.size.width * 0.66f,
+                                 0,
+                                 overlayBounds.size.width * 0.33f,
                                  overlayBounds.size.height);
     }
     else if (displayPosition == edpRight_TwoThirds) {
@@ -329,6 +355,18 @@ NSString* const kICLOverlayKeyBase = @"ICLTrainingOverlay.Shown";
                                  overlayBounds.size.width,
                                  overlayBounds.size.height * 0.5f);
     }
+    else if (displayPosition == edpTop_Quarter) {
+        webViewRect = CGRectMake(0,
+                                 0,
+                                 overlayBounds.size.width,
+                                 overlayBounds.size.height * 0.25f);
+    }
+    else if (displayPosition == edpTop_Third) {
+        webViewRect = CGRectMake(0,
+                                 0,
+                                 overlayBounds.size.width,
+                                 overlayBounds.size.height * 0.33f);
+    }
     else if (displayPosition == edpTop_TwoThirds) {
         webViewRect = CGRectMake(0,
                                  0,
@@ -346,6 +384,18 @@ NSString* const kICLOverlayKeyBase = @"ICLTrainingOverlay.Shown";
                                  overlayBounds.size.height * 0.5f,
                                  overlayBounds.size.width,
                                  overlayBounds.size.height * 0.5f);
+    }
+    else if (displayPosition == edpBottom_Quarter) {
+        webViewRect = CGRectMake(0,
+                                 overlayBounds.size.height * 0.75f,
+                                 overlayBounds.size.width,
+                                 overlayBounds.size.height * 0.25f);
+    }
+    else if (displayPosition == edpBottom_Third) {
+        webViewRect = CGRectMake(0,
+                                 overlayBounds.size.height * 0.66f,
+                                 overlayBounds.size.width,
+                                 overlayBounds.size.height * 0.33f);
     }
     else if (displayPosition == edpBottom_TwoThirds) {
         webViewRect = CGRectMake(0,
@@ -567,12 +617,11 @@ NSString* const kICLOverlayKeyBase = @"ICLTrainingOverlay.Shown";
                          colour:(UIColor*) colour
                          bounds:(CGRect) overlayBounds {
     CGFloat cornerRadius = MIN(MIN(elementRect.size.width, elementRect.size.height) * 0.25f, 10);
-    CGFloat buffer = 3.0f;
     
-    CGRect workingRect = CGRectMake(elementRect.origin.x - buffer * 0.5f,
-                                    elementRect.origin.y - buffer * 0.5f,
-                                    elementRect.size.width + buffer,
-                                    elementRect.size.height + buffer);
+    CGRect workingRect = CGRectMake(elementRect.origin.x - kICLHighlightRectSizeAdjustment * 0.5f,
+                                    elementRect.origin.y - kICLHighlightRectSizeAdjustment * 0.5f,
+                                    elementRect.size.width + kICLHighlightRectSizeAdjustment,
+                                    elementRect.size.height + kICLHighlightRectSizeAdjustment);
     
     CGRect intersectedRect = CGRectIntersection(workingRect, overlayBounds);
     
@@ -667,12 +716,11 @@ NSString* const kICLOverlayKeyBase = @"ICLTrainingOverlay.Shown";
                           elementRect:(CGRect) elementRect
                                bounds:(CGRect) overlayBounds {
     CGFloat cornerRadius = MIN(MIN(elementRect.size.width, elementRect.size.height) * 0.25f, 10);
-    CGFloat buffer = 4.0f;
     
-    CGRect workingRect = CGRectMake(elementRect.origin.x - buffer * 0.5f,
-                                    elementRect.origin.y - buffer * 0.5f,
-                                    elementRect.size.width + buffer,
-                                    elementRect.size.height + buffer);
+    CGRect workingRect = CGRectMake(elementRect.origin.x - kICLHighlightRectSizeAdjustment * 0.5f,
+                                    elementRect.origin.y - kICLHighlightRectSizeAdjustment * 0.5f,
+                                    elementRect.size.width + kICLHighlightRectSizeAdjustment,
+                                    elementRect.size.height + kICLHighlightRectSizeAdjustment);
     CGRect intersectedRect = CGRectIntersection(workingRect, overlayBounds);
     
     if (!CGRectIsNull(intersectedRect)) {

@@ -37,13 +37,15 @@ NSString* const kICLTrainingOverlay_ElementHasHighlight = @"ElementHighlight";
         }
         else if ([parent isKindOfClass:[UISegmentedControl class]] && [child isKindOfClass:[NSNumber class]]) {
         }
-        else if ([parent isKindOfClass:[UIView class]] && [child isKindOfClass:[UIView class]]) {
-        }
         else {
-            NSLog(@"Unknown element type %@ for %@", NSStringFromClass([element class]), elementDescription);
-            assert(0);
-            
-            return;
+            for (NSObject* object in elementAsArray) {
+                if (![object isKindOfClass:[UIView class]]) {
+                    NSLog(@"Unknown element type %@ for %@", NSStringFromClass([object class]), elementDescription);
+                    assert(0);
+                    
+                    return;
+                }
+            }
         }
     }
     else {
@@ -129,8 +131,8 @@ NSString* const kICLTrainingOverlay_ElementHasHighlight = @"ElementHighlight";
         NSObject* parent = elementAsArray[0];
         NSObject* child = elementAsArray[1];
         
-        // UIBarButtonItem within a UIToolbar
-        if ([child isKindOfClass:[UIBarButtonItem class]]) {
+        // Controls within a toolbar
+        if ([parent isKindOfClass:[UIToolbar class]]) {
             UIBarButtonItem* childAsBarButtonItem = (UIBarButtonItem*) child;
             UIToolbar* parentAsToolbar = (UIToolbar*) parent;
             
@@ -159,9 +161,8 @@ NSString* const kICLTrainingOverlay_ElementHasHighlight = @"ElementHighlight";
             if (control) {
                 elementRect = [control convertRect:control.bounds toView:self.overlayView];
             }
-        }
-        else if ([child isKindOfClass:[UINavigationItem class]]) {
-            UINavigationItem* childAsNavigationItem = (UINavigationItem*) child;
+        } // Controls within a navigation bar
+        else if ([parent isKindOfClass:[UINavigationBar class]]) {
             UINavigationBar* parentAsNavigationBar = (UINavigationBar*) parent;
             
             ////////////////////////////////////////////////////////////////////////////////
@@ -171,7 +172,7 @@ NSString* const kICLTrainingOverlay_ElementHasHighlight = @"ElementHighlight";
             for (UIView* subview in parentAsNavigationBar.subviews) {
                 if ([subview isKindOfClass:[UIControl class]]) {
                     for (id target in [(UIControl*) subview allTargets]) {
-                        if (target == childAsNavigationItem) {
+                        if (target == child) {
                             control = (UIControl* )subview;
                             break;
                         }
@@ -190,7 +191,7 @@ NSString* const kICLTrainingOverlay_ElementHasHighlight = @"ElementHighlight";
                 elementRect = [control convertRect:control.bounds toView:self.overlayView];
             }
         }
-        else if ([child isKindOfClass:[UITabBarItem class]]) {
+        else if ([parent isKindOfClass:[UITabBar class]]) {
             UITabBarItem* childAsTabBarItem = (UITabBarItem*) child;
             UITabBar* parentAsTabBar = (UITabBar*) parent;
             
@@ -260,23 +261,29 @@ NSString* const kICLTrainingOverlay_ElementHasHighlight = @"ElementHighlight";
                 CGFloat segmentWidth = [segmentWidths[segmentIndex] floatValue];
                 
                 // Calculate the offset by summing the previous widths
-                CGFloat segmentOffset = 0;
+                CGFloat segmentOffset = segmentIndex == 0 ? 0 : kICLHighlightRectSizeAdjustment;
                 for (NSUInteger index = 0; index < segmentIndex; ++index) {
                     segmentOffset += [segmentWidths[index] floatValue];
                 }
                 
-                CGRect segmentRect = CGRectMake(segmentOffset, 0, segmentWidth, CGRectGetHeight(parentAsSegmentedControl.bounds));
+                CGFloat sizeReduction = ((segmentIndex == 0) || (segmentIndex == (numSegments - 1))) ? kICLHighlightRectSizeAdjustment : (2 * kICLHighlightRectSizeAdjustment);
+                
+                CGRect segmentRect = CGRectMake(segmentOffset,
+                                                0,
+                                                segmentWidth - sizeReduction,
+                                                CGRectGetHeight(parentAsSegmentedControl.bounds));
+                
                 elementRect = [parentAsSegmentedControl convertRect:segmentRect toView:self.overlayView];
             }
         }
-        else if ([parent isKindOfClass:[UIView class]] && [child isKindOfClass:[UIView class]]) {
-            UIView* parentAsView = (UIView*) parent;
-            UIView* childAsView = (UIView*) child;
+        else {
+            elementRect = CGRectNull;
             
-            CGRect parentRect = [parentAsView convertRect:parentAsView.bounds toView:self.overlayView];
-            CGRect childRect = [childAsView convertRect:childAsView.bounds toView:self.overlayView];
-            
-            elementRect = CGRectUnion(parentRect, childRect);
+            for (UIView* view in elementAsArray) {
+                CGRect viewRect = [view convertRect:view.bounds toView:self.overlayView];
+                
+                elementRect = CGRectUnion(elementRect, viewRect);
+            }
         }
     }
     
