@@ -488,8 +488,6 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
     
     self.requestFinishLoadingDataStoreReceived = NO;
     
-    [self setupDeviceList];
-    
     [self requestLoadDataStore];
 }
 
@@ -519,6 +517,8 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
     // initial setup stage
     if (self.currentState == essUninitialised) {
         self.canFinishLoadingDataStore = self.requestFinishLoadingDataStoreReceived ? nil : [[NSCondition alloc] init];
+        
+        [self setupDeviceList];
         
         [userDefaults setBool:NO forKey:Setting_MinimalDataImportPerformed];
         [userDefaults synchronize];
