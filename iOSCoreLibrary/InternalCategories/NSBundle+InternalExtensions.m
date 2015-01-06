@@ -25,6 +25,13 @@
                 break;
             }
         }
+        
+        if (!locBundle) {
+            NSString* path = [libraryBundle pathForResource:@"en" ofType:@"lproj"];
+            if (path) {
+                locBundle = [NSBundle bundleWithPath:path];
+            }
+        }
     });
     
     return locBundle;

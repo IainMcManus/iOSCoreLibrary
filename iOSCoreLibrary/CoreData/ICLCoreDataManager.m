@@ -668,11 +668,11 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
                     NSString* msgTitle = NSLocalizedStringFromTableInBundle(@"iCloud.Enable.Title", @"ICL_iCloud", [NSBundle localisationBundle], @"Data Storage Selection");
                     
                     NSString* option_iCloud = NSLocalizedStringFromTableInBundle(@"iCloud", @"ICL_iCloud", [NSBundle localisationBundle], @"iCloud");
-                    NSString* description_iCloud = NSLocalizedStringFromTableInBundle(@"iCloudDescription", @"ICL_iCloud", [NSBundle localisationBundle], @"All project related data will be stored in iCloud. If you have multiple devices connected to the same iCloud account then the data will be synchronised between them.");
+                    NSString* description_iCloud = NSLocalizedStringFromTableInBundle(@"iCloudDescription", @"ICL_iCloud", [NSBundle localisationBundle], @"All application data will be stored in iCloud. If you have multiple devices connected to the same iCloud account then the data will be synchronised between them.");
                     
                     NSString* option_Locally = NSLocalizedStringFromTableInBundle(@"Locally", @"ICL_iCloud", [NSBundle localisationBundle], @"Locally");
-                    NSString* description_Locally = NSLocalizedStringFromTableInBundle(@"LocallyDescription", @"ICL_iCloud", [NSBundle localisationBundle], @"All project related data will be stored locally on the device. If you have multiple devices then the data will not be synchronised between them.");
-                    
+                    NSString* description_Locally = NSLocalizedStringFromTableInBundle(@"LocallyDescription", @"ICL_iCloud", [NSBundle localisationBundle], @"All application data will be stored locally on the device. If you have multiple devices then the data will not be synchronised between them.");
+
                     NSDictionary* appearance = @{kICLButton1Colour: self.Colour_AlertView_Button1,
                                                  kICLButton2Colour: self.Colour_AlertView_Button2,
                                                  kICLPanel1Colour: self.Colour_AlertView_Panel1,
