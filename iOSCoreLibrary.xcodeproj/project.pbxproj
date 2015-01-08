@@ -45,6 +45,8 @@
 		AE96298F1919FF5E00A9AAC3 /* ICLUploadToDropboxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE9629871919FE9600A9AAC3 /* ICLUploadToDropboxViewController.xib */; };
 		AE9629901919FF5E00A9AAC3 /* ICLUploadToDropboxViewController~iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE96298B1919FEB200A9AAC3 /* ICLUploadToDropboxViewController~iPhone.xib */; };
 		AE9E91AE198232DD00C8179E /* ICL_Dropbox.strings in Resources */ = {isa = PBXBuildFile; fileRef = AE9E91AC198232DD00C8179E /* ICL_Dropbox.strings */; };
+		AEA4F5DE1A5F4F000030CD5C /* ICLScheduleHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA4F5DC1A5F4F000030CD5C /* ICLScheduleHelper.m */; };
+		AEA4F5DF1A5F4F000030CD5C /* ICLScheduleHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = AEA4F5DD1A5F4F000030CD5C /* ICLScheduleHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AEE765C8196A6DA600D8AAA4 /* ICLAlertViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = AEE765B8196A6DA600D8AAA4 /* ICLAlertViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AEE765C9196A6DA600D8AAA4 /* ICLAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEE765B9196A6DA600D8AAA4 /* ICLAlertViewController.m */; };
 		AEE765CA196A6DA600D8AAA4 /* ICLAlertViewController2.xib in Resources */ = {isa = PBXBuildFile; fileRef = AEE765BA196A6DA600D8AAA4 /* ICLAlertViewController2.xib */; };
@@ -135,6 +137,8 @@
 		AE9629871919FE9600A9AAC3 /* ICLUploadToDropboxViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ICLUploadToDropboxViewController.xib; sourceTree = "<group>"; };
 		AE96298B1919FEB200A9AAC3 /* ICLUploadToDropboxViewController~iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ICLUploadToDropboxViewController~iPhone.xib"; sourceTree = "<group>"; };
 		AE9E91AD198232DD00C8179E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = ICL_Dropbox.strings; sourceTree = "<group>"; };
+		AEA4F5DC1A5F4F000030CD5C /* ICLScheduleHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICLScheduleHelper.m; sourceTree = "<group>"; };
+		AEA4F5DD1A5F4F000030CD5C /* ICLScheduleHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICLScheduleHelper.h; sourceTree = "<group>"; };
 		AEE765B8196A6DA600D8AAA4 /* ICLAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICLAlertViewController.h; sourceTree = "<group>"; };
 		AEE765B9196A6DA600D8AAA4 /* ICLAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICLAlertViewController.m; sourceTree = "<group>"; };
 		AEE765BA196A6DA600D8AAA4 /* ICLAlertViewController2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ICLAlertViewController2.xib; sourceTree = "<group>"; };
@@ -227,6 +231,7 @@
 				AE9629841919FE5300A9AAC3 /* Dropbox */,
 				AEE765D6196A6DC100D8AAA4 /* External */,
 				AEE765C3196A6DA600D8AAA4 /* InternalCategories */,
+				AEA4F5E01A5F4F030030CD5C /* ScheduleHelper */,
 				AE1744CA17755777007051FF /* Supporting Files */,
 				AE42AEB719EB519C005C3172 /* TrainingOverlay */,
 			);
@@ -319,6 +324,15 @@
 				AE21AFCD1980912F00EE7644 /* NSDate+Extensions.m */,
 			);
 			path = Categories;
+			sourceTree = "<group>";
+		};
+		AEA4F5E01A5F4F030030CD5C /* ScheduleHelper */ = {
+			isa = PBXGroup;
+			children = (
+				AEA4F5DC1A5F4F000030CD5C /* ICLScheduleHelper.m */,
+				AEA4F5DD1A5F4F000030CD5C /* ICLScheduleHelper.h */,
+			);
+			path = ScheduleHelper;
 			sourceTree = "<group>";
 		};
 		AEE765B7196A6DA600D8AAA4 /* AlertView */ = {
@@ -437,6 +451,7 @@
 				AEE765F3196A6DC100D8AAA4 /* NSManagedObjectModel+KCOrderedAccessorFix.h in Headers */,
 				AE21AFD81980919000EE7644 /* UIColor+extensions.h in Headers */,
 				AEE765CE196A6DA600D8AAA4 /* ICLCoreDataDeviceList.h in Headers */,
+				AEA4F5DF1A5F4F000030CD5C /* ICLScheduleHelper.h in Headers */,
 				AE65B08B197B7D3900DB2172 /* BuildFlags.h in Headers */,
 				AEE765D4196A6DA600D8AAA4 /* NSURL+InternalExtensions.h in Headers */,
 				AEE765D0196A6DA600D8AAA4 /* ICLCoreDataManager.h in Headers */,
@@ -569,6 +584,7 @@
 				AEE765D5196A6DA600D8AAA4 /* NSURL+InternalExtensions.m in Sources */,
 				AE1744CF17755777007051FF /* iOSCoreLibrary.m in Sources */,
 				AEE765F4196A6DC100D8AAA4 /* NSManagedObjectModel+KCOrderedAccessorFix.m in Sources */,
+				AEA4F5DE1A5F4F000030CD5C /* ICLScheduleHelper.m in Sources */,
 				AE21AFD71980919000EE7644 /* UIButton+applyGlassStyle.m in Sources */,
 				AE21AFCF1980912F00EE7644 /* NSDate+Extensions.m in Sources */,
 				AE42AEBE19EB519C005C3172 /* ICLTrainingOverlay.m in Sources */,

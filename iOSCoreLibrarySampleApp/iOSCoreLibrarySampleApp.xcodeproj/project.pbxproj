@@ -34,6 +34,8 @@
 		AE9D306B196F99F10076398C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE9D306A196F99F10076398C /* CoreData.framework */; };
 		AE9D306E196F9A5B0076398C /* ISADataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9D306D196F9A5B0076398C /* ISADataManager.m */; };
 		AE9D3071196F9C1F0076398C /* ISADataManager+DBMaintenance.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9D3070196F9C1F0076398C /* ISADataManager+DBMaintenance.m */; };
+		AEA4F5E21A5F4F660030CD5C /* ICLScheduleHelper_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA4F5E11A5F4F660030CD5C /* ICLScheduleHelper_Tests.m */; };
+		AEA4F5E31A5F4FB00030CD5C /* libiOSCoreLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AEAD3613196DFF44009BDC11 /* libiOSCoreLibrary.a */; };
 		AEAD35D5196DFF27009BDC11 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEAD35D4196DFF27009BDC11 /* Foundation.framework */; };
 		AEAD35D7196DFF27009BDC11 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEAD35D6196DFF27009BDC11 /* CoreGraphics.framework */; };
 		AEAD35D9196DFF27009BDC11 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEAD35D8196DFF27009BDC11 /* UIKit.framework */; };
@@ -45,7 +47,6 @@
 		AEAD35F8196DFF27009BDC11 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEAD35D4196DFF27009BDC11 /* Foundation.framework */; };
 		AEAD35F9196DFF27009BDC11 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEAD35D8196DFF27009BDC11 /* UIKit.framework */; };
 		AEAD3601196DFF27009BDC11 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AEAD35FF196DFF27009BDC11 /* InfoPlist.strings */; };
-		AEAD3603196DFF27009BDC11 /* iOSCoreLibrarySampleAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAD3602196DFF27009BDC11 /* iOSCoreLibrarySampleAppTests.m */; };
 		AEAD362F196E01BE009BDC11 /* CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AEAD362D196E01BE009BDC11 /* CoreData.xcdatamodeld */; };
 		AEAD363B196E029E009BDC11 /* Pet+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAD363A196E029E009BDC11 /* Pet+Extensions.m */; };
 		AEAD363E196E02A8009BDC11 /* Owner+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AEAD363D196E02A8009BDC11 /* Owner+Extensions.m */; };
@@ -133,6 +134,7 @@
 		AE9D306D196F9A5B0076398C /* ISADataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ISADataManager.m; path = Source/ISADataManager.m; sourceTree = "<group>"; };
 		AE9D306F196F9C1F0076398C /* ISADataManager+DBMaintenance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ISADataManager+DBMaintenance.h"; path = "Source/ISADataManager+DBMaintenance.h"; sourceTree = "<group>"; };
 		AE9D3070196F9C1F0076398C /* ISADataManager+DBMaintenance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ISADataManager+DBMaintenance.m"; path = "Source/ISADataManager+DBMaintenance.m"; sourceTree = "<group>"; };
+		AEA4F5E11A5F4F660030CD5C /* ICLScheduleHelper_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICLScheduleHelper_Tests.m; sourceTree = "<group>"; };
 		AEAD35D1196DFF27009BDC11 /* iOSCoreLibrarySampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSCoreLibrarySampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEAD35D4196DFF27009BDC11 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AEAD35D6196DFF27009BDC11 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -148,7 +150,6 @@
 		AEAD35F6196DFF27009BDC11 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		AEAD35FE196DFF27009BDC11 /* iOSCoreLibrarySampleAppTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iOSCoreLibrarySampleAppTests-Info.plist"; sourceTree = "<group>"; };
 		AEAD3600196DFF27009BDC11 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		AEAD3602196DFF27009BDC11 /* iOSCoreLibrarySampleAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iOSCoreLibrarySampleAppTests.m; sourceTree = "<group>"; };
 		AEAD360C196DFF44009BDC11 /* iOSCoreLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iOSCoreLibrary.xcodeproj; path = ../iOSCoreLibrary.xcodeproj; sourceTree = "<group>"; };
 		AEAD361D196E001B009BDC11 /* iOSCoreLibrarySampleApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = iOSCoreLibrarySampleApp.entitlements; sourceTree = "<group>"; };
 		AEAD362E196E01BE009BDC11 /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
@@ -184,6 +185,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AEA4F5E31A5F4FB00030CD5C /* libiOSCoreLibrary.a in Frameworks */,
 				AEAD35F7196DFF27009BDC11 /* XCTest.framework in Frameworks */,
 				AEAD35F9196DFF27009BDC11 /* UIKit.framework in Frameworks */,
 				AEAD35F8196DFF27009BDC11 /* Foundation.framework in Frameworks */,
@@ -313,8 +315,8 @@
 		AEAD35FC196DFF27009BDC11 /* iOSCoreLibrarySampleAppTests */ = {
 			isa = PBXGroup;
 			children = (
-				AEAD3602196DFF27009BDC11 /* iOSCoreLibrarySampleAppTests.m */,
 				AEAD35FD196DFF27009BDC11 /* Supporting Files */,
+				AEA4F5E11A5F4F660030CD5C /* ICLScheduleHelper_Tests.m */,
 			);
 			path = iOSCoreLibrarySampleAppTests;
 			sourceTree = "<group>";
@@ -626,7 +628,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AEAD3603196DFF27009BDC11 /* iOSCoreLibrarySampleAppTests.m in Sources */,
+				AEA4F5E21A5F4F660030CD5C /* ICLScheduleHelper_Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
