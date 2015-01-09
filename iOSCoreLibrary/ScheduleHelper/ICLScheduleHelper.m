@@ -233,68 +233,7 @@ NSString* const kICLSchedule_Type = @"Schedule.Type";
         }
             break;
             
-        case estWeekly: {
-            NSInteger requiredDayOfWeek = edsoSunday;
-            
-            // if the schedule options are present and have a value then use that
-            if (scheduleOptions && ([scheduleOptions count] > 0)) {
-                requiredDayOfWeek = [[scheduleOptions firstObject] integerValue] + 1;
-            } // otherwise determine the day of the week from the start date
-            else {
-                requiredDayOfWeek = [startComponents weekday];
-            }
-            
-            BOOL startAndSearchSame = [startDate isEqualToDate:searchDate];
-            
-            // If the required weekday is after the starting weekday then advance to that weekday
-            if (requiredDayOfWeek > [startComponents weekday]) {
-                NSInteger weekdayDelta = requiredDayOfWeek - [startComponents weekday];
-                
-                [resultComponents setDay:[resultComponents day] + weekdayDelta];
-                
-                startDate = [[NSDate gregorianCalendar] dateFromComponents:resultComponents];
-            } // If the required weekday is before the starting weekday then advance to that weekday wrapping into the next week
-            else if (requiredDayOfWeek < [startComponents weekday]) {
-                NSInteger weekdayDelta = (7 - [startComponents weekday]) + requiredDayOfWeek;
-                
-                [resultComponents setDay:[resultComponents day] + weekdayDelta];
-                
-                startDate = [[NSDate gregorianCalendar] dateFromComponents:resultComponents];
-            }
-            
-            // If the required weekday is after the search weekday then advance to that weekday
-            if (requiredDayOfWeek > [searchComponents weekday]) {
-                NSInteger weekdayDelta = requiredDayOfWeek - [searchComponents weekday];
-                
-                [searchComponents setDay:[searchComponents day] + weekdayDelta];
-                
-                searchDate = [[NSDate gregorianCalendar] dateFromComponents:searchComponents];
-            } // If the required weekday is before the search weekday then advance to that weekday wrapping into the next week
-            else if (requiredDayOfWeek < [searchComponents weekday]) {
-                NSInteger weekdayDelta = (7 - [searchComponents weekday]) + requiredDayOfWeek;
-                
-                [searchComponents setDay:[searchComponents day] + weekdayDelta];
-                
-                searchDate = [[NSDate gregorianCalendar] dateFromComponents:searchComponents];
-            }
-            
-            // Calculate the delta in days between start and the search point
-            NSInteger daysDelta = [[[NSDate gregorianCalendar] components:NSDayCalendarUnit
-                                                        fromDate:startDate
-                                                          toDate:searchDate
-                                                         options:0] day];
-            
-            // Round to the nearest next week
-            NSInteger roundedDaysDelta = startAndSearchSame ? 7 : (daysDelta + (daysDelta % 7));
-            
-            [resultComponents setDay:[resultComponents day] + roundedDaysDelta];
-            
-            NSDate* resultDate = [[NSDate gregorianCalendar] dateFromComponents:resultComponents];
-            
-            return resultDate;
-        }
-            break;
-            
+        case estWeekly:
         case estFortnightly: {
             NSInteger requiredDayOfWeek = edsoSunday;
             
@@ -346,8 +285,10 @@ NSString* const kICLSchedule_Type = @"Schedule.Type";
                                                           toDate:searchDate
                                                          options:0] day];
             
+            NSInteger daysBetweenRepeats = scheduleType == estWeekly ? 7 : 14;
+            
             // Round to the nearest next week
-            NSInteger roundedDaysDelta = startAndSearchSame ? 14 : (daysDelta + (daysDelta % 14));
+            NSInteger roundedDaysDelta = startAndSearchSame ? daysBetweenRepeats : (daysDelta + (daysDelta % daysBetweenRepeats));
             
             [resultComponents setDay:[resultComponents day] + roundedDaysDelta];
             

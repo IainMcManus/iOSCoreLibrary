@@ -112,7 +112,7 @@
     dates = [ICLScheduleHelper generateScheduleDates:repeatConfig
                                             fromDate:secondDate
                                               toDate:thirdDate];
-    
+        
     expectedDates = @[[self buildDate:@[@(31), @(1), @(2012)]],
                       [self buildDate:@[@(7), @(2), @(2012)]],
                       [self buildDate:@[@(14), @(2), @(2012)]],
