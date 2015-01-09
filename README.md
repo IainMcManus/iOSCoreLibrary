@@ -9,6 +9,7 @@ The library contains the following:
  * Dropbox Uploader - Simple wrapper for the Dropbox upload process that provides a progress indicator.
  * Alert View - Custom UI Alert View control.
  * Colour Picker - iPad/iPhone compatible colour picker.
+ * Schedule Helper - Given a schedule (weekly, monthly etc) it generates all scheduled dates between two dates.
  * Custom Categories
    * NSDate
      * Methods to round time to start/end of the day
@@ -422,6 +423,45 @@ The colour picker is an iPhone/iPad compatible view which allows users to pick a
  * Brightness slider
  
 The colour picker is compatible with iPad and iPhone and has been tested on iOS 6 and above. An example of using the colour picker is provided in [Colour Picker Example](/iOSCoreLibrarySampleApp/iOSCoreLibrarySampleApp/Source/View%20Controllers/Miscellaneous/ISAMiscellaneousTabViewController.m)
+
+Schedule Helper
+===============
+
+The Schedule Helper class (ICLScheduleHelper) provides a single interface that returns an array of the corresponding NSDate objects:
+
+	+ (NSArray*) generateScheduleDates:(NSDictionary*) repeatConfig
+							  fromDate:(NSDate*) fromDate
+								toDate:(NSDate*) toDate;
+								
+The range in which the scheduled dates are generated is defined (inclusively) by *fromDate* and *toDate*. 
+
+The repeatConfig describes the schedule itself. The repeat config is a dictionary which must contain the following keys:
+
+ * kICLSchedule_StartDate - this is the date that the schedule begins. (Value must be an NSDate)
+ * kICLSchedule_EndDate - this is the last day that the schedule can occur. (Value must be an NSDate)
+ * kICLSchedule_Options - describes additional details for the schedule (eg. the days of the week it occurs) (Value must be an NSArray. It can be empty but not nil).
+ * kICLSchedule_Type - this is the (repeat) type for the schedule. The value is an NSNumber corresponding to one of:
+   * estNever - Never repeats.
+   * estDaily - Repeats the same days each week (eg. every Monday and Thursday).
+   * estWeekly - Repeats on the same day each week (eg. every Wednesday).
+   * estFortnightly - Repeats on the same day every 2 weeks (eg. every second Tuesday).
+   * estMonthly - Repeats every month on the same day (or the closest day to it).
+   * estQuarterly - Repeats every 3 months.
+   * estAnnually - Repeats every year on the same day (or the closest day to it).
+   
+For the Daily, Weekly and Fortnightly schedules the kICLSchedule_Options key corresponds to an NSArray that defines which days the schedule will repeat on. For the weekly and fortnightly options only the first value in the array will be used. The array elements must be NSNumbers that correspond to one of:
+
+   * edsoSunday
+   * edsoMonday
+   * edsoTuesday
+   * edsoWednesday
+   * edsoThursday
+   * edsoFriday
+   * edsoSaturday
+   
+For schedules that correspond to a specific day in the month (eg. monthly, quarterly or annually) the Schedule Helper will automatically handle clamping the day to the correct month. For example a monthly event that is set to repeat on the 31st of the month will clamp to the 30th (or earlier for February) as appropriate.
+
+For examples on using the Schedule Helper there are a set of unit tests that cover every schedule type in [Schedule Helper Unit Tests](/iOSCoreLibrarySampleApp/iOSCoreLibrarySampleAppTests/ICLScheduleHelper_Tests.m)
 
 Categories
 ===============
