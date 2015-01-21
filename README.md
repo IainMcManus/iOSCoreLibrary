@@ -10,6 +10,8 @@ The library contains the following:
  * Alert View - Custom UI Alert View control.
  * Colour Picker - iPad/iPhone compatible colour picker.
  * Schedule Helper - Given a schedule (weekly, monthly etc) it generates all scheduled dates between two dates.
+ * Date Picker Popup - An iPhone/iPad compatible Date Picker that lets you select a single date (or range). It is designed to popup from a toolbar.
+ * Filterable View Controller - A base class for a view controller that lets you filter and navigate data based on date.
  * Custom Categories
    * NSDate
      * Methods to round time to start/end of the day
@@ -469,6 +471,40 @@ For the Daily, Weekly and Fortnightly schedules the kICLSchedule_Options key cor
 For schedules that correspond to a specific day in the month (eg. monthly, quarterly or annually) the Schedule Helper will automatically handle clamping the day to the correct month. For example a monthly event that is set to repeat on the 31st of the month will clamp to the 30th (or earlier for February) as appropriate.
 
 For examples on using the Schedule Helper there are a set of unit tests that cover every schedule type in [Schedule Helper Unit Tests](/iOSCoreLibrarySampleApp/iOSCoreLibrarySampleAppTests/ICLScheduleHelper_Tests.m)
+
+Date Picker Popup
+===============
+
+The Date Picker Popup lets you show a single date, or date range, selector from a toolbar button. The Date Picker Popup automatically adjusts based on the device (iPhone or iPad). To create a Date Picker Popup use:
+
+	+ (id) create:(UIBarButtonItem*) buttonItem type:(DatePickerPopupType) type;
+	
+ * buttonItem is the UIBarButtonItem which triggered the display of the Date Picker Popup.
+ * type is one of:
+   * dpptSingleDate - for a popup that allows a single date to be selected
+   * dpptStartAndEndDate - for a popup allows a date range to be selected
+
+Once you have created a Date Picker Popup you should setup a delegate. The delegate must implement the ICLDatePickerPopupViewControllerDelegate protocol which has a single method:
+
+	- (void) datePickerPopupViewControllerDidChangeDates:(ICLDatePickerPopupViewController*) view
+											   startDate:(NSDate*) startDate
+												 endDate:(NSDate*) endDate;
+
+ * view is the instance which has called the delegate method
+ * startDate is the start of the date range or the single date selected (for the single date mode)
+ * endDate is nil (for the single date mode) or the end of the date range (for the date range mode)
+ 
+The delegate is linked by setting the delegate property on the instance of the Date Picker Popup.
+
+To show a created Date Picker Popup all you need to then do is call the method below on the instance.
+	
+	- (void) show;
+	
+
+Filterable View Controller
+===============
+
+For details on how to use the Filterable VC go to http://iaintheindie.com/2015/01/21/simple-view-controller-navigate-data-based-date/
 
 Categories
 ===============
