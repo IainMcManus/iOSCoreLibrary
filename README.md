@@ -126,6 +126,13 @@ The methods required by the ICLCoreDataManagerDelegate are shown below:
 		// TODO - Perform any required changes to the current data before the migration is performed
 	}
 	
+	- (BOOL) doesAppSupportiCloud {
+		// TODO - Return YES if your app is permitted to use iCloud. Return NO if iCloud is not permitted.
+		// If you return NO then the user will never see any prompts for enabling iCloud or Migration.
+		// This allows you to use the stack purely in local mode and at a later point in your app development
+		// you can enable iCloud if required.
+	}
+	
 It is very important that when using the library any calls you make using the managed object context are executed on the context's queue. To do that use performBlock/performBlockAndWait. The core data stack provides wrappers for these methods which you should always use. For example:
 
     // Synchronously execute code that uses the context

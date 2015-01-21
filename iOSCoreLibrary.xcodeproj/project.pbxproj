@@ -38,6 +38,16 @@
 		AE65B08B197B7D3900DB2172 /* BuildFlags.h in Headers */ = {isa = PBXBuildFile; fileRef = AE65B08A197B7D3900DB2172 /* BuildFlags.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AE7FF7531981CE09002D3F9E /* UITextField+matchesRegex.h in Headers */ = {isa = PBXBuildFile; fileRef = AE7FF7511981CE09002D3F9E /* UITextField+matchesRegex.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AE7FF7541981CE09002D3F9E /* UITextField+matchesRegex.m in Sources */ = {isa = PBXBuildFile; fileRef = AE7FF7521981CE09002D3F9E /* UITextField+matchesRegex.m */; };
+		AE8E8FCF1A68C2C4005DCB38 /* ICLDatePickerPopupViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = AE8E8FC61A68C2C4005DCB38 /* ICLDatePickerPopupViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AE8E8FD01A68C2C4005DCB38 /* ICLDatePickerPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8E8FC71A68C2C4005DCB38 /* ICLDatePickerPopupViewController.m */; };
+		AE8E8FD11A68C2C4005DCB38 /* ICLDatePickerPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE8E8FC81A68C2C4005DCB38 /* ICLDatePickerPopupViewController.xib */; };
+		AE8E8FD21A68C2C4005DCB38 /* ICLDatePickerPopupViewController_2Dates.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE8E8FC91A68C2C4005DCB38 /* ICLDatePickerPopupViewController_2Dates.xib */; };
+		AE8E8FD31A68C2C4005DCB38 /* ICLDatePickerTransition.h in Headers */ = {isa = PBXBuildFile; fileRef = AE8E8FCA1A68C2C4005DCB38 /* ICLDatePickerTransition.h */; };
+		AE8E8FD41A68C2C4005DCB38 /* ICLDatePickerTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8E8FCB1A68C2C4005DCB38 /* ICLDatePickerTransition.m */; };
+		AE8E8FD51A68C2C4005DCB38 /* ICLFilterableViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = AE8E8FCD1A68C2C4005DCB38 /* ICLFilterableViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AE8E8FD61A68C2C4005DCB38 /* ICLFilterableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8E8FCE1A68C2C4005DCB38 /* ICLFilterableViewController.m */; };
+		AE8E8FD71A68C2DA005DCB38 /* ICLDatePickerPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE8E8FC81A68C2C4005DCB38 /* ICLDatePickerPopupViewController.xib */; };
+		AE8E8FD81A68C2DD005DCB38 /* ICLDatePickerPopupViewController_2Dates.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE8E8FC91A68C2C4005DCB38 /* ICLDatePickerPopupViewController_2Dates.xib */; };
 		AE9629881919FE9600A9AAC3 /* ICLUploadToDropboxViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = AE9629851919FE9600A9AAC3 /* ICLUploadToDropboxViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AE9629891919FE9600A9AAC3 /* ICLUploadToDropboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9629861919FE9600A9AAC3 /* ICLUploadToDropboxViewController.m */; };
 		AE96298A1919FE9600A9AAC3 /* ICLUploadToDropboxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE9629871919FE9600A9AAC3 /* ICLUploadToDropboxViewController.xib */; };
@@ -132,6 +142,14 @@
 		AE65B08A197B7D3900DB2172 /* BuildFlags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuildFlags.h; sourceTree = "<group>"; };
 		AE7FF7511981CE09002D3F9E /* UITextField+matchesRegex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+matchesRegex.h"; sourceTree = "<group>"; };
 		AE7FF7521981CE09002D3F9E /* UITextField+matchesRegex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+matchesRegex.m"; sourceTree = "<group>"; };
+		AE8E8FC61A68C2C4005DCB38 /* ICLDatePickerPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICLDatePickerPopupViewController.h; sourceTree = "<group>"; };
+		AE8E8FC71A68C2C4005DCB38 /* ICLDatePickerPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICLDatePickerPopupViewController.m; sourceTree = "<group>"; };
+		AE8E8FC81A68C2C4005DCB38 /* ICLDatePickerPopupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ICLDatePickerPopupViewController.xib; sourceTree = "<group>"; };
+		AE8E8FC91A68C2C4005DCB38 /* ICLDatePickerPopupViewController_2Dates.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ICLDatePickerPopupViewController_2Dates.xib; sourceTree = "<group>"; };
+		AE8E8FCA1A68C2C4005DCB38 /* ICLDatePickerTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICLDatePickerTransition.h; sourceTree = "<group>"; };
+		AE8E8FCB1A68C2C4005DCB38 /* ICLDatePickerTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICLDatePickerTransition.m; sourceTree = "<group>"; };
+		AE8E8FCD1A68C2C4005DCB38 /* ICLFilterableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICLFilterableViewController.h; sourceTree = "<group>"; };
+		AE8E8FCE1A68C2C4005DCB38 /* ICLFilterableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICLFilterableViewController.m; sourceTree = "<group>"; };
 		AE9629851919FE9600A9AAC3 /* ICLUploadToDropboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICLUploadToDropboxViewController.h; sourceTree = "<group>"; };
 		AE9629861919FE9600A9AAC3 /* ICLUploadToDropboxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICLUploadToDropboxViewController.m; sourceTree = "<group>"; };
 		AE9629871919FE9600A9AAC3 /* ICLUploadToDropboxViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ICLUploadToDropboxViewController.xib; sourceTree = "<group>"; };
@@ -228,8 +246,10 @@
 				AEA38046179A4A2200A1CAD2 /* Categories */,
 				AE21AFC11980909C00EE7644 /* ColourPicker */,
 				AEE765BE196A6DA600D8AAA4 /* CoreData */,
+				AE8E8FC51A68C2C4005DCB38 /* DatePickerPopup */,
 				AE9629841919FE5300A9AAC3 /* Dropbox */,
 				AEE765D6196A6DC100D8AAA4 /* External */,
+				AE8E8FCC1A68C2C4005DCB38 /* FilterableView */,
 				AEE765C3196A6DA600D8AAA4 /* InternalCategories */,
 				AEA4F5E01A5F4F030030CD5C /* ScheduleHelper */,
 				AE1744CA17755777007051FF /* Supporting Files */,
@@ -296,6 +316,28 @@
 				AE42AEC319EB534F005C3172 /* UIImageEffects.m */,
 			);
 			name = UIImageEffects;
+			sourceTree = "<group>";
+		};
+		AE8E8FC51A68C2C4005DCB38 /* DatePickerPopup */ = {
+			isa = PBXGroup;
+			children = (
+				AE8E8FC61A68C2C4005DCB38 /* ICLDatePickerPopupViewController.h */,
+				AE8E8FC71A68C2C4005DCB38 /* ICLDatePickerPopupViewController.m */,
+				AE8E8FC81A68C2C4005DCB38 /* ICLDatePickerPopupViewController.xib */,
+				AE8E8FC91A68C2C4005DCB38 /* ICLDatePickerPopupViewController_2Dates.xib */,
+				AE8E8FCA1A68C2C4005DCB38 /* ICLDatePickerTransition.h */,
+				AE8E8FCB1A68C2C4005DCB38 /* ICLDatePickerTransition.m */,
+			);
+			path = DatePickerPopup;
+			sourceTree = "<group>";
+		};
+		AE8E8FCC1A68C2C4005DCB38 /* FilterableView */ = {
+			isa = PBXGroup;
+			children = (
+				AE8E8FCD1A68C2C4005DCB38 /* ICLFilterableViewController.h */,
+				AE8E8FCE1A68C2C4005DCB38 /* ICLFilterableViewController.m */,
+			);
+			path = FilterableView;
 			sourceTree = "<group>";
 		};
 		AE9629841919FE5300A9AAC3 /* Dropbox */ = {
@@ -449,6 +491,8 @@
 				AE21AFC61980909C00EE7644 /* ICLColourPickerViewController.h in Headers */,
 				AE21AFCE1980912F00EE7644 /* NSDate+Extensions.h in Headers */,
 				AEE765F3196A6DC100D8AAA4 /* NSManagedObjectModel+KCOrderedAccessorFix.h in Headers */,
+				AE8E8FD51A68C2C4005DCB38 /* ICLFilterableViewController.h in Headers */,
+				AE8E8FD31A68C2C4005DCB38 /* ICLDatePickerTransition.h in Headers */,
 				AE21AFD81980919000EE7644 /* UIColor+extensions.h in Headers */,
 				AEE765CE196A6DA600D8AAA4 /* ICLCoreDataDeviceList.h in Headers */,
 				AEA4F5DF1A5F4F000030CD5C /* ICLScheduleHelper.h in Headers */,
@@ -456,6 +500,7 @@
 				AEE765D4196A6DA600D8AAA4 /* NSURL+InternalExtensions.h in Headers */,
 				AEE765D0196A6DA600D8AAA4 /* ICLCoreDataManager.h in Headers */,
 				AE9629881919FE9600A9AAC3 /* ICLUploadToDropboxViewController.h in Headers */,
+				AE8E8FCF1A68C2C4005DCB38 /* ICLDatePickerPopupViewController.h in Headers */,
 				AE21AFDA1980919000EE7644 /* UIViewController+Extensions.h in Headers */,
 				AE57F7CE1980F16900B5B3FC /* iOSCoreLibraryCommon.h in Headers */,
 			);
@@ -538,6 +583,8 @@
 				AEE765CC196A6DA600D8AAA4 /* ICLAlertViewController3.xib in Resources */,
 				AEE76625196A6EA300D8AAA4 /* ICL_iCloud.strings in Resources */,
 				AE96298C1919FEB200A9AAC3 /* ICLUploadToDropboxViewController~iPhone.xib in Resources */,
+				AE8E8FD11A68C2C4005DCB38 /* ICLDatePickerPopupViewController.xib in Resources */,
+				AE8E8FD21A68C2C4005DCB38 /* ICLDatePickerPopupViewController_2Dates.xib in Resources */,
 				AEE765CD196A6DA600D8AAA4 /* ICLAlertViewController3~iPhone.xib in Resources */,
 				AEE765F5196A6DC100D8AAA4 /* README.md in Resources */,
 				AEE765CB196A6DA600D8AAA4 /* ICLAlertViewController2~iPhone.xib in Resources */,
@@ -563,6 +610,7 @@
 				AEE76621196A6E9100D8AAA4 /* ICLAlertViewController2~iPhone.xib in Resources */,
 				AEE76618196A6E1300D8AAA4 /* Localizable.strings in Resources */,
 				AE9629901919FF5E00A9AAC3 /* ICLUploadToDropboxViewController~iPhone.xib in Resources */,
+				AE8E8FD71A68C2DA005DCB38 /* ICLDatePickerPopupViewController.xib in Resources */,
 				AE42AED019EB5967005C3172 /* ICL_TrainingOverlay.strings in Resources */,
 				AEE76619196A6E1300D8AAA4 /* UI_Autogenerated.strings in Resources */,
 				AEE76622196A6E9400D8AAA4 /* ICLAlertViewController3.xib in Resources */,
@@ -571,6 +619,7 @@
 				AE21AFCB198090AC00EE7644 /* ICLColourPickerViewController~iPhone.xib in Resources */,
 				AE174531177579F8007051FF /* InfoPlist.strings in Resources */,
 				AE21AFCA198090A900EE7644 /* ICLColourPickerViewController.xib in Resources */,
+				AE8E8FD81A68C2DD005DCB38 /* ICLDatePickerPopupViewController_2Dates.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -585,6 +634,7 @@
 				AE1744CF17755777007051FF /* iOSCoreLibrary.m in Sources */,
 				AEE765F4196A6DC100D8AAA4 /* NSManagedObjectModel+KCOrderedAccessorFix.m in Sources */,
 				AEA4F5DE1A5F4F000030CD5C /* ICLScheduleHelper.m in Sources */,
+				AE8E8FD01A68C2C4005DCB38 /* ICLDatePickerPopupViewController.m in Sources */,
 				AE21AFD71980919000EE7644 /* UIButton+applyGlassStyle.m in Sources */,
 				AE21AFCF1980912F00EE7644 /* NSDate+Extensions.m in Sources */,
 				AE42AEBE19EB519C005C3172 /* ICLTrainingOverlay.m in Sources */,
@@ -595,9 +645,11 @@
 				AE7FF7541981CE09002D3F9E /* UITextField+matchesRegex.m in Sources */,
 				AEE76603196A6DC100D8AAA4 /* Reachability.m in Sources */,
 				AE21AFDB1980919000EE7644 /* UIViewController+Extensions.m in Sources */,
+				AE8E8FD41A68C2C4005DCB38 /* ICLDatePickerTransition.m in Sources */,
 				AE42AEC119EB519C005C3172 /* ICLTrainingOverlayData.m in Sources */,
 				AE42AEC519EB534F005C3172 /* UIImageEffects.m in Sources */,
 				AEE765D1196A6DA600D8AAA4 /* ICLCoreDataManager.m in Sources */,
+				AE8E8FD61A68C2C4005DCB38 /* ICLFilterableViewController.m in Sources */,
 				AE9629891919FE9600A9AAC3 /* ICLUploadToDropboxViewController.m in Sources */,
 				AE21AFC71980909C00EE7644 /* ICLColourPickerViewController.m in Sources */,
 			);

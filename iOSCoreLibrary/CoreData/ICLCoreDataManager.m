@@ -154,7 +154,11 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
 
 - (void) refreshDeviceList:(BOOL) canAddCurrentDevice completionHandler:(void (^)(BOOL deviceListExisted, BOOL currentDevicePresent))completionHandler {
     _knownDeviceUUIDs = nil;
-    
+
+    if (![self doesAppSupportiCloud]) {
+        return;
+    }
+
     NSString* iCloudUUID = [[NSUserDefaults standardUserDefaults] stringForKey:Setting_iCloudUUID];
     
     // force synchronise the device list document
@@ -382,11 +386,23 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
              NSSQLitePragmasOption: @{@"journal_mode" : @"DELETE"}};
 }
 
+- (BOOL) doesAppSupportiCloud {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(doesAppSupportiCloud)]) {
+        return [self.delegate doesAppSupportiCloud];
+    }
+    
+    return YES;
+}
+
 - (BOOL) isDataStoreOnline {
     return self.currentState == essDataStoreOnline;
 }
 
 - (BOOL) iCloudAvailable {
+    if (![self doesAppSupportiCloud]) {
+        return NO;
+    }
+    
     return ([self ubiquityIdentityToken] != nil) &&
     ([[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil] != nil);
 }
@@ -408,6 +424,10 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
 }
 
 - (id) ubiquityIdentityToken {
+    if (![self doesAppSupportiCloud]) {
+        return NO;
+    }
+    
     if (Using_iOS7OrAbove &&
         ([[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil] != nil)) {
         return [[NSFileManager defaultManager] ubiquityIdentityToken];

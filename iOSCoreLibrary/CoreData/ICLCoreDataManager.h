@@ -106,5 +106,9 @@ typedef enum {
 - (void) storeDidChangeNotification;
 - (void) prepareForMigration:(BOOL) isLocalToiCloud;
 
+@optional
+
+- (BOOL) doesAppSupportiCloud;
+
 @end;
 
