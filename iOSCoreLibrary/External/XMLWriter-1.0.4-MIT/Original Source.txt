@@ -1,0 +1,1 @@
+The XMLWriter files were sourced from https://code.google.com/p/xswi/
