@@ -296,7 +296,9 @@ NSString* const kICLButton3Colour = @"Button3Colour";
         _alertViewNavController = nil;
         _alertViewPopoverController = nil;
         
-        [self.delegate alertViewControllerDidFinish:self selectedOption:selectedOption];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.delegate alertViewControllerDidFinish:self selectedOption:selectedOption];
+        });
     }
     else {
         [_alertViewNavController dismissViewControllerAnimated:YES completion:^{
