@@ -15,6 +15,9 @@
     #define Using_iPad (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     #define Using_iPhone (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
 
+    #define Using_4InchOrHigherPhone ([[UIScreen mainScreen] bounds].size.height >= ((double)568 - DBL_EPSILON))
+    #define Using_iPhone6OrLarger ([[UIScreen mainScreen] bounds].size.height >= ((double)667 - DBL_EPSILON))
+
     extern NSString* const kICLBackgroundImage;
     extern NSString* const kICLBackgroundColour;
 

@@ -152,6 +152,11 @@ float const kICLHighlightRectSizeAdjustment = 2.0f;
         
         return registeredScreens[screen];
     }
+
+    // If supported log out the screen registration
+    if (self.delegate && [self.delegate respondsToSelector:@selector(debug_ICLTrainingOverlayLog:)]) {
+        [self.delegate debug_ICLTrainingOverlayLog:[NSString stringWithFormat:@"[ICLTrainingOverlay] registerScreen: %@", screen]];
+    }
     
     registeredScreens[screen] = [[ICLTrainingOverlayData alloc] init];
     
@@ -185,6 +190,11 @@ float const kICLHighlightRectSizeAdjustment = 2.0f;
     
     // Overlay not found? should never happen
     if (!overlay) {
+        // If supported log out handleTap
+        if (self.delegate && [self.delegate respondsToSelector:@selector(debug_ICLTrainingOverlayLog:)]) {
+            [self.delegate debug_ICLTrainingOverlayLog:@"[ICLTrainingOverlay] handleTap failed to find a screen to close"];
+        }
+        
         NSLog(@"The overlay could not be found and will not be closed.");
         assert(0);
         
@@ -211,6 +221,11 @@ float const kICLHighlightRectSizeAdjustment = 2.0f;
 
 - (BOOL) resumeShowingOverlays {
     if (!activeOverlay && ([queuedOverlays count] > 0)) {
+        // If supported log out the resumption of overlay display
+        if (self.delegate && [self.delegate respondsToSelector:@selector(debug_ICLTrainingOverlayLog:)]) {
+            [self.delegate debug_ICLTrainingOverlayLog:[NSString stringWithFormat:@"[ICLTrainingOverlay] resumeShowingOverlays has %lu overlays queued", (unsigned long)[queuedOverlays count]]];
+        }
+        
         NSDictionary* showScreenRequest = [queuedOverlays firstObject];
         [queuedOverlays removeObjectAtIndex:0];
 
@@ -244,6 +259,11 @@ float const kICLHighlightRectSizeAdjustment = 2.0f;
     
     // Can't show if the overlay does not exist
     if (!overlayData) {
+        // If supported log out screen that was attempted to be shown
+        if (self.delegate && [self.delegate respondsToSelector:@selector(debug_ICLTrainingOverlayLog:)]) {
+            [self.delegate debug_ICLTrainingOverlayLog:[NSString stringWithFormat:@"[ICLTrainingOverlay] showScreen_Wrapper tried to show a screen (%@) that doesn't exist", screen]];
+        }
+        
         NSLog(@"Screen has never been registered!");
         assert(0);
         
@@ -270,6 +290,11 @@ float const kICLHighlightRectSizeAdjustment = 2.0f;
         }
         
         if (!alreadyExists) {
+            // If supported log out the queuing of the screen
+            if (self.delegate && [self.delegate respondsToSelector:@selector(debug_ICLTrainingOverlayLog:)]) {
+                [self.delegate debug_ICLTrainingOverlayLog:[NSString stringWithFormat:@"[ICLTrainingOverlay] showScreen_Wrapper adding screen %@ to the queue", screen]];
+            }
+            
             [queuedOverlays addObject:@{kICLTrainingOverlay_Screen: screen,
                                         kICLTrainingOverlay_CurrentViewController: currentVC,
                                         kICLTrainingOverlay_WebViewRect: webViewRect ? webViewRect : [NSNull null],
@@ -278,6 +303,11 @@ float const kICLHighlightRectSizeAdjustment = 2.0f;
     } // Otherwise show the overlay immediately
     else {
         activeOverlay = overlayData;
+        
+        // If supported log out the showing of the screen
+        if (self.delegate && [self.delegate respondsToSelector:@selector(debug_ICLTrainingOverlayLog:)]) {
+            [self.delegate debug_ICLTrainingOverlayLog:[NSString stringWithFormat:@"[ICLTrainingOverlay] showScreen_Wrapper showing %@", screen]];
+        }
         
         // Show the screen
         [self showScreen_Internal:overlayData currentViewController:currentVC webViewRect:webViewRect displayPosition:displayPosition];

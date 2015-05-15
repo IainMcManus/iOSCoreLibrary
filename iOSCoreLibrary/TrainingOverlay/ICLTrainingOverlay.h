@@ -52,4 +52,8 @@
 - (void) currentOverlaySequenceComplete;
 - (BOOL) readyToShowOverlays;
 
+@optional
+
+- (void) debug_ICLTrainingOverlayLog:(NSString*) message;
+
 @end;

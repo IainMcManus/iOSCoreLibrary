@@ -50,7 +50,6 @@ NSString* const kICLTrainingOverlay_ElementHasHighlight = @"ElementHighlight";
     }
     else {
         NSLog(@"Unknown element type %@ for %@", NSStringFromClass([element class]), elementDescription);
-        assert(0);
         
         return;
     }
