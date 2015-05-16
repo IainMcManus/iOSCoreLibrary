@@ -49,6 +49,8 @@ const NSInteger ICL_SecurityImageTag = 0x12345678;
     blurredImage = [self captureScreen];
     
     if (unlocked) {
+        unlocked = NO;
+        
         [self setLastCheckTime];
     }
 }
@@ -58,6 +60,8 @@ const NSInteger ICL_SecurityImageTag = 0x12345678;
     [self showSecurityImage];
     
     if (unlocked) {
+        unlocked = NO;
+        
         [self setLastCheckTime];
     }
 }

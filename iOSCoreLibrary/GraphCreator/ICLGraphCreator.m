@@ -907,7 +907,7 @@ NSString* kICLMaximumValue = @"MaximumValue";
             // Draw the labels
             __block BOOL shiftDown = NO;
             __block CGRect previousRect = CGRectZero;
-            __block CGFloat xOffset = marginLeft + pointSpacing * 0.5f;
+            __block CGFloat xOffset = marginLeft;
             [xAxisLabels enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 NSString* text = (NSString*) obj;
                 
