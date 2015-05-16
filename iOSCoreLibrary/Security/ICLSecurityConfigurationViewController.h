@@ -10,7 +10,13 @@
 
 @interface ICLSecurityConfigurationViewController : UIViewController
 
+- (void) linkToParent;
+
+- (void) storeWillChange;
+- (void) storeDidChange;
+
 - (void) refresh;
+- (void) isGoingAway;
 
 - (void) showOverlay:(BOOL) forceReshow;
 

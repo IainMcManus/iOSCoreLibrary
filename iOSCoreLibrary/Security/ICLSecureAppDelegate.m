@@ -33,10 +33,13 @@ const NSInteger ICL_SecurityImageTag = 0x12345678;
     
     KeychainItemWrapper* keychain;
     ABPadLockScreenViewController* passCodeConfirmationScreen;
+    
+    BOOL unlocked;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     authenticationAttemptCount = 0;
+    unlocked = NO;
     
     return YES;
 }
@@ -45,14 +48,18 @@ const NSInteger ICL_SecurityImageTag = 0x12345678;
     // Capture the screen
     blurredImage = [self captureScreen];
     
-    [self setLastCheckTime];
+    if (unlocked) {
+        [self setLastCheckTime];
+    }
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Show the security image
     [self showSecurityImage];
     
-    [self setLastCheckTime];
+    if (unlocked) {
+        [self setLastCheckTime];
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -83,28 +90,40 @@ const NSInteger ICL_SecurityImageTag = 0x12345678;
         [keychain setObject:(__bridge id)kSecAttrAccessibleWhenUnlocked forKey:(__bridge id)(kSecAttrAccessible)];
         
         // Authenticate the user
-        [self authenticate];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self authenticate];
+        });
     }
 }
 
 - (void) showSecurityImage {
-    UIImageView* imageView = [[UIImageView alloc]initWithFrame:[self.window frame]];
+    void (^showSecurityImageBlock)() = ^() {
+        UIImageView* imageView = [[UIImageView alloc]initWithFrame:[self.window frame]];
+        
+        [imageView setImage:blurredImage];
+        imageView.tag = ICL_SecurityImageTag;
+        imageView.userInteractionEnabled = YES;
+        
+        // We need the true parent VC
+        UIViewController* topVC = [self.window.rootViewController topViewController];
+        while ([topVC parentViewController] != nil) {
+            topVC = [topVC parentViewController];
+        }
+        
+        [topVC.view addSubview:imageView];
+    };
     
-    [imageView setImage:blurredImage];
-    imageView.tag = ICL_SecurityImageTag;
-    imageView.userInteractionEnabled = YES;
-    
-    // We need the true parent VC
-    UIViewController* topVC = [self.window.rootViewController topViewController];
-    while ([topVC parentViewController] != nil) {
-        topVC = [topVC parentViewController];
+    // Run immediately if we are on the mainthread queue it to run on the main thread
+    if ([NSThread currentThread].isMainThread) {
+        showSecurityImageBlock();
     }
-    
-    [topVC.view addSubview:imageView];
+    else {
+        dispatch_async(dispatch_get_main_queue(), showSecurityImageBlock);
+    }
 }
 
 - (void) removeSecurityImage {
-    dispatch_async(dispatch_get_main_queue(), ^{
+    void (^removeSecurityImageBlock)() = ^() {
         // We need the true parent VC
         UIViewController* topVC = [self.window.rootViewController topViewController];
         while ([topVC parentViewController] != nil) {
@@ -117,7 +136,15 @@ const NSInteger ICL_SecurityImageTag = 0x12345678;
                 [view removeFromSuperview];
             }
         }
-    });
+    };
+    
+    // Run immediately if we are on the mainthread queue it to run on the main thread
+    if ([NSThread currentThread].isMainThread) {
+        removeSecurityImageBlock();
+    }
+    else {
+        dispatch_async(dispatch_get_main_queue(), removeSecurityImageBlock);
+    }
 }
 
 - (UIImage*) captureScreen {
@@ -166,12 +193,15 @@ const NSInteger ICL_SecurityImageTag = 0x12345678;
         
         // We have checked within our check time
         if (lastTimeChecked && (fabs([lastTimeChecked timeIntervalSinceNow]) < secondsBeforeRechecking)) {
+            unlocked = YES;
             return NO;
         }
 
         return YES;
     }
 
+    unlocked = YES;
+    
     return NO;
 }
 
@@ -211,6 +241,8 @@ const NSInteger ICL_SecurityImageTag = 0x12345678;
 
     // Successful authentication updates the security check and removes the security image
     void (^authenticationBlock_Successful)(NSString*) = ^(NSString* message) {
+        unlocked = YES;
+        
         [self setLastCheckTime];
         
         [self removeSecurityImage];
@@ -257,7 +289,13 @@ const NSInteger ICL_SecurityImageTag = 0x12345678;
 
     // Show the authentication screen
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.window.rootViewController presentViewController:passCodeConfirmationScreen animated:NO completion:nil];
+        // We need the true parent VC
+        UIViewController* topVC = [self.window.rootViewController topViewController];
+        while ([topVC parentViewController] != nil) {
+            topVC = [topVC parentViewController];
+        }
+        
+        [topVC presentViewController:passCodeConfirmationScreen animated:NO completion:nil];
     });
 }
 
@@ -271,6 +309,8 @@ const NSInteger ICL_SecurityImageTag = 0x12345678;
 
 - (void)unlockWasSuccessfulForPadLockScreenViewController:(ABPadLockScreenViewController *)padLockScreenViewController {
     [padLockScreenViewController dismissViewControllerAnimated:NO completion:^{
+        unlocked = YES;
+        
         [self setLastCheckTime];
         
         [self removeSecurityImage];
