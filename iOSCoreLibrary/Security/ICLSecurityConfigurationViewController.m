@@ -81,15 +81,6 @@ typedef enum {
 
 #pragma mark Common Interfaces for Settings Wizard
 
-- (void) linkToParent {
-}
-
-- (void) storeWillChange {
-}
-
-- (void) storeDidChange {
-}
-
 - (void) refreshIsTouchIdAvailable {
     LAContext *context = [[LAContext alloc] init];
     NSError *touchIdCheckError = nil;
@@ -132,9 +123,6 @@ typedef enum {
     }
     
     [securityStatusWebView loadHTMLString:[self generateStatusHTML] baseURL:nil];
-}
-
-- (void) isGoingAway {
 }
 
 - (void) showOverlay:(BOOL) forceReshow {
