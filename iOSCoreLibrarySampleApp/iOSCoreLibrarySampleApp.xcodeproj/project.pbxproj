@@ -94,6 +94,20 @@
 			remoteGlobalIDString = AE174529177579F7007051FF;
 			remoteInfo = iOSCoreLibraryBundle;
 		};
+		AEC2A0661B6E2D3B003B9776 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AEC2A0611B6E2D3B003B9776 /* OSXCoreLibrarySampleApp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AEC2A0381B6E2D3A003B9776;
+			remoteInfo = OSXCoreLibrarySampleApp;
+		};
+		AEC2A0681B6E2D3B003B9776 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AEC2A0611B6E2D3B003B9776 /* OSXCoreLibrarySampleApp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AEC2A0511B6E2D3B003B9776;
+			remoteInfo = OSXCoreLibrarySampleAppTests;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -165,6 +179,7 @@
 		AEAD3650196E0424009BDC11 /* Pet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pet.m; sourceTree = "<group>"; };
 		AEAD3652196E0424009BDC11 /* Owner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Owner.h; sourceTree = "<group>"; };
 		AEAD3653196E0424009BDC11 /* Owner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Owner.m; sourceTree = "<group>"; };
+		AEC2A0611B6E2D3B003B9776 /* OSXCoreLibrarySampleApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OSXCoreLibrarySampleApp.xcodeproj; path = ../OSXCoreLibrarySampleApp/OSXCoreLibrarySampleApp.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -262,6 +277,7 @@
 		AEAD35C8196DFF27009BDC11 = {
 			isa = PBXGroup;
 			children = (
+				AEC2A0611B6E2D3B003B9776 /* OSXCoreLibrarySampleApp.xcodeproj */,
 				AEAD360C196DFF44009BDC11 /* iOSCoreLibrary.xcodeproj */,
 				AEAD35DA196DFF27009BDC11 /* iOSCoreLibrarySampleApp */,
 				AEAD35FC196DFF27009BDC11 /* iOSCoreLibrarySampleAppTests */,
@@ -456,6 +472,15 @@
 			path = Pets;
 			sourceTree = "<group>";
 		};
+		AEC2A0621B6E2D3B003B9776 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AEC2A0671B6E2D3B003B9776 /* OSXCoreLibrarySampleApp.app */,
+				AEC2A0691B6E2D3B003B9776 /* OSXCoreLibrarySampleAppTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -535,6 +560,10 @@
 					ProductGroup = AEAD360D196DFF44009BDC11 /* Products */;
 					ProjectRef = AEAD360C196DFF44009BDC11 /* iOSCoreLibrary.xcodeproj */;
 				},
+				{
+					ProductGroup = AEC2A0621B6E2D3B003B9776 /* Products */;
+					ProjectRef = AEC2A0611B6E2D3B003B9776 /* OSXCoreLibrarySampleApp.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -557,6 +586,20 @@
 			fileType = wrapper.cfbundle;
 			path = iOSCoreLibraryBundle.bundle;
 			remoteRef = AEAD3614196DFF44009BDC11 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AEC2A0671B6E2D3B003B9776 /* OSXCoreLibrarySampleApp.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = OSXCoreLibrarySampleApp.app;
+			remoteRef = AEC2A0661B6E2D3B003B9776 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AEC2A0691B6E2D3B003B9776 /* OSXCoreLibrarySampleAppTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = OSXCoreLibrarySampleAppTests.xctest;
+			remoteRef = AEC2A0681B6E2D3B003B9776 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

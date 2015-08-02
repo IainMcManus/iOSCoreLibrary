@@ -84,6 +84,8 @@
 		AE9629901919FF5E00A9AAC3 /* ICLUploadToDropboxViewController~iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE96298B1919FEB200A9AAC3 /* ICLUploadToDropboxViewController~iPhone.xib */; };
 		AEA4F5DE1A5F4F000030CD5C /* ICLScheduleHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA4F5DC1A5F4F000030CD5C /* ICLScheduleHelper.m */; };
 		AEA4F5DF1A5F4F000030CD5C /* ICLScheduleHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = AEA4F5DD1A5F4F000030CD5C /* ICLScheduleHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AEC2A06E1B6E2F0A003B9776 /* NSColor+Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = AEC2A06C1B6E2F0A003B9776 /* NSColor+Extensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AEC2A06F1B6E2F0A003B9776 /* NSColor+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AEC2A06D1B6E2F0A003B9776 /* NSColor+Extensions.m */; };
 		AEE765C8196A6DA600D8AAA4 /* ICLAlertViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = AEE765B8196A6DA600D8AAA4 /* ICLAlertViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AEE765C9196A6DA600D8AAA4 /* ICLAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEE765B9196A6DA600D8AAA4 /* ICLAlertViewController.m */; };
 		AEE765CA196A6DA600D8AAA4 /* ICLAlertViewController2.xib in Resources */ = {isa = PBXBuildFile; fileRef = AEE765BA196A6DA600D8AAA4 /* ICLAlertViewController2.xib */; };
@@ -214,6 +216,8 @@
 		AE96298B1919FEB200A9AAC3 /* ICLUploadToDropboxViewController~iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ICLUploadToDropboxViewController~iPhone.xib"; sourceTree = "<group>"; };
 		AEA4F5DC1A5F4F000030CD5C /* ICLScheduleHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICLScheduleHelper.m; sourceTree = "<group>"; };
 		AEA4F5DD1A5F4F000030CD5C /* ICLScheduleHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICLScheduleHelper.h; sourceTree = "<group>"; };
+		AEC2A06C1B6E2F0A003B9776 /* NSColor+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+Extensions.h"; sourceTree = "<group>"; };
+		AEC2A06D1B6E2F0A003B9776 /* NSColor+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+Extensions.m"; sourceTree = "<group>"; };
 		AEE765B8196A6DA600D8AAA4 /* ICLAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICLAlertViewController.h; sourceTree = "<group>"; };
 		AEE765B9196A6DA600D8AAA4 /* ICLAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICLAlertViewController.m; sourceTree = "<group>"; };
 		AEE765BA196A6DA600D8AAA4 /* ICLAlertViewController2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ICLAlertViewController2.xib; sourceTree = "<group>"; };
@@ -471,6 +475,8 @@
 		AEA38046179A4A2200A1CAD2 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				AEC2A06C1B6E2F0A003B9776 /* NSColor+Extensions.h */,
+				AEC2A06D1B6E2F0A003B9776 /* NSColor+Extensions.m */,
 				AE7FF7511981CE09002D3F9E /* UITextField+matchesRegex.h */,
 				AE7FF7521981CE09002D3F9E /* UITextField+matchesRegex.m */,
 				AE21AFD01980919000EE7644 /* UIButton+applyGlassStyle.h */,
@@ -652,6 +658,7 @@
 				AE42AEBD19EB519C005C3172 /* ICLTrainingOverlay.h in Headers */,
 				AEE76602196A6DC100D8AAA4 /* Reachability.h in Headers */,
 				AEE765C8196A6DA600D8AAA4 /* ICLAlertViewController.h in Headers */,
+				AEC2A06E1B6E2F0A003B9776 /* NSColor+Extensions.h in Headers */,
 				AE2C04C41B059C310057A3C3 /* ICLSecurityCommon.h in Headers */,
 				AE2C04BA1B059C200057A3C3 /* KeychainItemWrapper.h in Headers */,
 				AE42AEC419EB534F005C3172 /* UIImageEffects.h in Headers */,
@@ -826,6 +833,7 @@
 				AE21AFD71980919000EE7644 /* UIButton+applyGlassStyle.m in Sources */,
 				AE2C04931B059BDC0057A3C3 /* ABPadLockScreenSetupViewController.m in Sources */,
 				AE2C04C31B059C310057A3C3 /* ICLSecureAppDelegate.m in Sources */,
+				AEC2A06F1B6E2F0A003B9776 /* NSColor+Extensions.m in Sources */,
 				AE21AFCF1980912F00EE7644 /* NSDate+Extensions.m in Sources */,
 				AEEAA3021AC81E81004D0E78 /* XMLWriter.m in Sources */,
 				AE42AEBE19EB519C005C3172 /* ICLTrainingOverlay.m in Sources */,
@@ -976,6 +984,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -1001,7 +1011,9 @@
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
 			};
 			name = Release;
 		};
@@ -1016,10 +1028,11 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iOSCoreLibrary/iOSCoreLibrary-Prefix.pch";
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "include/$(TARGET_NAME)";
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -1039,6 +1052,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "include/$(TARGET_NAME)";
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
