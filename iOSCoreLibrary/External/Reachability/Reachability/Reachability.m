@@ -54,6 +54,7 @@
 
 #import "Reachability.h"
 
+#if TARGET_OS_IPHONE
 
 NSString *kReachabilityChangedNotification = @"kNetworkReachabilityChangedNotification";
 
@@ -309,3 +310,5 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 
 
 @end
+
+#endif // TARGET_OS_IPHONE

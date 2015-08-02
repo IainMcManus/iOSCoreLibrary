@@ -22,6 +22,8 @@
 
 #import "ABPadLockScreenAbstractViewController.h"
 
+#if TARGET_OS_IPHONE
+
 /**
  The ABPadLockScreenViewController presents a full screen pin to the user.
  Classess simply need to register as a delegate and implement the ABPadLockScreenViewControllerDelegate Protocol to recieve callbacks
@@ -78,3 +80,5 @@
 - (void)attemptsExpiredForPadLockScreenViewController:(ABPadLockScreenViewController *)padLockScreenViewController;
 
 @end
+
+#endif // TARGET_OS_IPHONE

@@ -22,6 +22,8 @@
 
 #define SIMPLE_PIN_LENGTH 4
 
+#if TARGET_OS_IPHONE
+
 #import <UIKit/UIKit.h>
 
 @class ABPinSelectionView;
@@ -87,3 +89,5 @@
 - (id)initWithFrame:(CGRect)frame complexPin:(BOOL)complexPin;
 
 @end
+
+#endif // TARGET_OS_IPHONE

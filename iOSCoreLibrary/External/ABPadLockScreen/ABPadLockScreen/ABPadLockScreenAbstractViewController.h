@@ -24,6 +24,8 @@
  Abstract Class that encapsulates common functionality between the lock and setup screen. It is not designed to be used directly
  */
 
+#if TARGET_OS_IPHONE
+
 #import <UIKit/UIKit.h>
 
 @protocol ABPadLockScreenDelegate;
@@ -64,3 +66,5 @@
 - (void)unlockWasCancelledForPadLockScreenViewController:(ABPadLockScreenAbstractViewController *)padLockScreenViewController;
 
 @end
+
+#endif // TARGET_OS_IPHONE

@@ -9,6 +9,8 @@
 #import "ICLCoreDataDeviceList.h"
 #import "ICLCoreDataManager.h"
 
+#if TARGET_OS_IPHONE
+
 @implementation ICLCoreDataDeviceList {
     NSURL* _deviceListURL;
     NSOperationQueue* _operationQueue;
@@ -46,3 +48,5 @@
 }
 
 @end
+
+#endif // TARGET_OS_IPHONE

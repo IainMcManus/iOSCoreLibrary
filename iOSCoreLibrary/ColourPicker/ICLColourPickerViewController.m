@@ -11,6 +11,8 @@
 
 NSString* ICL_Regex_RGB = @"^([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])$";
 
+#if TARGET_OS_IPHONE
+
 @interface ICLColourPickerViewController ()
 
 @end
@@ -632,3 +634,5 @@ typedef struct
 }
 
 @end
+
+#endif // TARGET_OS_IPHONE

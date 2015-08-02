@@ -9,6 +9,8 @@
 #import "ICLTrainingOverlay.h"
 #import "ICLTrainingOverlayData.h"
 
+#if TARGET_OS_IPHONE
+
 #import <UIKit/UIKit.h>
 
 #import "UIColor+extensions.h"
@@ -583,7 +585,7 @@ float const kICLHighlightRectSizeAdjustment = 2.0f;
         
         if ([overlay doesElementHaveHighlight:elementIndex] && ([elementDescription length] > 0)) {
             [html appendString:@"                <p class=\"Element\">"];
-            [html appendFormat:@"                    <span class=\"ElementBullet\" style=\"color: %@\">&#x25B6;</span>", [elementColour htmlHexString]];
+            [html appendFormat:@"                    <span class=\"ElementBullet\" style=\"color: %@\">&#x2022;</span>", [elementColour htmlHexString]];
             [html appendFormat:@"                    <span class=\"ElementDescription\">%@</span>", elementDescription];
             [html appendString:@"                </p>"];
         }
@@ -823,3 +825,5 @@ float const kICLHighlightRectSizeAdjustment = 2.0f;
 }
 
 @end
+
+#endif // TARGET_OS_IPHONE

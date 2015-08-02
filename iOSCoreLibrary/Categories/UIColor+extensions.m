@@ -8,6 +8,8 @@
 
 #import "UIColor+extensions.h"
 
+#if TARGET_OS_IPHONE
+
 @implementation UIColor (extensions)
 
 - (NSString*) hexString {
@@ -156,3 +158,5 @@
 }
 
 @end
+
+#endif // TARGET_OS_IPHONE

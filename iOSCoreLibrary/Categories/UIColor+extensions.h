@@ -6,6 +6,8 @@
 //
 //
 
+#if TARGET_OS_IPHONE
+
 #import <UIKit/UIKit.h>
 
 @interface UIColor (extensions)
@@ -25,3 +27,5 @@
 - (UIColor*) autoGenerateMuchLighterShade;
 
 @end
+
+#endif // TARGET_OS_IPHONE

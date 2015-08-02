@@ -8,6 +8,26 @@
 
 #import "NSDate+Extensions.h"
 
+#ifdef __IPHONE_8_0
+    #define ICL_DayCalendarUnit NSCalendarUnitDay
+    #define ICL_MonthCalendarUnit NSCalendarUnitMonth
+    #define ICL_YearCalendarUnit NSCalendarUnitYear
+    #define ICL_WeekdayCalendarUnit NSCalendarUnitWeekday
+    #define ICL_GregorianCalendar NSCalendarIdentifierGregorian
+#elif __MAC_10_10
+    #define ICL_DayCalendarUnit NSCalendarUnitDay
+    #define ICL_MonthCalendarUnit NSCalendarUnitMonth
+    #define ICL_YearCalendarUnit NSCalendarUnitYear
+    #define ICL_WeekdayCalendarUnit NSCalendarUnitWeekday
+    #define ICL_GregorianCalendar NSCalendarIdentifierGregorian
+#else
+    #define ICL_DayCalendarUnit NSDayCalendarUnit
+    #define ICL_MonthCalendarUnit NSMonthCalendarUnit
+    #define ICL_YearCalendarUnit NSYearCalendarUnit
+    #define ICL_WeekdayCalendarUnit NSWeekdayCalendarUnit
+    #define ICL_GregorianCalendar NSGregorianCalendar
+#endif
+
 @implementation NSDate (Extensions)
 
 + (NSCalendar*) gregorianCalendar {
@@ -15,7 +35,7 @@
 
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        calendar = [[NSCalendar alloc] initWithCalendarIdentifier:ICL_GregorianCalendar];
     });
 
     return calendar;
@@ -26,13 +46,13 @@
 }
 
 - (NSDate*) dateFloor {
-    NSDateComponents* dateComponents = [[NSDate gregorianCalendar] components:(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:self];
+    NSDateComponents* dateComponents = [[NSDate gregorianCalendar] components:(ICL_DayCalendarUnit | ICL_MonthCalendarUnit | ICL_YearCalendarUnit) fromDate:self];
     
     return [[NSDate gregorianCalendar] dateFromComponents:dateComponents];
 }
 
 - (NSDate*) dateCeil {
-    NSDateComponents* dateComponents = [[NSDate gregorianCalendar] components:(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:self];
+    NSDateComponents* dateComponents = [[NSDate gregorianCalendar] components:(ICL_DayCalendarUnit | ICL_MonthCalendarUnit | ICL_YearCalendarUnit) fromDate:self];
     
     [dateComponents setHour:23];
     [dateComponents setMinute:59];
@@ -42,7 +62,7 @@
 }
 
 - (NSDate*) startOfWeek {
-    NSDateComponents* components = [[NSDate gregorianCalendar] components:NSWeekdayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self];
+    NSDateComponents* components = [[NSDate gregorianCalendar] components:ICL_WeekdayCalendarUnit | ICL_YearCalendarUnit | ICL_MonthCalendarUnit | ICL_DayCalendarUnit fromDate:self];
     
     [components setDay:([components day] - ([components weekday] - 1))];
     
@@ -50,7 +70,7 @@
 }
 
 - (NSDate*) endOfWeek {
-    NSDateComponents* components = [[NSDate gregorianCalendar] components:NSWeekdayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self];
+    NSDateComponents* components = [[NSDate gregorianCalendar] components:ICL_WeekdayCalendarUnit | ICL_YearCalendarUnit | ICL_MonthCalendarUnit | ICL_DayCalendarUnit fromDate:self];
     
     [components setDay:([components day] + (7 - [components weekday]))];
     [components setHour:23];
@@ -61,15 +81,15 @@
 }
 
 - (NSDate*) startOfMonth {
-    NSDateComponents* components = [[NSDate gregorianCalendar] components:NSYearCalendarUnit | NSMonthCalendarUnit fromDate:self];
+    NSDateComponents* components = [[NSDate gregorianCalendar] components:ICL_YearCalendarUnit | ICL_MonthCalendarUnit fromDate:self];
     
     return [[NSDate gregorianCalendar] dateFromComponents:components];
 }
 
 - (NSDate*) endOfMonth {
-    NSDateComponents* components = [[NSDate gregorianCalendar] components:NSYearCalendarUnit | NSMonthCalendarUnit fromDate:self];
+    NSDateComponents* components = [[NSDate gregorianCalendar] components:ICL_YearCalendarUnit | ICL_MonthCalendarUnit fromDate:self];
     
-    NSRange dayRange = [[NSDate gregorianCalendar] rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:self];
+    NSRange dayRange = [[NSDate gregorianCalendar] rangeOfUnit:ICL_DayCalendarUnit inUnit:ICL_MonthCalendarUnit forDate:self];
     
     [components setDay:dayRange.length];
     [components setHour:23];
@@ -80,13 +100,13 @@
 }
 
 - (NSDate*) startOfYear {
-    NSDateComponents* components = [[NSDate gregorianCalendar] components:NSYearCalendarUnit fromDate:self];
+    NSDateComponents* components = [[NSDate gregorianCalendar] components:ICL_YearCalendarUnit fromDate:self];
     
     return [[NSDate gregorianCalendar] dateFromComponents:components];
 }
 
 - (NSDate*) endOfYear {
-    NSDateComponents* components = [[NSDate gregorianCalendar] components:NSYearCalendarUnit fromDate:self];
+    NSDateComponents* components = [[NSDate gregorianCalendar] components:ICL_YearCalendarUnit fromDate:self];
     
     [components setDay:31];
     [components setMonth:12];
@@ -118,7 +138,7 @@
 }
 
 - (NSDate*) previousMonth:(NSUInteger) monthsToMove {
-    NSDateComponents* components = [[NSDate gregorianCalendar] components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self];
+    NSDateComponents* components = [[NSDate gregorianCalendar] components:ICL_YearCalendarUnit | ICL_MonthCalendarUnit | ICL_DayCalendarUnit fromDate:self];
     
     NSInteger dayInMonth = [components day];
     
@@ -129,7 +149,7 @@
     
     // Determine the valid day range for that month
     NSDate* workingDate = [[NSDate gregorianCalendar] dateFromComponents:components];
-    NSRange dayRange = [[NSDate gregorianCalendar] rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:workingDate];
+    NSRange dayRange = [[NSDate gregorianCalendar] rangeOfUnit:ICL_DayCalendarUnit inUnit:ICL_MonthCalendarUnit forDate:workingDate];
     
     // Set the day clamping to the maximum number of days in that month
     [components setDay:MIN(dayInMonth, dayRange.length)];
@@ -142,7 +162,7 @@
 }
 
 - (NSDate*) nextMonth:(NSUInteger) monthsToMove {
-    NSDateComponents* components = [[NSDate gregorianCalendar] components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self];
+    NSDateComponents* components = [[NSDate gregorianCalendar] components:ICL_YearCalendarUnit | ICL_MonthCalendarUnit | ICL_DayCalendarUnit fromDate:self];
     
     NSInteger dayInMonth = [components day];
     
@@ -153,7 +173,7 @@
     
     // Determine the valid day range for that month
     NSDate* workingDate = [[NSDate gregorianCalendar] dateFromComponents:components];
-    NSRange dayRange = [[NSDate gregorianCalendar] rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:workingDate];
+    NSRange dayRange = [[NSDate gregorianCalendar] rangeOfUnit:ICL_DayCalendarUnit inUnit:ICL_MonthCalendarUnit forDate:workingDate];
     
     // Set the day clamping to the maximum number of days in that month
     [components setDay:MIN(dayInMonth, dayRange.length)];

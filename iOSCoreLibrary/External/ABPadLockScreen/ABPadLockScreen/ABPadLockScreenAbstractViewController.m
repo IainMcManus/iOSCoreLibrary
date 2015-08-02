@@ -25,6 +25,8 @@
 #import "ABPinSelectionView.h"
 #import <AudioToolbox/AudioToolbox.h>
 
+#if TARGET_OS_IPHONE
+
 #define lockScreenView ((ABPadLockScreenView *) [self view])
 
 @interface ABPadLockScreenAbstractViewController ()
@@ -289,3 +291,5 @@
 }
 
 @end
+
+#endif // TARGET_OS_IPHONE

@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Iain McManus. All rights reserved.
 //
 
+#if TARGET_OS_IPHONE
+
 #import <UIKit/UIKit.h>
 
 typedef enum {
@@ -55,3 +57,5 @@ typedef enum {
 - (void) copyFilterStateFrom:(ICLFilterableViewController*) otherController;
 
 @end
+
+#endif // TARGET_OS_IPHONE

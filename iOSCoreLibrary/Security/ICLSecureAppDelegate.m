@@ -23,6 +23,8 @@
 
 const NSInteger ICL_SecurityImageTag = 0x12345678;
 
+#if TARGET_OS_IPHONE
+
 @interface ICLSecureAppDelegate () <ABPadLockScreenViewControllerDelegate>
 
 @end
@@ -37,9 +39,17 @@ const NSInteger ICL_SecurityImageTag = 0x12345678;
     BOOL unlocked;
 }
 
+- (void) appBecameLocked {
+    unlocked = NO;
+}
+
+- (void) appBecameUnlocked {
+    unlocked = YES;
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     authenticationAttemptCount = 0;
-    unlocked = NO;
+    [self appBecameLocked];
     
     return YES;
 }
@@ -49,7 +59,7 @@ const NSInteger ICL_SecurityImageTag = 0x12345678;
     blurredImage = [self captureScreen];
     
     if (unlocked) {
-        unlocked = NO;
+        [self appBecameLocked];
         
         [self setLastCheckTime];
     }
@@ -60,7 +70,7 @@ const NSInteger ICL_SecurityImageTag = 0x12345678;
     [self showSecurityImage];
     
     if (unlocked) {
-        unlocked = NO;
+        [self appBecameLocked];
         
         [self setLastCheckTime];
     }
@@ -197,14 +207,15 @@ const NSInteger ICL_SecurityImageTag = 0x12345678;
         
         // We have checked within our check time
         if (lastTimeChecked && (fabs([lastTimeChecked timeIntervalSinceNow]) < secondsBeforeRechecking)) {
-            unlocked = YES;
+            [self appBecameUnlocked];
+            
             return NO;
         }
 
         return YES;
     }
 
-    unlocked = YES;
+    [self appBecameUnlocked];
     
     return NO;
 }
@@ -245,7 +256,7 @@ const NSInteger ICL_SecurityImageTag = 0x12345678;
 
     // Successful authentication updates the security check and removes the security image
     void (^authenticationBlock_Successful)(NSString*) = ^(NSString* message) {
-        unlocked = YES;
+        [self appBecameUnlocked];
         
         [self setLastCheckTime];
         
@@ -313,7 +324,7 @@ const NSInteger ICL_SecurityImageTag = 0x12345678;
 
 - (void)unlockWasSuccessfulForPadLockScreenViewController:(ABPadLockScreenViewController *)padLockScreenViewController {
     [padLockScreenViewController dismissViewControllerAnimated:NO completion:^{
-        unlocked = YES;
+        [self appBecameUnlocked];
         
         [self setLastCheckTime];
         
@@ -334,3 +345,5 @@ const NSInteger ICL_SecurityImageTag = 0x12345678;
 }
 
 @end
+
+#endif // TARGET_OS_IPHONE

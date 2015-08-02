@@ -24,6 +24,8 @@
 #import "ABPadButton.h"
 #import "ABPinSelectionView.h"
 
+#if TARGET_OS_IPHONE
+
 #define animationLength 0.15
 #define IS_IPHONE5 ([UIScreen mainScreen].bounds.size.height==568)
 #define IS_IOS6_OR_LOWER (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1)
@@ -555,3 +557,5 @@
 }
 
 @end
+
+#endif // TARGET_OS_IPHONE

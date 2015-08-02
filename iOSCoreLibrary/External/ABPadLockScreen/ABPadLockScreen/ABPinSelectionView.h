@@ -20,6 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#if TARGET_OS_IPHONE
+
 #import <UIKit/UIKit.h>
 
 /**
@@ -35,3 +37,5 @@
 
 extern CGFloat const ABPinSelectionViewWidth;
 extern CGFloat const ABPinSelectionViewHeight;
+
+#endif // TARGET_OS_IPHONE

@@ -8,7 +8,13 @@
 
 #import "ICLGraphCreator.h"
 
+#if TARGET_OS_IPHONE
 #import "UIColor+Extensions.h"
+#else
+#import "NSColor+Extensions.h"
+#endif
+
+#if TARGET_OS_IPHONE
 
 #import <UIKit/UIKit.h>
 
@@ -1305,3 +1311,5 @@ NSString* kICLMaximumValue = @"MaximumValue";
 }
 
 @end
+
+#endif // TARGET_OS_IPHONE

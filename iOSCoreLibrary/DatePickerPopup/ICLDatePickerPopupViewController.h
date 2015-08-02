@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Iain McManus. All rights reserved.
 //
 
+#if TARGET_OS_IPHONE
+
 #import <UIKit/UIKit.h>
 
 typedef enum {
@@ -44,3 +46,5 @@ typedef enum {
 - (void) datePickerPopupViewControllerDidChangeDates:(ICLDatePickerPopupViewController*) view startDate:(NSDate*) startDate endDate:(NSDate*) endDate;
 
 @end;
+
+#endif // TARGET_OS_IPHONE

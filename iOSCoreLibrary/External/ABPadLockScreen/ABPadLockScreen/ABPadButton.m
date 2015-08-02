@@ -25,6 +25,8 @@
 
 #define animationLength 0.15
 
+#if TARGET_OS_IPHONE
+
 @interface ABPadButton()
 
 @property (nonatomic, strong) UIView *selectedView;
@@ -191,3 +193,5 @@
 
 CGFloat const ABPadButtonHeight = 75;
 CGFloat const ABPadButtonWidth = 75;
+
+#endif // TARGET_OS_IPHONE

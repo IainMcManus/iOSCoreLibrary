@@ -26,6 +26,8 @@ NSString* Setting_MigrationFromCloudPerformedBase = @"iCloud.%@.MigrationPerform
 NSString* Setting_iCloudUUID = @"iCloud.UUID";
 NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
 
+#if TARGET_OS_IPHONE
+
 @interface ICLCoreDataManager() <ICLAlertViewControllerDelegate, UIAlertViewDelegate>
 - (id)initInstance;
 @end
@@ -1316,3 +1318,5 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
 }
 
 @end
+
+#endif // TARGET_OS_IPHONE

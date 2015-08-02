@@ -11,6 +11,8 @@
 
 #import "ICLAlertViewController.h"
 
+#if TARGET_OS_IPHONE
+
 typedef enum {
     essUninitialised,
     essConvertingLegacyDataToCoreData,
@@ -112,3 +114,4 @@ typedef enum {
 
 @end;
 
+#endif // TARGET_OS_IPHONE

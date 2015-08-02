@@ -7,6 +7,8 @@
 
 #import "UIViewController+Extensions.h"
 
+#if TARGET_OS_IPHONE
+
 @implementation UIViewController (Extensions)
 
 // This code is from an answer Stack Overflow to this question
@@ -65,3 +67,5 @@
 }
 
 @end
+
+#endif // TARGET_OS_IPHONE

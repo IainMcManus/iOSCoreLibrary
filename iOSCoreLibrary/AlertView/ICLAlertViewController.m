@@ -20,6 +20,8 @@ NSString* const kICLButton1Colour = @"Button1Colour";
 NSString* const kICLButton2Colour = @"Button2Colour";
 NSString* const kICLButton3Colour = @"Button3Colour";
 
+#if TARGET_OS_IPHONE
+
 @interface ICLAlertViewController () <UIPopoverControllerDelegate>
 
 @end
@@ -307,3 +309,5 @@ NSString* const kICLButton3Colour = @"Button3Colour";
     }
 }
 @end
+
+#endif // TARGET_OS_IPHONE

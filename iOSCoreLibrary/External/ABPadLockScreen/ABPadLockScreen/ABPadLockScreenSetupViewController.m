@@ -27,6 +27,8 @@
 
 #define lockScreenView ((ABPadLockScreenView *) [self view])
 
+#if TARGET_OS_IPHONE
+
 @interface ABPadLockScreenSetupViewController ()
 
 @property (nonatomic, strong) NSString *enteredPin;
@@ -133,3 +135,5 @@
 }
 
 @end
+
+#endif // TARGET_OS_IPHONE

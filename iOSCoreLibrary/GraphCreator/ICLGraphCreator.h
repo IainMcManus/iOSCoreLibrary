@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#if TARGET_OS_IPHONE
+
 typedef enum {
     iclgtPieChart,
     iclgtHollowPieChart,
@@ -52,3 +54,5 @@ extern NSString* kICLMaximumValue;
      showLegendForHidden:(BOOL) showLegendForHidden;
 
 @end
+
+#endif // TARGET_OS_IPHONE

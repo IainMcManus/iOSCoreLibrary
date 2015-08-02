@@ -8,6 +8,8 @@
 
 #import "UITextField+matchesRegex.h"
 
+#if TARGET_OS_IPHONE
+
 @implementation UITextField (matchesRegex)
 
 - (BOOL) matchesRegex:(NSString *)inRegex {
@@ -27,3 +29,5 @@
 }
 
 @end
+
+#endif // TARGET_OS_IPHONE

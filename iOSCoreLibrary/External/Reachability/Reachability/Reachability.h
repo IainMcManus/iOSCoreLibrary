@@ -49,6 +49,8 @@
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <netinet/in.h>
 
+#if TARGET_OS_IPHONE
+
 
 typedef enum : NSInteger {
 	NotReachable = 0,
@@ -98,3 +100,5 @@ extern NSString *kReachabilityChangedNotification;
 @end
 
 
+
+#endif // TARGET_OS_IPHONE

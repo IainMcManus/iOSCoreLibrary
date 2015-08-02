@@ -10,6 +10,8 @@
 #import "UIViewController+Extensions.h"
 #import "ICLDatePickerTransition.h"
 
+#if TARGET_OS_IPHONE
+
 @interface ICLDatePickerPopupViewController () <UIPopoverControllerDelegate, UIViewControllerTransitioningDelegate>
 
 @end
@@ -156,3 +158,5 @@
 }
 
 @end
+
+#endif // TARGET_OS_IPHONE

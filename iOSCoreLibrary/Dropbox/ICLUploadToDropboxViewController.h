@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Iain McManus. All rights reserved.
 //
 
+#if TARGET_OS_IPHONE
+
 #import <UIKit/UIKit.h>
 
 #import "BuildFlags.h"
@@ -56,3 +58,5 @@ extern NSString* const kICLMeterGlow;
 @end;
 
 #endif // ICL_Using_Dropbox
+
+#endif // TARGET_OS_IPHONE

@@ -8,6 +8,7 @@
 
 #import "ICLUploadToDropboxViewController.h"
 
+#if TARGET_OS_IPHONE
 #if ICL_Using_Dropbox
 
 #import "UIButton+applyGlassStyle.h"
@@ -440,3 +441,4 @@ NSString* const kICLMeterGlow = @"MeterGlow";
 @end
 
 #endif // ICL_Using_Dropbox
+#endif // TARGET_OS_IPHONE

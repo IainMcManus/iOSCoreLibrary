@@ -49,6 +49,8 @@
 
 #import "UIImageEffects.h"
 
+#if TARGET_OS_IPHONE
+
 @import Accelerate;
 
 @implementation UIImageEffects
@@ -303,3 +305,5 @@ void cleanupBuffer(void *userData, void *buf_data)
 
 @end
 
+
+#endif // TARGET_OS_IPHONE

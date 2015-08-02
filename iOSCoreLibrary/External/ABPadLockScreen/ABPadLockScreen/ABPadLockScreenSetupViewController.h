@@ -28,6 +28,8 @@
  */
 #import "ABPadLockScreenAbstractViewController.h"
 
+#if TARGET_OS_IPHONE
+
 @class ABPadLockScreenSetupViewController;
 @protocol ABPadLockScreenSetupViewControllerDelegate;
 
@@ -49,3 +51,5 @@
 - (void)pinSet:(NSString *)pin padLockScreenSetupViewController:(ABPadLockScreenSetupViewController *)padLockScreenViewController;
 
 @end
+
+#endif // TARGET_OS_IPHONE

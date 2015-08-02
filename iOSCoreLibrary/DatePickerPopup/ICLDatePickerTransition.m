@@ -8,6 +8,8 @@
 
 #import "ICLDatePickerTransition.h"
 
+#if TARGET_OS_IPHONE
+
 @implementation ICLDatePickerTransition
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext
@@ -69,3 +71,5 @@
 }
 
 @end
+
+#endif // TARGET_OS_IPHONETARGET_OS_IPHONE

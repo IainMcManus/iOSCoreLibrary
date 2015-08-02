@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Iain McManus. All rights reserved.
 //
 
+#if TARGET_OS_IPHONE
+
 #import <UIKit/UIKit.h>
 
 #import "iOSCoreLibraryCommon.h"
@@ -64,3 +66,5 @@ extern NSString* const kICLButton3Colour;
 - (void) alertViewControllerDidFinish:(ICLAlertViewController*) alertView selectedOption:(NSUInteger) option;
 
 @end;
+
+#endif // TARGET_OS_IPHONE

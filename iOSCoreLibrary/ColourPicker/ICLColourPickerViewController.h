@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Iain McManus. All rights reserved.
 //
 
+#if TARGET_OS_IPHONE
+
 #import <UIKit/UIKit.h>
 
 @protocol ICLColourPickerViewControllerDelegate;
@@ -51,3 +53,5 @@
 - (void) colourPickerViewControllerDidCancel:(ICLColourPickerViewController*) viewController;
 
 @end;
+
+#endif // TARGET_OS_IPHONE

@@ -10,6 +10,8 @@
 #import "UIColor+extensions.h"
 #import <QuartzCore/QuartzCore.h>
 
+#if TARGET_OS_IPHONE
+
 @implementation UIButton (applyGlassStyle)
 
 - (void) applyGlassStyle:(GlassButtonSize) inButtonSize colour:(UIColor*) inColour {
@@ -158,3 +160,6 @@
 }
 
 @end
+
+
+#endif // TARGET_OS_IPHONE

@@ -6,6 +6,8 @@
 //
 //
 
+#if TARGET_OS_IPHONE
+
 #import <UIKit/UIKit.h>
 
 typedef enum {
@@ -21,3 +23,5 @@ typedef enum {
 - (void) applyGlassStyle:(GlassButtonSize) inButtonSize colour:(UIColor*) inColour autoColourText:(BOOL) autoColourText;
 
 @end
+
+#endif // TARGET_OS_IPHONE

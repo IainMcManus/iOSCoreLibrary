@@ -14,6 +14,7 @@ NSString* const kICLTrainingOverlay_ElementControls = @"ElementControls";
 NSString* const kICLTrainingOverlay_ElementDescription = @"ElementDescription";
 NSString* const kICLTrainingOverlay_ElementHasHighlight = @"ElementHighlight";
 
+#if TARGET_OS_IPHONE
 @implementation ICLTrainingOverlayData
 
 - (void) addElement_Internal:(NSObject*) element description:(NSString*) elementDescription hasHighlight:(BOOL) hasHighlight {
@@ -306,3 +307,5 @@ NSString* const kICLTrainingOverlay_ElementHasHighlight = @"ElementHighlight";
 }
 
 @end
+
+#endif // TARGET_OS_IPHONE

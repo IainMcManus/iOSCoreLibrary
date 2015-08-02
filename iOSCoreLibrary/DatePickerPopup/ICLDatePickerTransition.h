@@ -7,6 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+
+#if TARGET_OS_IPHONE
+
 #import <UIKit/UIKit.h>
 
 @interface ICLDatePickerTransition : NSObject<UIViewControllerAnimatedTransitioning>
@@ -14,3 +17,5 @@
 @property (assign, nonatomic) BOOL isPresenting;
 
 @end
+
+#endif // TARGET_OS_IPHONE

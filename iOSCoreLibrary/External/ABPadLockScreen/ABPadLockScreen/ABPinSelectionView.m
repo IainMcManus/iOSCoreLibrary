@@ -23,6 +23,8 @@
 #import "ABPinSelectionView.h"
 #import <QuartzCore/QuartzCore.h>
 
+#if TARGET_OS_IPHONE
+
 #define animationLength 0.15
 
 @interface ABPinSelectionView()
@@ -110,3 +112,5 @@
 
 CGFloat const ABPinSelectionViewWidth = 10;
 CGFloat const ABPinSelectionViewHeight = 10;
+
+#endif // TARGET_OS_IPHONE

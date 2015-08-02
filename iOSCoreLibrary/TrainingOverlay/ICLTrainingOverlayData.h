@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Iain McManus. All rights reserved.
 //
 
+#if TARGET_OS_IPHONE
+
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
@@ -37,3 +39,5 @@
 - (BOOL) doesElementHaveHighlight:(NSUInteger) elementIndex;
 
 @end
+
+#endif // TARGET_OS_IPHONE

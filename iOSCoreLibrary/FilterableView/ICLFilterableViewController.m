@@ -12,6 +12,8 @@
 #import "ICLDatePickerPopupViewController.h"
 #import "NSBundle+InternalExtensions.h"
 
+#if TARGET_OS_IPHONE
+
 @interface ICLFilterableViewController () <UIActionSheetDelegate, ICLDatePickerPopupViewControllerDelegate>
 
 @end
@@ -391,3 +393,5 @@
 }
 
 @end
+
+#endif // TARGET_OS_IPHONE
