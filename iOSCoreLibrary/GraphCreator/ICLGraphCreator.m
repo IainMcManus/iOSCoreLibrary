@@ -248,6 +248,15 @@ NSString* kICLMaximumValue = @"MaximumValue";
         const NSString* kMissingText_Label = @"MissingText.Label";
         const NSString* kMissingText_Value = @"MissingText.Value";
         
+        // Define the paragraph style and attributes
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.lineBreakMode = NSLineBreakByClipping;
+        paragraphStyle.alignment = NSTextAlignmentCenter;
+        NSDictionary* fontAttributes = @{NSFontAttributeName: pieChartLabelFont,
+                                         NSParagraphStyleAttributeName: paragraphStyle};
+        NSDictionary* legendFontAttributes = @{NSFontAttributeName: legendLabelFont,
+                                               NSParagraphStyleAttributeName: paragraphStyle};
+        
         __block CGFloat widestText = 0;
         __block CGFloat highestText = 0;
         
@@ -270,10 +279,10 @@ NSString* kICLMaximumValue = @"MaximumValue";
             }
             
             NSString* labelString = obj;
-            CGSize labelStringSize = [labelString sizeWithFont:pieChartLabelFont];
-            
+            CGSize labelStringSize = [labelString sizeWithAttributes:@{NSFontAttributeName: pieChartLabelFont}];
+
             NSString* valueString = valueStrings[idx];
-            CGSize valueStringSize = [valueString sizeWithFont:pieChartLabelFont];
+            CGSize valueStringSize = [valueString sizeWithAttributes:@{NSFontAttributeName: pieChartLabelFont}];
             
             // Determine the size of the label and value combined
             CGSize textSize = CGSizeMake(MAX(labelStringSize.width, valueStringSize.width),
@@ -330,17 +339,13 @@ NSString* kICLMaximumValue = @"MaximumValue";
             if (textFits) {
                 CGContextSaveGState(context);
                 CGContextSetFillColorWithColor(context, cgColour);
-                
+
                 [labelString drawInRect:textRect
-                               withFont:pieChartLabelFont
-                          lineBreakMode:NSLineBreakByClipping
-                              alignment:NSTextAlignmentCenter];
+                         withAttributes:fontAttributes];
                 
                 textRect.origin = CGPointMake(textRect.origin.x, textRect.origin.y + labelStringSize.height + 5);
                 [valueString drawInRect:textRect
-                               withFont:pieChartLabelFont
-                          lineBreakMode:NSLineBreakByClipping
-                              alignment:NSTextAlignmentCenter];
+                         withAttributes:fontAttributes];
                 
                 CGContextRestoreGState(context);
             }
@@ -406,10 +411,10 @@ NSString* kICLMaximumValue = @"MaximumValue";
                 CGContextRestoreGState(labelContext);
                 
                 NSString* labelString = obj[kMissingText_Label];
-                CGSize labelStringSize = [labelString sizeWithFont:legendLabelFont];
+                CGSize labelStringSize = [labelString sizeWithAttributes:@{NSFontAttributeName: legendLabelFont}];
                 
                 NSString* valueString = obj[kMissingText_Value];
-                CGSize valueStringSize = [valueString sizeWithFont:legendLabelFont];
+                CGSize valueStringSize = [valueString sizeWithAttributes:@{NSFontAttributeName: legendLabelFont}];
                 
                 // Determine the size of the label and value combined
                 CGSize textSize = CGSizeMake(MAX(labelStringSize.width, valueStringSize.width),
@@ -434,15 +439,11 @@ NSString* kICLMaximumValue = @"MaximumValue";
                 CGContextSetFillColorWithColor(labelContext, cgColour);
                 
                 [labelString drawInRect:textRect
-                               withFont:legendLabelFont
-                          lineBreakMode:NSLineBreakByClipping
-                              alignment:NSTextAlignmentCenter];
+                               withAttributes:legendFontAttributes];
                 
                 textRect.origin = CGPointMake(textRect.origin.x, textRect.origin.y + labelStringSize.height + 5);
                 [valueString drawInRect:textRect
-                               withFont:legendLabelFont
-                          lineBreakMode:NSLineBreakByClipping
-                              alignment:NSTextAlignmentCenter];
+                               withAttributes:legendFontAttributes];
                 
                 CGContextRestoreGState(labelContext);
                 
@@ -622,6 +623,13 @@ NSString* kICLMaximumValue = @"MaximumValue";
         
         CGColorSpaceRef colourSpace = CGColorSpaceCreateDeviceRGB();
         
+        // Define the paragraph style and attributes
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.lineBreakMode = NSLineBreakByClipping;
+        paragraphStyle.alignment = NSTextAlignmentCenter;
+        NSDictionary* fontAttributes = @{NSFontAttributeName: textFont,
+                                         NSParagraphStyleAttributeName: paragraphStyle};
+        
         // draw all of the bars
         __block CGFloat xOffset = marginLeft + barMarginWidth * 0.5f;
         [valueLabels enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -649,7 +657,7 @@ NSString* kICLMaximumValue = @"MaximumValue";
             
             // calculate the size and location of the bar label
             NSString* labelString = obj;
-            CGSize textSize = [labelString sizeWithFont:textFont];
+            CGSize textSize = [labelString sizeWithAttributes:@{NSFontAttributeName: textFont}];
 
             // Only draw the labels if there is sufficient room
             if (textSize.height < barRect.size.width) {
@@ -667,14 +675,12 @@ NSString* kICLMaximumValue = @"MaximumValue";
                 CGContextConcatCTM(context, CGAffineTransformMakeTranslation(-textRect.origin.x, -textRect.origin.y));
                 
                 [labelString drawInRect:textRect
-                               withFont:textFont
-                          lineBreakMode:NSLineBreakByClipping
-                              alignment:NSTextAlignmentCenter];
+                               withAttributes:fontAttributes];
                 
                 CGContextRestoreGState(context);
                 
                 NSString* valueString = valueStrings[idx];
-                textSize = [valueString sizeWithFont:textFont];
+                textSize = [valueString sizeWithAttributes:@{NSFontAttributeName: textFont}];
                 
                 // slightly offset the text by extending the width
                 textSize.width += marginTop;
@@ -696,9 +702,7 @@ NSString* kICLMaximumValue = @"MaximumValue";
                 CGContextConcatCTM(context, CGAffineTransformMakeTranslation(-textRect.origin.x, -textRect.origin.y));
                 
                 [valueString drawInRect:textRect
-                               withFont:textFont
-                          lineBreakMode:NSLineBreakByClipping
-                              alignment:NSTextAlignmentCenter];
+                               withAttributes:fontAttributes];
                 
                 CGContextRestoreGState(context);
             }
@@ -867,6 +871,13 @@ NSString* kICLMaximumValue = @"MaximumValue";
         if ([yAxisLabels count] > 0) {
             CGFloat fontSize = attributes[kICLFontSize] ? [attributes[kICLFontSize] floatValue] : 12.0f;
             UIFont* textFont = [UIFont fontWithName:@"HelveticaNeue-Thin" size:fontSize];
+            
+            // Define the paragraph style and attributes
+            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+            paragraphStyle.lineBreakMode = NSLineBreakByClipping;
+            paragraphStyle.alignment = NSTextAlignmentCenter;
+            NSDictionary* fontAttributes = @{NSFontAttributeName: textFont,
+                                             NSParagraphStyleAttributeName: paragraphStyle};
 
             CGContextSetFillColorWithColor(context, [UIColor blackColor].CGColor);
 
@@ -881,14 +892,14 @@ NSString* kICLMaximumValue = @"MaximumValue";
                 else {
                     NSString* text = (NSString*) obj;
                     
-                    CGSize textSize = [text sizeWithFont:textFont];
+                    CGSize textSize = [text sizeWithAttributes:@{NSFontAttributeName: textFont}];
                     
                     CGRect textRect = CGRectMake(marginLeft - textSize.width - marginLeft * 0.075f,
                                                  marginTop + maximumHeight - (heightIncrement * idx) - (textSize.height * 0.5f),
                                                  textSize.width,
                                                  textSize.height);
                     
-                    [text drawInRect:textRect withFont:textFont];
+                    [text drawInRect:textRect withAttributes:fontAttributes];
                     
                     CGContextBeginPath(context);
                     CGContextMoveToPoint(context, point.x, point.y);
@@ -908,6 +919,13 @@ NSString* kICLMaximumValue = @"MaximumValue";
             CGFloat fontSize = attributes[kICLFontSize] ? [attributes[kICLFontSize] floatValue] : 12.0f;
             UIFont* textFont = [UIFont fontWithName:@"HelveticaNeue-Thin" size:fontSize];
             
+            // Define the paragraph style and attributes
+            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+            paragraphStyle.lineBreakMode = NSLineBreakByClipping;
+            paragraphStyle.alignment = NSTextAlignmentCenter;
+            NSDictionary* fontAttributes = @{NSFontAttributeName: textFont,
+                                             NSParagraphStyleAttributeName: paragraphStyle};
+            
             CGContextSetFillColorWithColor(context, [UIColor blackColor].CGColor);
             
             // Draw the labels
@@ -917,7 +935,7 @@ NSString* kICLMaximumValue = @"MaximumValue";
             [xAxisLabels enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 NSString* text = (NSString*) obj;
                 
-                CGSize textSize = [text sizeWithFont:textFont];
+                CGSize textSize = [text sizeWithAttributes:@{NSFontAttributeName: textFont}];
                 
                 CGFloat yOffset = shiftDown ? marginBottom * 0.15f : 0;
                 
@@ -928,7 +946,7 @@ NSString* kICLMaximumValue = @"MaximumValue";
                 
                 // Only draw if we won't collide with previously drawn text
                 if (!CGRectIntersectsRect(textRect, previousRect) && CGRectContainsRect(imageRect, textRect)) {
-                    [text drawInRect:textRect withFont:textFont];
+                    [text drawInRect:textRect withAttributes:fontAttributes];
                     previousRect = textRect;
                     
                     CGPoint point = CGPointMake(xOffset + pointSpacing * idx, marginTop + maximumHeight);
@@ -1061,6 +1079,13 @@ NSString* kICLMaximumValue = @"MaximumValue";
             CGFloat fontSize = attributes[kICLFontSize] ? [attributes[kICLFontSize] floatValue] : 12.0f;
             UIFont* textFont = [UIFont fontWithName:@"HelveticaNeue-Thin" size:fontSize];
             
+            // Define the paragraph style and attributes
+            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+            paragraphStyle.lineBreakMode = NSLineBreakByClipping;
+            paragraphStyle.alignment = NSTextAlignmentCenter;
+            NSDictionary* fontAttributes = @{NSFontAttributeName: textFont,
+                                             NSParagraphStyleAttributeName: paragraphStyle};
+            
             CGContextSetFillColorWithColor(context, [UIColor blackColor].CGColor);
             
             // Draw the labels
@@ -1074,14 +1099,14 @@ NSString* kICLMaximumValue = @"MaximumValue";
                 else {
                     NSString* text = (NSString*) obj;
                     
-                    CGSize textSize = [text sizeWithFont:textFont];
+                    CGSize textSize = [text sizeWithAttributes:@{NSFontAttributeName: textFont}];
                     
                     CGRect textRect = CGRectMake(marginLeft - textSize.width - marginLeft * 0.075f,
                                                  marginTop + maximumHeight - (heightIncrement * idx) - (textSize.height * 0.5f),
                                                  textSize.width,
                                                  textSize.height);
                     
-                    [text drawInRect:textRect withFont:textFont];
+                    [text drawInRect:textRect withAttributes:fontAttributes];
                     
                     CGContextBeginPath(context);
                     CGContextMoveToPoint(context, point.x, point.y);
@@ -1101,6 +1126,13 @@ NSString* kICLMaximumValue = @"MaximumValue";
             CGFloat fontSize = attributes[kICLFontSize] ? [attributes[kICLFontSize] floatValue] : 12.0f;
             UIFont* textFont = [UIFont fontWithName:@"HelveticaNeue-Thin" size:fontSize];
             
+            // Define the paragraph style and attributes
+            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+            paragraphStyle.lineBreakMode = NSLineBreakByClipping;
+            paragraphStyle.alignment = NSTextAlignmentCenter;
+            NSDictionary* fontAttributes = @{NSFontAttributeName: textFont,
+                                             NSParagraphStyleAttributeName: paragraphStyle};
+            
             CGContextSetFillColorWithColor(context, [UIColor blackColor].CGColor);
             
             // Draw the labels
@@ -1110,7 +1142,7 @@ NSString* kICLMaximumValue = @"MaximumValue";
             [xAxisLabels enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 NSString* text = (NSString*) obj;
                 
-                CGSize textSize = [text sizeWithFont:textFont];
+                CGSize textSize = [text sizeWithAttributes:@{NSFontAttributeName: textFont}];
                 
                 CGFloat yOffset = shiftDown ? marginBottom * 0.15f : 0;
                 
@@ -1121,7 +1153,7 @@ NSString* kICLMaximumValue = @"MaximumValue";
                 
                 // Only draw if we won't collide with previously drawn text
                 if (!CGRectIntersectsRect(textRect, previousRect) && CGRectContainsRect(imageRect, textRect)) {
-                    [text drawInRect:textRect withFont:textFont];
+                    [text drawInRect:textRect withAttributes:fontAttributes];
                     previousRect = textRect;
                     
                     CGPoint point = CGPointMake(xOffset + barWidth * idx, marginTop + maximumHeight);
@@ -1148,10 +1180,17 @@ NSString* kICLMaximumValue = @"MaximumValue";
         CGFloat legendFontSize = attributes[kICLFontSize_LegendLabel] ? [attributes[kICLFontSize_LegendLabel] floatValue] : 12.0f;
         UIFont* legendLabelFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:legendFontSize];
         
+        // Define the paragraph style and attributes
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.lineBreakMode = NSLineBreakByClipping;
+        paragraphStyle.alignment = NSTextAlignmentCenter;
+        NSDictionary* legendFontAttributes = @{NSFontAttributeName: legendLabelFont,
+                                         NSParagraphStyleAttributeName: paragraphStyle};
+        
         // Determine the widest and tallest label data
         [categoryOrders enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             NSString* labelString = obj;
-            CGSize labelStringSize = [labelString sizeWithFont:legendLabelFont];
+            CGSize labelStringSize = [labelString sizeWithAttributes:@{NSFontAttributeName: legendLabelFont}];
             
             widestText = MAX(widestText, labelStringSize.width);
             highestText = MAX(highestText, labelStringSize.height);
@@ -1202,7 +1241,7 @@ NSString* kICLMaximumValue = @"MaximumValue";
             CGContextRestoreGState(labelContext);
 
             // Determine the size of the label
-            CGSize textSize = [category sizeWithFont:legendLabelFont];
+            CGSize textSize = [category sizeWithAttributes:@{NSFontAttributeName: legendLabelFont}];
             
             // Work out the final text rect
             CGRect textRect = CGRectMake(workingX + (labelWidth - textSize.width) / 2,
@@ -1223,9 +1262,7 @@ NSString* kICLMaximumValue = @"MaximumValue";
             CGContextSetFillColorWithColor(labelContext, cgColour);
             
             [category drawInRect:textRect
-                           withFont:legendLabelFont
-                      lineBreakMode:NSLineBreakByClipping
-                          alignment:NSTextAlignmentCenter];
+                  withAttributes:legendFontAttributes];
             
             CGContextRestoreGState(labelContext);
             

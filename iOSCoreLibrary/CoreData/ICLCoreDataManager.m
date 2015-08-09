@@ -430,8 +430,7 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
         return NO;
     }
     
-    if (Using_iOS7OrAbove &&
-        ([[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil] != nil)) {
+    if ([[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil] != nil) {
         return [[NSFileManager defaultManager] ubiquityIdentityToken];
     }
     else {
@@ -456,7 +455,7 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
     [userDefaults synchronize];
     
     id identityToken = [self ubiquityIdentityToken];
-    NSString* tokenString = identityToken ? [[NSKeyedArchiver archivedDataWithRootObject:identityToken] base64Encoding] : nil;
+    NSString* tokenString = identityToken ? [[NSKeyedArchiver archivedDataWithRootObject:identityToken] base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength] : nil;
     
     // user has enabled iCloud
     if ([userDefaults boolForKey:Setting_iCloudEnabled]) {
@@ -568,15 +567,6 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
             [userDefaults synchronize];
         }
         
-        // Are we running a version of iOS below 7?
-        // If so iCloud will not be used due to reliablilty issues.
-        if (!Using_iOS7OrAbove) {
-            // Force iCloud to be disabled by disabling the flag and removing any stored identity token
-            [userDefaults setBool:NO forKey:Setting_iCloudEnabled];
-            [userDefaults removeObjectForKey:Setting_IdentityToken];
-            [userDefaults synchronize];
-        }
-        
         // The local store should always be present. If it is not at this point then we recreate it with minimal data
         if (!isLocalStorePresent) {
             // flag the minimal data import as performed
@@ -655,7 +645,7 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
                     
                     self.accountChangedView.delegate = self;
                     
-                    NSString* tokenString = identityToken ? [[NSKeyedArchiver archivedDataWithRootObject:identityToken] base64Encoding] : nil;
+                    NSString* tokenString = identityToken ? [[NSKeyedArchiver archivedDataWithRootObject:identityToken] base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength] : nil;
                     
                     NSString* Setting_MigrationToCloudPerformed = [NSString stringWithFormat:Setting_MigrationToCloudPerformedBase, tokenString];
                     NSString* Setting_MigrationFromCloudPerformed = identityToken ? [NSString stringWithFormat:Setting_MigrationFromCloudPerformedBase, tokenString] : nil;
@@ -729,7 +719,7 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
     
     // The user has made a choice if iCloud can be enabled or not
     if (self.currentState == essReadyToInitialiseDataStore) {
-        NSString* tokenString = identityToken ? [[NSKeyedArchiver archivedDataWithRootObject:identityToken] base64Encoding] : nil;
+        NSString* tokenString = identityToken ? [[NSKeyedArchiver archivedDataWithRootObject:identityToken] base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength] : nil;
         
         // User has elected to enable iCloud and it is supported
         if ([userDefaults boolForKey:Setting_iCloudEnabled]) {
@@ -936,7 +926,7 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
             
             self.currentState = essReadyToLoadStore;
             
-            NSString* tokenString = [[NSKeyedArchiver archivedDataWithRootObject:[self ubiquityIdentityToken]] base64Encoding];
+            NSString* tokenString = [[NSKeyedArchiver archivedDataWithRootObject:[self ubiquityIdentityToken]] base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
             NSString* Setting_MigrationToCloudPerformed = [NSString stringWithFormat:Setting_MigrationToCloudPerformedBase, tokenString];
             
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:Setting_MigrationToCloudPerformed];
@@ -956,7 +946,7 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
             
             self.currentState = essReadyToLoadStore;
             
-            NSString* tokenString = [[NSKeyedArchiver archivedDataWithRootObject:[self ubiquityIdentityToken]] base64Encoding];
+            NSString* tokenString = [[NSKeyedArchiver archivedDataWithRootObject:[self ubiquityIdentityToken]] base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
             NSString* Setting_MigrationFromCloudPerformed = [NSString stringWithFormat:Setting_MigrationFromCloudPerformedBase, tokenString];
             
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:Setting_MigrationFromCloudPerformed];
@@ -1000,7 +990,7 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
             
             self.currentState = essReadyToLoadStore;
             
-            NSString* tokenString = [[NSKeyedArchiver archivedDataWithRootObject:[self ubiquityIdentityToken]] base64Encoding];
+            NSString* tokenString = [[NSKeyedArchiver archivedDataWithRootObject:[self ubiquityIdentityToken]] base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
             NSString* Setting_MigrationToCloudPerformed = [NSString stringWithFormat:Setting_MigrationToCloudPerformedBase, tokenString];
             
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:Setting_MigrationToCloudPerformed];
@@ -1059,7 +1049,7 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
                                                                   withType:NSSQLiteStoreType error:nil];
         
         if (newStore) {
-            NSString* tokenString = [[NSKeyedArchiver archivedDataWithRootObject:[self ubiquityIdentityToken]] base64Encoding];
+            NSString* tokenString = [[NSKeyedArchiver archivedDataWithRootObject:[self ubiquityIdentityToken]] base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
             NSString* Setting_MigrationFromCloudPerformed = [NSString stringWithFormat:Setting_MigrationFromCloudPerformedBase, tokenString];
             
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:Setting_MigrationFromCloudPerformed];
@@ -1093,12 +1083,10 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
 - (void)CoreData_RegisterForNotifications:(NSPersistentStoreCoordinator*) coordinator {
     NSNotificationCenter* notificationCentre = [NSNotificationCenter defaultCenter];
     
-    if (Using_iOS7OrAbove) {
-        [notificationCentre addObserver:self
-                               selector:@selector(CoreData_StoresWillChange:)
-                                   name:NSPersistentStoreCoordinatorStoresWillChangeNotification
-                                 object:coordinator];
-    }
+    [notificationCentre addObserver:self
+                           selector:@selector(CoreData_StoresWillChange:)
+                               name:NSPersistentStoreCoordinatorStoresWillChangeNotification
+                             object:coordinator];
     
     [notificationCentre addObserver:self
                            selector:@selector(CoreData_StoresDidChange:)
@@ -1114,11 +1102,9 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
 - (void)CoreData_UnregisterForNotifications {
     NSNotificationCenter* notificationCentre = [NSNotificationCenter defaultCenter];
     
-    if (Using_iOS7OrAbove) {
-        [notificationCentre removeObserver:self
-                                      name:NSPersistentStoreCoordinatorStoresWillChangeNotification
-                                    object:self.persistentStoreCoordinator];
-    }
+    [notificationCentre removeObserver:self
+                                  name:NSPersistentStoreCoordinatorStoresWillChangeNotification
+                                object:self.persistentStoreCoordinator];
     [notificationCentre removeObserver:self
                                   name:NSPersistentStoreCoordinatorStoresDidChangeNotification
                                 object:self.persistentStoreCoordinator];
@@ -1226,11 +1212,6 @@ NSString* iCloudDeviceListName = @"ICLKnownDevices.plist";
 //        
 //        dataStoreIsFullyReady = transitionType == NSPersistentStoreUbiquitousTransitionTypeInitialImportCompleted;
 //    }
-    
-    // iOS 6 and below do not support the StoresWillChange notification
-    if (!Using_iOS7OrAbove) {
-        [self CoreData_StoresWillChange:nil];
-    }
     
     // if the account has not changed then we can proceed with a minimal reload
     if (!_accountChanged) {

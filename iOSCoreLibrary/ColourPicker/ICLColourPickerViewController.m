@@ -130,12 +130,7 @@ typedef struct
     
     // If we're on iPad then we need to control the size of the colour picker
     if (Using_iPad) {
-        if (Using_iOS7OrAbove) {
-            self.preferredContentSize = CGSizeMake(400, self.view.frame.size.height);
-        }
-        else {
-            self.contentSizeForViewInPopover = CGSizeMake(400, self.view.frame.size.height);
-        }
+        self.preferredContentSize = CGSizeMake(400, self.view.frame.size.height);
     }
     
     self.TitleItem.title = self.TitleText;

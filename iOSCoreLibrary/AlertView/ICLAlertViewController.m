@@ -119,17 +119,7 @@ NSString* const kICLButton3Colour = @"Button3Colour";
     [super viewDidLoad];
     
     if (Using_iPad) {
-        CGFloat viewWidth = 600.0f;
-        CGFloat viewHeight = 400.0f;
-        
-        CGSize contentSize = CGSizeMake(viewWidth, viewHeight);
-        
-        if (Using_iOS7OrAbove) {
-            self.preferredContentSize = contentSize;
-        }
-        else {
-            self.contentSizeForViewInPopover = contentSize;
-        }
+        self.preferredContentSize = CGSizeMake(600.0f, 400.0f);
     }
     
     [self.titleItem setTitle:self.title];

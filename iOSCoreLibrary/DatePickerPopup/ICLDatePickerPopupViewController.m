@@ -57,12 +57,10 @@
     }
     else {
         // transitioning delegates are only available on iOS 7
-        if (Using_iOS7OrAbove) {
-            if (self.datePickerPopupType == dpptSingleDate) {
-                _navigationViewController.transitioningDelegate = self;
-                _navigationViewController.modalPresentationStyle = UIModalPresentationCustom;
-                _navigationViewController.view.frame = CGRectMake(0, 0, 320.0f, 265.0f);
-            }
+        if (self.datePickerPopupType == dpptSingleDate) {
+            _navigationViewController.transitioningDelegate = self;
+            _navigationViewController.modalPresentationStyle = UIModalPresentationCustom;
+            _navigationViewController.view.frame = CGRectMake(0, 0, 320.0f, 265.0f);
         }
         
         [self.view setBackgroundColor:[UIColor colorWithWhite:0.9f alpha:0.95f]];
@@ -95,15 +93,7 @@
     CGFloat viewHeight = self.datePickerPopupType == dpptSingleDate ? 265.0f : 478.0f;
     
     if (Using_iPad) {
-        CGSize contentSize = CGSizeMake(viewWidth, viewHeight);
-        
-        // set content size for versions < iOS 7
-        if ([[[UIDevice currentDevice] systemVersion] floatValue] < 7) {
-            self.contentSizeForViewInPopover = contentSize;
-        } // iOS7 and above
-        else {
-            self.preferredContentSize = contentSize;
-        }
+        self.preferredContentSize = CGSizeMake(viewWidth, viewHeight);
     }
 }
 

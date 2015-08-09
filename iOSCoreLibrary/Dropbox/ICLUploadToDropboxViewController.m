@@ -110,17 +110,7 @@ NSString* const kICLMeterGlow = @"MeterGlow";
     [super viewDidLoad];
     
     if (Using_iPad) {
-        CGFloat viewWidth = 320.0f;
-        CGFloat viewHeight = 400.0f;
-        
-        CGSize contentSize = CGSizeMake(viewWidth, viewHeight);
-        
-        if (Using_iOS7OrAbove) {
-            self.preferredContentSize = contentSize;
-        }
-        else {
-            self.contentSizeForViewInPopover = contentSize;
-        }
+        self.preferredContentSize = CGSizeMake(320.0f, 400.0f);
     }
     
     [self.titleItem setTitle:self.title];
@@ -247,7 +237,7 @@ NSString* const kICLMeterGlow = @"MeterGlow";
         
         UIFont* textFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:40];
         NSString* workingText = [NSString stringWithFormat:@"%3ld%%", (long)progressPercentage];
-        CGSize textSize = [workingText sizeWithFont:textFont];
+        CGSize textSize = [workingText sizeWithAttributes:@{NSFontAttributeName: textFont}];
         CGFloat xOffset = (width - textSize.width) / 2;
         CGFloat yOffset = (height - textSize.height) / 2;
         
@@ -256,7 +246,14 @@ NSString* const kICLMeterGlow = @"MeterGlow";
         CGContextSaveGState(context);
         CGContextSetFillColorWithColor(context, cgColour);
         
-        [workingText drawInRect:textRect withFont:textFont lineBreakMode:NSLineBreakByWordWrapping alignment:NSTextAlignmentLeft];
+        // Define the paragraph style and attributes
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+        paragraphStyle.alignment = NSTextAlignmentLeft;
+        NSDictionary* fontAttributes = @{NSFontAttributeName: textFont,
+                                         NSParagraphStyleAttributeName: paragraphStyle};
+        
+        [workingText drawInRect:textRect withAttributes:fontAttributes];
         
         CGContextRestoreGState(context);
         
@@ -283,12 +280,7 @@ NSString* const kICLMeterGlow = @"MeterGlow";
         _gaussianBlurFilter = [CIFilter filterWithName:@"CIGaussianBlur"];
         
         [_gaussianBlurFilter setDefaults];
-        if (Using_iOS7OrAbove) {
-            [_gaussianBlurFilter setValue:@(10) forKey:kCIInputRadiusKey];
-        }
-        else {
-            [_gaussianBlurFilter setValue:@(10) forKey:@"inputRadius"];
-        }
+        [_gaussianBlurFilter setValue:@(10) forKey:kCIInputRadiusKey];
         
         _blendFilter = [CIFilter filterWithName:@"CISourceOverCompositing"];
         [_blendFilter setDefaults];

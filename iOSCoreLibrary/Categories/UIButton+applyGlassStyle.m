@@ -28,22 +28,6 @@
         float cornerRadius = 0.0f;
         float borderWidth = 0.0f;
         
-        // If the device running iOS version < 7 then use rounded corners
-        if (!Using_iOS7OrAbove) {
-            if (inButtonSize == egbsSmall) {
-                cornerRadius = 4.0f;
-                borderWidth = 1.0f;
-            }
-            else if (inButtonSize == egbsMedium) {
-                cornerRadius = 8.0f;
-                borderWidth = 2.0f;
-            }
-            else if (inButtonSize == egbsLarge) {
-                cornerRadius = 16.0f;
-                borderWidth = 4.0f;
-            }
-        }
-        
         // Setup the border
         buttonLayer.cornerRadius = cornerRadius;
         buttonLayer.masksToBounds = NO;
