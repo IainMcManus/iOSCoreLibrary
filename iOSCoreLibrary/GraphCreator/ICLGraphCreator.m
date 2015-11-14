@@ -22,6 +22,7 @@ NSString* kICLWidthKey = @"Width";
 NSString* kICLHeightKey = @"Height";
 NSString* kICLDataColours = @"DataColours";
 NSString* kICLMaximumColour = @"MaximumColour";
+NSString* kICLMinimumColour = @"MinimumColour";
 NSString* kICLFontSize = @"FontSize";
 NSString* kICLFontSize_LegendLabel = @"FontSize.Legend";
 NSString* kICLNumLabelsAcrossForLegend = @"NumLabelsAcrossForLegend";
@@ -41,6 +42,7 @@ NSString* kICLXAxisLabels = @"XAxisLabels";
 NSString* kICLYAxisLabels = @"YAxisLabels";
 
 NSString* kICLMaximumValue = @"MaximumValue";
+NSString* kICLMinimumValue = @"MinimumValue";
 
 @implementation ICLGraphCreator
 
@@ -747,27 +749,52 @@ NSString* kICLMaximumValue = @"MaximumValue";
     CGFloat marginBottom = attributes[kICLMarginBottom] ? [attributes[kICLMarginBottom] floatValue] : height * 0.1f;
     CGFloat axisWidth    = attributes[kICLAxisWidth]    ? [attributes[kICLAxisWidth] floatValue]    : 2.0f;
     
-    CGFloat maximumHeight = height - (marginTop + marginBottom);
-    CGFloat maximumWidth = width - (marginLeft + marginRight);
-    CGFloat pointSpacing = maximumWidth / ([values count] - 1);
-    
     CGRect imageRect = CGRectMake(0, 0, width, height);
     
-    // calculate the sum of all the data values
+    // calculate the range of all the data values
     __block double highestValue = 0;
-    
+    __block double lowestValue = 0;
+
+    [values enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        highestValue = MAX(highestValue, [obj doubleValue]);
+        lowestValue = MIN(lowestValue, [obj doubleValue]);
+    }];
+
     if (attributes[kICLMaximumValue]) {
         highestValue = [attributes[kICLMaximumValue] doubleValue];
     }
+    if (attributes[kICLMinimumValue]) {
+        lowestValue = [attributes[kICLMinimumValue] doubleValue];
+    }
+    
+    // If we only have negative values then give the top margin more room to allow for text
+    if (highestValue == 0) {
+        marginTop += marginBottom * 0.25;
+        marginBottom *= 0.75;
+    }
+    
+    CGFloat maximumHeight = height - (marginTop + marginBottom);
+    CGFloat maximumWidth = width - (marginLeft + marginRight);
+    CGFloat pointSpacing = maximumWidth / ([values count] - 1);
+    CGFloat centrePoint = 0;
+    
+    // Positive and negative values
+    __block BOOL havePositiveAndNegativeValues = NO;
+    if ((lowestValue < 0) && (highestValue > 0)) {
+        havePositiveAndNegativeValues = YES;
+        centrePoint = maximumHeight / 2;
+    } // Only negative values
+    else if (lowestValue < 0) {
+        centrePoint = 0;
+    } // Only positive values
     else {
-        [values enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            highestValue = MAX(highestValue, [obj doubleValue]);
-        }];
+        centrePoint = maximumHeight;
     }
     
     // normalise the data
     NSMutableArray* normalisedValues = [[NSMutableArray alloc] initWithCapacity:[values count]];
-    double scaleFactor = highestValue == 0 ? 0 : maximumHeight / highestValue;
+    double range = highestValue - lowestValue;
+    double scaleFactor = range == 0 ? 0 : maximumHeight / range;
     for (NSNumber* value in values) {
         [normalisedValues addObject:@(scaleFactor * [value doubleValue])];
     }
@@ -784,18 +811,18 @@ NSString* kICLMaximumValue = @"MaximumValue";
         UIBezierPath* bezierPath = [UIBezierPath bezierPath];
         
         // Set the starting point
-        [bezierPath moveToPoint:CGPointMake(marginLeft, marginTop + maximumHeight)];
+        [bezierPath moveToPoint:CGPointMake(marginLeft, marginTop + centrePoint)];
 
         // Add the graph points to the bezier path
         __block CGFloat xOffset = marginLeft;
         [values enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             CGFloat barHeight = [normalisedValues[idx] floatValue];
             
-            CGPoint point = CGPointMake(xOffset, marginTop + (maximumHeight - barHeight));
+            CGPoint point = CGPointMake(xOffset, marginTop + (centrePoint - barHeight));
             [bezierPath addLineToPoint:point];
             
             if ((idx + 1) == [values count]) {
-                [bezierPath addLineToPoint:CGPointMake(xOffset, marginTop + maximumHeight)];
+                [bezierPath addLineToPoint:CGPointMake(xOffset, marginTop + centrePoint)];
             }
             
             xOffset += pointSpacing;
@@ -803,11 +830,33 @@ NSString* kICLMaximumValue = @"MaximumValue";
         
         // Setup the colour space for the gradient fill
         CGColorSpaceRef colourSpace = CGColorSpaceCreateDeviceRGB();
-        UIColor* colour = attributes[kICLMaximumColour] ? attributes[kICLMaximumColour] : [UIColor magentaColor];
+        UIColor* minimumColour = attributes[kICLMinimumColour] ? attributes[kICLMinimumColour] : [UIColor magentaColor];
+        UIColor* maximumColour = attributes[kICLMaximumColour] ? attributes[kICLMaximumColour] : [UIColor magentaColor];
         
-        CGFloat locations[] = { 0.0, 1.0f };
-        NSArray *colours = @[(__bridge id) colour.CGColor,
-                             (__bridge id) [colour autoGenerateLighterShade].CGColor];
+        CGFloat locationSet_MinAndMax[] = {0.0f, 0.49f, 0.51f, 1.0f};
+        CGFloat locationSet_Min[] = {0.0f, 1.0f};
+        CGFloat locationSet_Max[] = {0.0f, 1.0f};
+        CGFloat* locations;
+        NSArray *colours;
+        
+        // Positive and negative values
+        if ((lowestValue < 0) && (highestValue > 0)) {
+            locations = locationSet_MinAndMax;
+            colours = @[(__bridge id) minimumColour.CGColor,
+                        (__bridge id) [minimumColour autoGenerateLighterShade].CGColor,
+                        (__bridge id) [maximumColour autoGenerateLighterShade].CGColor,
+                        (__bridge id) maximumColour.CGColor];
+        } // Only negative values
+        else if (lowestValue < 0) {
+            locations = locationSet_Min;
+            colours = @[(__bridge id) minimumColour.CGColor,
+                        (__bridge id) [minimumColour autoGenerateLighterShade].CGColor];
+        } // Only positive values
+        else {
+            locations = locationSet_Max;
+            colours = @[(__bridge id) maximumColour.CGColor,
+                        (__bridge id) [maximumColour autoGenerateLighterShade].CGColor];
+        }
         
 
         CGContextSaveGState(context);
@@ -836,10 +885,10 @@ NSString* kICLMaximumValue = @"MaximumValue";
         xOffset = marginLeft;
         [values enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             CGFloat barHeight = [normalisedValues[idx] floatValue];
-            CGPoint point = CGPointMake(xOffset, marginTop + (maximumHeight - barHeight));
+            CGPoint point = CGPointMake(xOffset, marginTop + (centrePoint - barHeight));
             
             CGContextBeginPath(context);
-            CGContextMoveToPoint(context, point.x, marginTop + maximumHeight);
+            CGContextMoveToPoint(context, point.x, marginTop + centrePoint);
             CGContextAddLineToPoint(context, point.x, point.y);
 
             CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
@@ -863,7 +912,8 @@ NSString* kICLMaximumValue = @"MaximumValue";
         
         CGContextMoveToPoint(context, marginLeft, marginTop);
         CGContextAddLineToPoint(context, marginLeft, marginTop + maximumHeight);
-        CGContextAddLineToPoint(context, marginLeft + maximumWidth, marginTop + maximumHeight);
+        CGContextMoveToPoint(context, marginLeft, marginTop + centrePoint);
+        CGContextAddLineToPoint(context, marginLeft + maximumWidth, marginTop + centrePoint);
         CGContextStrokePath(context);
         
         // Draw the y axis labels if present
@@ -935,32 +985,45 @@ NSString* kICLMaximumValue = @"MaximumValue";
             [xAxisLabels enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 NSString* text = (NSString*) obj;
                 
-                CGSize textSize = [text sizeWithAttributes:@{NSFontAttributeName: textFont}];
-                
-                CGFloat yOffset = shiftDown ? marginBottom * 0.15f : 0;
-                
-                CGRect textRect = CGRectMake(xOffset + (pointSpacing * idx) - (textSize.width * 0.5f),
-                                             marginTop + maximumHeight + marginBottom * 0.15f + yOffset,
-                                             textSize.width,
-                                             textSize.height);
-                
-                // Only draw if we won't collide with previously drawn text
-                if (!CGRectIntersectsRect(textRect, previousRect) && CGRectContainsRect(imageRect, textRect)) {
-                    [text drawInRect:textRect withAttributes:fontAttributes];
-                    previousRect = textRect;
+                // Skip the first one if we have both positive and negative values
+                if (!havePositiveAndNegativeValues || (idx != 0)) {
+                    CGSize textSize = [text sizeWithAttributes:@{NSFontAttributeName: textFont}];
                     
-                    CGPoint point = CGPointMake(xOffset + pointSpacing * idx, marginTop + maximumHeight);
+                    CGFloat yOffset = marginBottom * 0.15f + (shiftDown ? marginBottom * 0.15f : 0);
                     
-                    CGContextBeginPath(context);
-                    CGContextMoveToPoint(context, point.x, point.y);
-                    CGContextAddLineToPoint(context, point.x, point.y + marginBottom * 0.15f);
+                    CGFloat normalisedValue = [normalisedValues[idx] floatValue];
+                    if (normalisedValue < 0) {
+                        yOffset = -yOffset - textSize.height;
+                    }
                     
-                    CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
-                    CGContextSetLineWidth(context, 5.0f);
+                    CGRect textRect = CGRectMake(xOffset + (pointSpacing * idx) - (textSize.width * 0.5f),
+                                                 marginTop + centrePoint + yOffset,
+                                                 textSize.width,
+                                                 textSize.height);
                     
-                    CGContextStrokePath(context);
-                    
-                    shiftDown = !shiftDown;
+                    // Only draw if we won't collide with previously drawn text
+                    if (!CGRectIntersectsRect(textRect, previousRect) && CGRectContainsRect(imageRect, textRect)) {
+                        [text drawInRect:textRect withAttributes:fontAttributes];
+                        previousRect = textRect;
+                        
+                        CGPoint point = CGPointMake(xOffset + pointSpacing * idx, marginTop + centrePoint);
+                        
+                        CGContextBeginPath(context);
+                        CGContextMoveToPoint(context, point.x, point.y);
+                        if (normalisedValue >= 0) {
+                            CGContextAddLineToPoint(context, point.x, point.y + marginBottom * 0.15f);
+                        }
+                        else {
+                            CGContextAddLineToPoint(context, point.x, point.y - marginBottom * 0.15f);
+                        }
+                        
+                        CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
+                        CGContextSetLineWidth(context, 5.0f);
+                        
+                        CGContextStrokePath(context);
+                        
+                        shiftDown = !shiftDown;
+                    }
                 }
             }];
         }

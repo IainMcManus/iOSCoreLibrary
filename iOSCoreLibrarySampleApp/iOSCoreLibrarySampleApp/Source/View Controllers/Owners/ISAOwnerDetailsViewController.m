@@ -158,7 +158,7 @@
 
 - (void) ownerUpdated:(Owner *)owner remoteChange:(BOOL)isRemoteChange {
     // We only care if the owner we are editing was updated.
-    if (self.owner && (self.owner == owner)) {
+    if (isRemoteChange && self.owner && (self.owner == owner)) {
         dispatch_async(dispatch_get_main_queue(), ^{
             NSString* messageTitle = NSLocalizedStringFromTable(@"Modified.Title", @"Owners", @"Current Owner Modified");
             NSString* message = NSLocalizedStringFromTable(@"Modified.Message", @"Owners", @"The Owner you are editing was modified remotely. You will be returned to the main screen.");

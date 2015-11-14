@@ -24,6 +24,7 @@ extern NSString* kICLWidthKey;
 extern NSString* kICLHeightKey;
 extern NSString* kICLDataColours;
 extern NSString* kICLMaximumColour;
+extern NSString* kICLMinimumColour;
 extern NSString* kICLFontSize;
 extern NSString* kICLFontSize_LegendLabel;
 extern NSString* kICLNumLabelsAcrossForLegend;
@@ -43,6 +44,7 @@ extern NSString* kICLXAxisLabels;
 extern NSString* kICLYAxisLabels;
 
 extern NSString* kICLMaximumValue;
+extern NSString* kICLMinimumValue;
 
 @interface ICLGraphCreator : NSObject
 

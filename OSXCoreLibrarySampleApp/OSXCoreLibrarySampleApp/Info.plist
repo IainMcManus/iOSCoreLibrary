@@ -28,6 +28,8 @@
 	<string>Copyright © 2015 Injaia. All rights reserved.</string>
 	<key>NSMainStoryboardFile</key>
 	<string>Main</string>
+	<key>NSUbiquitousDisplaySet</key>
+	<string>com.injaia.iOSCoreLibrary.ExampleSet</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 </dict>

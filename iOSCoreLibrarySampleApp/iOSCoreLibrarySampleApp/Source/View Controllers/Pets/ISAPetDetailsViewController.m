@@ -252,7 +252,7 @@
 
 - (void) petUpdated:(Pet *)pet remoteChange:(BOOL)isRemoteChange {
     // We only care if the pet we are editing was updated.
-    if (self.pet && (self.pet == pet)) {
+    if (isRemoteChange && self.pet && (self.pet == pet)) {
         dispatch_async(dispatch_get_main_queue(), ^{
             NSString* messageTitle = NSLocalizedStringFromTable(@"Modified.Title", @"Pets", @"Current Pet Modified");
             NSString* message = NSLocalizedStringFromTable(@"Modified.Message", @"Pets", @"The Pet you are editing was modified remotely. You will be returned to the main screen.");

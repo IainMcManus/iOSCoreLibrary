@@ -155,7 +155,7 @@
 
 - (void) classificationUpdated:(Classification *)classification remoteChange:(BOOL)isRemoteChange {
     // We only care if the classification we are editing was updated.
-    if (self.classification && (self.classification == classification)) {
+    if (isRemoteChange && self.classification && (self.classification == classification)) {
         dispatch_async(dispatch_get_main_queue(), ^{
             NSString* messageTitle = NSLocalizedStringFromTable(@"Modified.Title", @"Classifications", @"Current Classification Modified");
             NSString* message = NSLocalizedStringFromTable(@"Modified.Message", @"Classifications", @"The Classification you are editing was modified remotely. You will be returned to the main screen.");

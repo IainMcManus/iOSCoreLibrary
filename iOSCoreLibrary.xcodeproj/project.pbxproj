@@ -119,7 +119,7 @@
 		AEEAA3021AC81E81004D0E78 /* XMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = AEEAA2FF1AC81E81004D0E78 /* XMLWriter.m */; };
 		AEEAA3041AC81ED6004D0E78 /* XMLWriter.license in Resources */ = {isa = PBXBuildFile; fileRef = AEEAA3031AC81ED6004D0E78 /* XMLWriter.license */; };
 		AEEAA3061AC81EE8004D0E78 /* KCOrderedAccessorFix.license in Resources */ = {isa = PBXBuildFile; fileRef = AEEAA3051AC81EE8004D0E78 /* KCOrderedAccessorFix.license */; };
-		AEED9C751AEB1A4B004F1753 /* ICLGraphCreator.h in Headers */ = {isa = PBXBuildFile; fileRef = AEED9C731AEB1A4B004F1753 /* ICLGraphCreator.h */; };
+		AEED9C751AEB1A4B004F1753 /* ICLGraphCreator.h in Headers */ = {isa = PBXBuildFile; fileRef = AEED9C731AEB1A4B004F1753 /* ICLGraphCreator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AEED9C761AEB1A4B004F1753 /* ICLGraphCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = AEED9C741AEB1A4B004F1753 /* ICLGraphCreator.m */; };
 /* End PBXBuildFile section */
 
@@ -743,7 +743,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastTestingUpgradeCheck = 0510;
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Iain McManus";
 			};
 			buildConfigurationList = AE1744BF17755777007051FF /* Build configuration list for PBXProject "iOSCoreLibrary" */;
@@ -969,6 +969,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1020,6 +1021,7 @@
 		AE1744EA17755778007051FF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DSTROOT = /tmp/iOSCoreLibrary.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1040,6 +1042,7 @@
 		AE1744EB17755778007051FF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DSTROOT = /tmp/iOSCoreLibrary.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
